@@ -1,1 +1,6 @@
 @import 'tailwindcss';
+
+
+.h1 {
+    @apply tracking-tight;
+}

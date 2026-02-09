@@ -7,8 +7,9 @@
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
 <nav class="
+	sticky top-0
 	flex flex-row justify-center items-between
-	w-full h-fit
+	w-full max-w-4xl h-fit
 ">
 	<h1>Jason Coawette</h1>
 	<!-- Button Wrapper -->
