@@ -6,7 +6,10 @@
 </script>
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
-<nav>
+<nav class="
+	flex flex-row justify-center items-between
+	w-full h-fit
+">
 	<h1>Jason Coawette</h1>
 	<!-- Button Wrapper -->
 	<!--	Button	-->
