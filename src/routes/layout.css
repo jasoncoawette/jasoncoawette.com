@@ -1,6 +1,12 @@
 @import 'tailwindcss';
 
+/* H1 – main page title */
+h1 {
+    @apply  font-semibold text-2xl leading-tight tracking-tight
+            md:text-3xl;
+}
 
-.h1 {
-    @apply tracking-tight;
+p {
+    @apply  text-sm leading-relaxed tracking-normal
+            md:text-base;
 }
