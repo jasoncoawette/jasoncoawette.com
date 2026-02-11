@@ -3,12 +3,23 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<!-- THEME FLASH GUARD -->
+		<script>
+			(function () {
+				const stored = localStorage.getItem('theme');
+				const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+				const theme =
+					stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
+				if (theme === 'dark') document.documentElement.classList.add('dark');
+			})();
+		</script>
 		%sveltekit.head%
 	</head>
-	<body data-sveltekit-preload-data="hover" class="
-		flex flex-col justify-start items-center
-		w-full min-h-screen p-4
-	">
+	<body
+		data-sveltekit-preload-data="hover"
+		class="flex min-h-screen w-full min-w-xs flex-col items-center justify-start bg-primary-bg px-4 py-6"
+	>
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>

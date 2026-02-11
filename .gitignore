@@ -4,6 +4,7 @@ node_modules
 .vscode
 
 # Output
+.claude
 .output
 .vercel
 .netlify

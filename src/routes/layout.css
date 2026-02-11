@@ -1,12 +1,24 @@
 @import 'tailwindcss';
 
-/* H1 – main page title */
+/* ---------- Color Styles ---------- */
+@theme {
+	--color-primary-fg: oklch(14.5% 0 0);
+	--color-secondary-fg: oklch(37.1% 0 0);
+	--color-primary-bg: oklch(98.5% 0 0);
+	--color-secondary-bg: oklch(97% 0 0);
+}
+.dark {
+	--color-primary-fg: oklch(98.5% 0 0);
+	--color-secondary-fg: oklch(87% 0 0);
+	--color-primary-bg: oklch(14.5% 0 0);
+	--color-secondary-bg: oklch(20.5% 0 0);
+}
+
+/* ---------- Text Styles ----------- */
 h1 {
-    @apply  font-semibold text-2xl leading-tight tracking-tight
-            md:text-3xl;
+	@apply text-2xl leading-tight font-semibold tracking-tight text-primary-fg md:text-3xl;
 }
 
 p {
-    @apply  text-sm leading-relaxed tracking-normal
-            md:text-base;
+	@apply text-sm leading-relaxed font-normal tracking-normal text-secondary-fg md:text-base;
 }

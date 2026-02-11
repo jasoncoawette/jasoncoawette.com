@@ -7,10 +7,8 @@ RUN corepack enable
 
 WORKDIR /app
 
-# Install dependencies (cached as long as package.json / lockfile don't change)
 COPY package.json pnpm-lock.yaml ./
-# If you have .npmrc or pnpm-workspace.yaml, add them too:
-# COPY .npmrc pnpm-workspace.yaml ./
+COPY .npmrc pnpm-workspace.yaml ./
 
 RUN pnpm install
 
