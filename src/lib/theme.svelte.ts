@@ -10,11 +10,15 @@ export function initTheme() {
 }
 
 export function toggleTheme() {
-	theme.current = theme.current === 'light' ? 'dark' : 'light';
-	localStorage.setItem('theme', theme.current);
-	applyTheme();
-}
+	const apply = () => {
+		theme.current = theme.current === 'light' ? 'dark' : 'light';
+		localStorage.setItem('theme', theme.current);
+		document.documentElement.classList.toggle('dark', theme.current === 'dark');
+	};
 
-function applyTheme() {
-	document.documentElement.classList.toggle('dark', theme.current === 'dark');
+	if (document.startViewTransition) {
+		document.startViewTransition(apply);
+	} else {
+		apply();
+	}
 }

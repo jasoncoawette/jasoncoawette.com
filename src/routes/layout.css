@@ -1,24 +1,247 @@
 @import 'tailwindcss';
 
+/* ---------- Global Defaults ---------- */
+
+html,
+body {
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
 /* ---------- Color Styles ---------- */
 @theme {
 	--color-primary-fg: oklch(14.5% 0 0);
 	--color-secondary-fg: oklch(37.1% 0 0);
-	--color-primary-bg: oklch(98.5% 0 0);
-	--color-secondary-bg: oklch(97% 0 0);
+	--color-primary-bg: oklch(97% 0 0);
+	--color-secondary-bg: oklch(92.2% 0 0);
 }
 .dark {
 	--color-primary-fg: oklch(98.5% 0 0);
 	--color-secondary-fg: oklch(87% 0 0);
-	--color-primary-bg: oklch(14.5% 0 0);
-	--color-secondary-bg: oklch(20.5% 0 0);
+	--color-primary-bg: oklch(20.5% 0 0);
+	--color-secondary-bg: oklch(37.1% 0 0);
 }
 
 /* ---------- Text Styles ----------- */
 h1 {
-	@apply text-2xl leading-tight font-semibold tracking-tight text-primary-fg md:text-3xl;
+	@apply text-2xl leading-tight font-semibold tracking-tight sm:text-3xl;
+}
+
+button {
+	@apply text-[14px] leading-tight font-medium tracking-tight;
 }
 
 p {
-	@apply text-sm leading-relaxed font-normal tracking-normal text-secondary-fg md:text-base;
+	@apply text-[14px] leading-relaxed font-normal tracking-normal text-secondary-fg;
+}
+
+/* ---------- Shimmer Text ---------- */
+.shimmer-text {
+	position: relative;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+}
+
+.shimmer-text::before {
+	content: attr(data-text);
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(90deg, transparent, var(--color-primary-fg), transparent) -100% 0 /
+		50% 100% no-repeat;
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	pointer-events: none;
+}
+
+a:hover .shimmer-text,
+button:hover .shimmer-text {
+	color: color-mix(in oklch, var(--color-primary-fg) 35%, transparent);
+	transition: color 0.3s ease-in-out;
+}
+
+a:hover .shimmer-text::before,
+button:hover .shimmer-text::before {
+	animation: shimmer 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes shimmer {
+	from {
+		background-position: -100% 0;
+	}
+	to {
+		background-position: 250% 0;
+	}
+}
+
+/* ---------- Color Styles ---------- */
+body {
+	background-color: var(--color-primary-bg);
+	color: var(--color-primary-fg);
+}
+
+/* ---------- Theme View Transition ---------- */
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation-duration: 250ms;
+	animation-timing-function: ease-in-out;
+}
+
+/* ---------- Liquid Glass ---------- */
+
+/*
+ * Apple-style liquid glass.
+ *
+ * Usage: apply .liquid-glass to any element.
+ * Set --lg-glow-x / --lg-glow-y via JS for cursor-tracking glow.
+ *
+ * Custom properties:
+ *   --lg-blur       backdrop blur           (default: 16px)
+ *   --lg-radius     border radius           (default: 20px)
+ *   --lg-bg         fill color              (default: white 6%)
+ *   --lg-border     border color            (default: white 20%)
+ *   --lg-glow-x/y   cursor glow position    (default: 50%)
+ */
+
+.liquid-glass {
+	--lg-blur: 16px;
+	--lg-radius: 20px;
+	--lg-bg: rgba(255, 255, 255, 0.06);
+	--lg-border: rgba(255, 255, 255, 0.2);
+	--lg-glow-x: 50%;
+	--lg-glow-y: 50%;
+
+	position: relative;
+	border-radius: var(--lg-radius);
+	background: var(--lg-bg);
+	backdrop-filter: blur(var(--lg-blur)) saturate(120%) brightness(105%);
+	-webkit-backdrop-filter: blur(var(--lg-blur)) saturate(120%) brightness(105%);
+	border: 1px solid var(--lg-border);
+	overflow: hidden;
+	isolation: isolate;
+	cursor: pointer;
+	user-select: none;
+	will-change: transform;
+	transform: scale(1);
+	transition:
+		transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1),
+		box-shadow 300ms ease,
+		border-color 300ms ease;
+	box-shadow:
+		0 1px 2px rgba(0, 0, 0, 0.04),
+		0 4px 16px -4px rgba(0, 0, 0, 0.08);
+}
+
+/* Cursor-tracking glow + top frosted shine */
+.liquid-glass::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	background:
+		radial-gradient(
+			300px circle at var(--lg-glow-x) var(--lg-glow-y),
+			rgba(255, 255, 255, 0.12),
+			transparent 60%
+		),
+		linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, transparent 40%);
+	pointer-events: none;
+	z-index: 1;
+	transition: opacity 300ms ease;
+}
+
+/* Reflective border shine sweep */
+.liquid-glass::after {
+	content: '';
+	position: absolute;
+	inset: -1px;
+	border-radius: inherit;
+	background: linear-gradient(
+		105deg,
+		transparent 30%,
+		rgba(255, 255, 255, 0.25) 45%,
+		rgba(255, 255, 255, 0.35) 50%,
+		rgba(255, 255, 255, 0.25) 55%,
+		transparent 70%
+	);
+	mask:
+		linear-gradient(#000, #000) content-box,
+		linear-gradient(#000, #000);
+	mask-composite: exclude;
+	-webkit-mask:
+		linear-gradient(#000, #000) content-box,
+		linear-gradient(#000, #000);
+	-webkit-mask-composite: xor;
+	padding: 1px;
+	pointer-events: none;
+	z-index: 2;
+}
+
+/* Press: scale down */
+.liquid-glass:active {
+	transform: scale(0.97);
+	transition:
+		transform 120ms cubic-bezier(0.4, 0, 0.2, 1),
+		box-shadow 120ms ease;
+	box-shadow:
+		0 1px 2px rgba(0, 0, 0, 0.06),
+		0 2px 8px -2px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover: subtle lift */
+.liquid-glass:hover {
+	box-shadow:
+		0 2px 4px rgba(0, 0, 0, 0.05),
+		0 8px 24px -4px rgba(0, 0, 0, 0.1);
+	border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Focus visible */
+.liquid-glass:focus-visible {
+	outline: 2px solid rgba(255, 255, 255, 0.4);
+	outline-offset: 2px;
+}
+
+/* Dark mode */
+.dark .liquid-glass {
+	--lg-bg: rgba(255, 255, 255, 0.04);
+	--lg-border: rgba(255, 255, 255, 0.12);
+	box-shadow:
+		0 1px 2px rgba(0, 0, 0, 0.12),
+		0 4px 16px -4px rgba(0, 0, 0, 0.2);
+}
+
+.dark .liquid-glass::before {
+	background:
+		radial-gradient(
+			300px circle at var(--lg-glow-x) var(--lg-glow-y),
+			rgba(255, 255, 255, 0.08),
+			transparent 60%
+		),
+		linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, transparent 40%);
+}
+
+.dark .liquid-glass::after {
+	background: linear-gradient(
+		105deg,
+		transparent 30%,
+		rgba(255, 255, 255, 0.15) 45%,
+		rgba(255, 255, 255, 0.2) 50%,
+		rgba(255, 255, 255, 0.15) 55%,
+		transparent 70%
+	);
+}
+
+.dark .liquid-glass:hover {
+	border-color: rgba(255, 255, 255, 0.2);
+	box-shadow:
+		0 2px 4px rgba(0, 0, 0, 0.15),
+		0 8px 24px -4px rgba(0, 0, 0, 0.25);
+}
+
+.dark .liquid-glass:active {
+	box-shadow:
+		0 1px 2px rgba(0, 0, 0, 0.15),
+		0 2px 8px -2px rgba(0, 0, 0, 0.2);
 }
