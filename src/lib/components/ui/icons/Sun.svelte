@@ -11,7 +11,7 @@
 	/** @type {Props} */
 	let {
 		color = 'currentColor',
-		size = 24,
+		size = undefined,
 		strokeWidth = 2,
 		isHovered = false,
 		class: className = ''
@@ -38,6 +38,8 @@
 		xmlns="http://www.w3.org/2000/svg"
 		width={size}
 		height={size}
+		style:width={size ? undefined : 'var(--icon-size)'}
+		style:height={size ? undefined : 'var(--icon-size)'}
 		viewBox="0 0 24 24"
 		fill="none"
 		stroke={color}
