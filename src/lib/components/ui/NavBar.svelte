@@ -34,6 +34,7 @@
 </nav>
 
 <style>
+	/* ---- Layer 1: Nav container — sticky + backdrop blur ---- */
 	.nav {
 		--nav-tint: oklch(97% 0 0 / 0.7);
 		position: sticky;
@@ -59,14 +60,12 @@
 		backdrop-filter: blur(20px) saturate(1.8);
 	}
 
-	/* Absolute layer for the tinted background + mask fade only */
+	/* ---- Layer 2: Background tint + mask fade ---- */
 	.nav-bg {
 		position: absolute;
 		inset: 0;
 		z-index: 0;
 		background: transparent;
-		mask-image: none;
-		-webkit-mask-image: none;
 		transition: background 300ms ease-out;
 		pointer-events: none;
 	}
@@ -94,6 +93,7 @@
 		);
 	}
 
+	/* ---- Layer 3: Content ---- */
 	.nav-inner {
 		position: relative;
 		z-index: 1;
@@ -112,6 +112,7 @@
 		flex-wrap: nowrap;
 	}
 
+	/* ---- Title ---- */
 	.nav-title {
 		transition: font-size 300ms ease-out;
 	}
@@ -120,6 +121,30 @@
 		font-size: var(--text-lg);
 	}
 
+	/* ---- Subtitle ---- */
+	.nav-subtitle {
+		font-size: var(--text-sm);
+		letter-spacing: var(--tracking-tight);
+		max-height: 0;
+		opacity: 0;
+		filter: blur(4px);
+		transform: translateY(6px);
+		overflow: hidden;
+		transition:
+			max-height 300ms ease-out,
+			opacity 300ms ease-out,
+			filter 300ms ease-out,
+			transform 300ms ease-out;
+	}
+
+	.nav-subtitle.scrolled {
+		max-height: 2rem;
+		opacity: 1;
+		filter: blur(0);
+		transform: translateY(0);
+	}
+
+	/* ---- ≤370px overrides ---- */
 	@media (max-width: 370px) {
 		.nav-inner.scrolled {
 			flex-wrap: wrap-reverse;
@@ -146,9 +171,10 @@
 
 		.nav-title {
 			transition:
-				opacity 300ms ease-out,
-				filter 300ms ease-out,
-				transform 300ms ease-out;
+				font-size 300ms ease-out,
+				opacity 300ms 150ms ease-out,
+				filter 300ms 150ms ease-out,
+				transform 300ms 150ms ease-out;
 		}
 
 		.nav-title.scrolled {
@@ -157,27 +183,5 @@
 			filter: blur(4px);
 			transform: translateY(-6px);
 		}
-	}
-
-	.nav-subtitle {
-		font-size: var(--text-sm);
-		letter-spacing: var(--tracking-tight);
-		max-height: 0;
-		opacity: 0;
-		filter: blur(4px);
-		transform: translateY(6px);
-		transition:
-			max-height 300ms ease-out,
-			opacity 300ms ease-out,
-			filter 300ms ease-out,
-			transform 300ms ease-out;
-		overflow: hidden;
-	}
-
-	.nav-subtitle.scrolled {
-		max-height: 2rem;
-		opacity: 1;
-		filter: blur(0);
-		transform: translateY(0);
 	}
 </style>

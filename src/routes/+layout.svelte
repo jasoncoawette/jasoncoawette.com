@@ -1,7 +1,7 @@
 <script lang="ts">
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
-	import { initTheme, initViewport } from '$lib';
+	import { initTheme } from '$lib';
 	import { NavBar } from '$lib';
 	import { onMount } from 'svelte';
 
@@ -9,7 +9,6 @@
 
 	onMount(() => {
 		initTheme();
-		initViewport();
 	});
 </script>
 
@@ -20,7 +19,6 @@
 <NavBar />
 <main
 	class="
-		relative z-0
 		flex
 		min-h-screen w-full max-w-3xl px-4 flex-col
 		items-center justify-start
