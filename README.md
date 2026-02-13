@@ -1,6 +1,6 @@
 # Jason Coawette
 
-Design-forward software engineer building clean, durable products with clarity, usability, and speed.  
+Design engineer building clean, durable products with clarity, usability, and speed.  
 Recognized as a top fifteen tech entrepreneur at Arizona State University and a multi-year Venture Devils funding recipient.
 
 I enjoy building things and bringing people together, whether through software, food, or shared space.
@@ -9,7 +9,7 @@ Currently, a Software Engineer at Boeing.
 
 ### Quote
 
-> "Jason demonstrates strong design judgment and makes sound architectural decisions."
+> "Jason consistently demonstrates strong design judgment and sound architectural decisions."
 
 — Dr. Ray Hsu, Founder & CEO, Ada Analytics
 

@@ -1,24 +1,18 @@
 <!doctype html>
 <html lang="en">
 	<head>
+		<title>Jason Coawette - Design Engineer</title>
+		
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 		<!-- THEME FLASH GUARD -->
-		<script>
-			(function () {
-				const stored = localStorage.getItem('theme');
-				const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-				const theme =
-					stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
-				if (theme === 'dark') document.documentElement.classList.add('dark');
-			})();
-		</script>
+		<script src="/theme-guard.js"></script>
 		%sveltekit.head%
 	</head>
 	<body
 		data-sveltekit-preload-data="hover"
-		class="flex min-h-screen w-full min-w-xs flex-col items-center justify-start px-4 py-6 antialiased"
+		class="flex min-h-screen w-full min-w-xs flex-col items-center justify-start antialiased select-none"
 	>
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>
