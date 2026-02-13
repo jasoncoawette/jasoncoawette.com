@@ -20,8 +20,8 @@
 <main
 	class="
 		flex
-		min-h-screen w-full max-w-3xl px-4 flex-col
-		items-center justify-start
+		min-h-screen w-full max-w-3xl flex-col items-center
+		justify-start px-4
 	"
 >
 	{@render children()}

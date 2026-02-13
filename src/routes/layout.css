@@ -97,9 +97,9 @@ p {
 
 /* ---------- Button Styles ------------------------------ */
 button {
-	@apply flex items-center justify-center w-fit h-fit;
-	@apply text-base font-medium tracking-tight leading-1.5 text-center;
-	@apply hover:scale-105 active:scale-95 duration-200 ease-in-out;
+	@apply flex h-fit w-fit items-center justify-center;
+	@apply text-center text-base leading-1.5 font-medium tracking-tight;
+	@apply duration-200 ease-in-out hover:scale-105 active:scale-95;
 	@apply cursor-pointer;
 	&:hover {
 		border-color: var(--color-glass-shine);
@@ -115,10 +115,10 @@ button {
 }
 
 .btn-icon {
-	@apply p-3 rounded-full;
+	@apply rounded-full p-3;
 }
 
 .btn-text {
-	@apply px-6 py-3 rounded-full;
+	@apply rounded-full px-6 py-3;
 	line-height: var(--icon-size);
 }

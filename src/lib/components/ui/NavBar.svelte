@@ -19,23 +19,19 @@
 	<div class="nav-bg"></div>
 
 	<div class="nav-inner" class:scrolled>
-		<div class="
-			flex flex-col w-fit h-fit shrink-0
+		<div
+			class="
+			flex h-fit w-fit shrink-0 flex-col
 			items-start justify-center
-		">
-			<h1 class="nav-title" class:scrolled>
-				Jason Coawette
-			</h1>
-			<p class="nav-subtitle" class:scrolled>
-				Design Engineer
-			</p>
+		"
+		>
+			<h1 class="nav-title" class:scrolled>Jason Coawette</h1>
+			<p class="nav-subtitle" class:scrolled>Design Engineer</p>
 		</div>
 
 		<div class="nav-actions">
-			<ThemeToggle/>
-			<button class="glass btn-text">
-				Email
-			</button>
+			<ThemeToggle />
+			<button class="glass btn-text"> Email </button>
 		</div>
 	</div>
 </nav>
@@ -82,98 +78,110 @@
 	.bl-1 {
 		-webkit-backdrop-filter: blur(16px) saturate(1.8);
 		backdrop-filter: blur(16px) saturate(1.8);
-		mask: linear-gradient(to bottom,
-			rgba(0,0,0,1) 0%,
-			rgba(0,0,0,1) 20%,
-			rgba(0,0,0,0) 35%
+		mask: linear-gradient(
+			to bottom,
+			rgba(0, 0, 0, 1) 0%,
+			rgba(0, 0, 0, 1) 20%,
+			rgba(0, 0, 0, 0) 35%
 		);
-		-webkit-mask: linear-gradient(to bottom,
-			rgba(0,0,0,1) 0%,
-			rgba(0,0,0,1) 20%,
-			rgba(0,0,0,0) 35%
+		-webkit-mask: linear-gradient(
+			to bottom,
+			rgba(0, 0, 0, 1) 0%,
+			rgba(0, 0, 0, 1) 20%,
+			rgba(0, 0, 0, 0) 35%
 		);
 	}
 
 	.bl-2 {
 		-webkit-backdrop-filter: blur(8px) saturate(1.6);
 		backdrop-filter: blur(8px) saturate(1.6);
-		mask: linear-gradient(to bottom,
-			rgba(0,0,0,0) 10%,
-			rgba(0,0,0,1) 25%,
-			rgba(0,0,0,1) 40%,
-			rgba(0,0,0,0) 55%
+		mask: linear-gradient(
+			to bottom,
+			rgba(0, 0, 0, 0) 10%,
+			rgba(0, 0, 0, 1) 25%,
+			rgba(0, 0, 0, 1) 40%,
+			rgba(0, 0, 0, 0) 55%
 		);
-		-webkit-mask: linear-gradient(to bottom,
-			rgba(0,0,0,0) 10%,
-			rgba(0,0,0,1) 25%,
-			rgba(0,0,0,1) 40%,
-			rgba(0,0,0,0) 55%
+		-webkit-mask: linear-gradient(
+			to bottom,
+			rgba(0, 0, 0, 0) 10%,
+			rgba(0, 0, 0, 1) 25%,
+			rgba(0, 0, 0, 1) 40%,
+			rgba(0, 0, 0, 0) 55%
 		);
 	}
 
 	.bl-3 {
 		-webkit-backdrop-filter: blur(4px) saturate(1.4);
 		backdrop-filter: blur(4px) saturate(1.4);
-		mask: linear-gradient(to bottom,
-			rgba(0,0,0,0) 25%,
-			rgba(0,0,0,1) 40%,
-			rgba(0,0,0,1) 55%,
-			rgba(0,0,0,0) 70%
+		mask: linear-gradient(
+			to bottom,
+			rgba(0, 0, 0, 0) 25%,
+			rgba(0, 0, 0, 1) 40%,
+			rgba(0, 0, 0, 1) 55%,
+			rgba(0, 0, 0, 0) 70%
 		);
-		-webkit-mask: linear-gradient(to bottom,
-			rgba(0,0,0,0) 25%,
-			rgba(0,0,0,1) 40%,
-			rgba(0,0,0,1) 55%,
-			rgba(0,0,0,0) 70%
+		-webkit-mask: linear-gradient(
+			to bottom,
+			rgba(0, 0, 0, 0) 25%,
+			rgba(0, 0, 0, 1) 40%,
+			rgba(0, 0, 0, 1) 55%,
+			rgba(0, 0, 0, 0) 70%
 		);
 	}
 
 	.bl-4 {
 		-webkit-backdrop-filter: blur(2px) saturate(1.2);
 		backdrop-filter: blur(2px) saturate(1.2);
-		mask: linear-gradient(to bottom,
-			rgba(0,0,0,0) 40%,
-			rgba(0,0,0,1) 55%,
-			rgba(0,0,0,1) 70%,
-			rgba(0,0,0,0) 85%
+		mask: linear-gradient(
+			to bottom,
+			rgba(0, 0, 0, 0) 40%,
+			rgba(0, 0, 0, 1) 55%,
+			rgba(0, 0, 0, 1) 70%,
+			rgba(0, 0, 0, 0) 85%
 		);
-		-webkit-mask: linear-gradient(to bottom,
-			rgba(0,0,0,0) 40%,
-			rgba(0,0,0,1) 55%,
-			rgba(0,0,0,1) 70%,
-			rgba(0,0,0,0) 85%
+		-webkit-mask: linear-gradient(
+			to bottom,
+			rgba(0, 0, 0, 0) 40%,
+			rgba(0, 0, 0, 1) 55%,
+			rgba(0, 0, 0, 1) 70%,
+			rgba(0, 0, 0, 0) 85%
 		);
 	}
 
 	.bl-5 {
 		-webkit-backdrop-filter: blur(1px) saturate(1.1);
 		backdrop-filter: blur(1px) saturate(1.1);
-		mask: linear-gradient(to bottom,
-			rgba(0,0,0,0) 55%,
-			rgba(0,0,0,1) 70%,
-			rgba(0,0,0,1) 85%,
-			rgba(0,0,0,0) 100%
+		mask: linear-gradient(
+			to bottom,
+			rgba(0, 0, 0, 0) 55%,
+			rgba(0, 0, 0, 1) 70%,
+			rgba(0, 0, 0, 1) 85%,
+			rgba(0, 0, 0, 0) 100%
 		);
-		-webkit-mask: linear-gradient(to bottom,
-			rgba(0,0,0,0) 55%,
-			rgba(0,0,0,1) 70%,
-			rgba(0,0,0,1) 85%,
-			rgba(0,0,0,0) 100%
+		-webkit-mask: linear-gradient(
+			to bottom,
+			rgba(0, 0, 0, 0) 55%,
+			rgba(0, 0, 0, 1) 70%,
+			rgba(0, 0, 0, 1) 85%,
+			rgba(0, 0, 0, 0) 100%
 		);
 	}
 
 	.bl-6 {
 		-webkit-backdrop-filter: blur(0.5px);
 		backdrop-filter: blur(0.5px);
-		mask: linear-gradient(to bottom,
-			rgba(0,0,0,0) 70%,
-			rgba(0,0,0,1) 85%,
-			rgba(0,0,0,1) 100%
+		mask: linear-gradient(
+			to bottom,
+			rgba(0, 0, 0, 0) 70%,
+			rgba(0, 0, 0, 1) 85%,
+			rgba(0, 0, 0, 1) 100%
 		);
-		-webkit-mask: linear-gradient(to bottom,
-			rgba(0,0,0,0) 70%,
-			rgba(0,0,0,1) 85%,
-			rgba(0,0,0,1) 100%
+		-webkit-mask: linear-gradient(
+			to bottom,
+			rgba(0, 0, 0, 0) 70%,
+			rgba(0, 0, 0, 1) 85%,
+			rgba(0, 0, 0, 1) 100%
 		);
 	}
 
@@ -187,27 +195,27 @@
 		transition: background 300ms ease-out;
 		pointer-events: none;
 		background: linear-gradient(
-						to bottom,
-						var(--nav-tint) 0%,
-						var(--nav-tint) 70%,
-						transparent 100%
+			to bottom,
+			var(--nav-tint) 0%,
+			var(--nav-tint) 70%,
+			transparent 100%
 		);
 		mask-image: linear-gradient(
-						to bottom,
-						black 0%,
-						black 60%,
-						rgba(0,0,0,0.4) 80%,
-						transparent 100%
+			to bottom,
+			black 0%,
+			black 60%,
+			rgba(0, 0, 0, 0.4) 80%,
+			transparent 100%
 		);
 		-webkit-mask-image: linear-gradient(
-						to bottom,
-						black 0%,
-						black 60%,
-						rgba(0,0,0,0.4) 80%,
-						transparent 100%
+			to bottom,
+			black 0%,
+			black 60%,
+			rgba(0, 0, 0, 0.4) 80%,
+			transparent 100%
 		);
 	}
-	
+
 	/* ---- Content ---- */
 	.nav-inner {
 		position: relative;
@@ -326,25 +334,6 @@
 		.nav-inner.scrolled {
 			flex-wrap: wrap-reverse;
 			padding-top: 1rem;
-		}
-
-		.nav-bg.scrolled {
-			mask-image: linear-gradient(
-				to bottom,
-				black 0%,
-				black 30%,
-				rgba(0,0,0,0.4) 60%,
-				rgba(0,0,0,0.15) 80%,
-				transparent 100%
-			);
-			-webkit-mask-image: linear-gradient(
-				to bottom,
-				black 0%,
-				black 30%,
-				rgba(0,0,0,0.4) 60%,
-				rgba(0,0,0,0.15) 80%,
-				transparent 100%
-			);
 		}
 
 		.nav-title {
