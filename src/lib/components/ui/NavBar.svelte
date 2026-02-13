@@ -5,16 +5,11 @@
 	let scrolled = $derived((scrollY.current ?? 0) > 20);
 </script>
 
-<!--TODO: States: Back-->
-<nav class="
-	sticky top-0 z-30
-	flex flex-col sm:flex-row
-	w-full min-w-sm h-fit items-center justify-center gap-y-4
-	p-4
-">
+<nav class="nav">
 	<div class="nav-glass"></div>
 
-	<div class="z-40 flex w-full max-w-3xl items-center sm:justify-between">
+	<div class="z-40 flex flex-col sm:flex-row
+		w-full max-w-3xl items-center sm:justify-between">
 		<div class="
 			flex flex-col w-full sm:w-fit h-fit
 			items-start justify-center
@@ -27,7 +22,7 @@
 				Design Engineer
 			</p>
 		</div>
-		
+
 		<div class="
 			flex flex-row
 			w-full sm:w-fit items-center justify-end gap-x-2
@@ -44,24 +39,58 @@
 </nav>
 
 <style>
+	.nav {
+		--nav-tint: oklch(97% 0 0 / 0.92);
+		position: sticky;
+		top: 0;
+		z-index: 30;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		padding: 1rem;
+	}
+
+	:global(.dark) .nav {
+		--nav-tint: oklch(20.5% 0 0 / 0.92);
+	}
+
 	.nav-glass {
 		pointer-events: none;
 		position: absolute;
-		inset: 0;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: -2rem;
 		z-index: 30;
 		backdrop-filter: blur(4px) saturate(0.6);
 		-webkit-backdrop-filter: blur(4px) saturate(0.6);
 		background: linear-gradient(
 			to bottom,
-			var(--color-nav-tint) 80%,
+			var(--nav-tint) 0%,
+			var(--nav-tint) 60%,
 			transparent 100%
 		);
-		mask-image: linear-gradient(to bottom, black 0%, black 30%, rgba(0,0,0,0.5) 55%, rgba(0,0,0,0.3) 75%, transparent 100%);
-		-webkit-mask-image: linear-gradient(to bottom, black 0%, black 30%, rgba(0,0,0,0.5) 55%, rgba(0,0,0,0.3) 75%, transparent 100%);
+		mask-image: linear-gradient(
+			to bottom,
+			black 0%,
+			black 50%,
+			rgba(0,0,0,0.4) 70%,
+			rgba(0,0,0,0.15) 85%,
+			transparent 100%
+		);
+		-webkit-mask-image: linear-gradient(
+			to bottom,
+			black 0%,
+			black 50%,
+			rgba(0,0,0,0.4) 70%,
+			rgba(0,0,0,0.15) 85%,
+			transparent 100%
+		);
 	}
 
 	.nav-title {
-		transition: font-size 300ms ease-out, filter 300ms ease-out;
+		transition: font-size 300ms ease-out;
 	}
 
 	.nav-title.scrolled {

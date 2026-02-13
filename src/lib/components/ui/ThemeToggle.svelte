@@ -11,8 +11,8 @@
 	onmouseleave={() => (isHovered = false)}
 >
 	{#if theme.current === 'light'}
-		<Moon size={viewport.isMobile ? 28 : 22} color="var(--color-primary-fg)" {isHovered} />
+		<Moon size={viewport.isMobile ? 24 : 18} color="var(--color-primary-fg)" {isHovered} />
 	{:else}
-		<Sun size={viewport.isMobile ? 28 : 22} color="var(--color-primary-fg)" {isHovered} />
+		<Sun size={viewport.isMobile ? 24 : 18} color="var(--color-primary-fg)" {isHovered} />
 	{/if}
 </button>
