@@ -21,10 +21,7 @@
 			</p>
 		</div>
 
-		<div class="
-			flex flex-row grow
-			items-center justify-end gap-x-2
-		">
+		<div class="nav-actions">
 			<ThemeToggle/>
 			<button class="glass btn-text">
 				Email
@@ -112,6 +109,16 @@
 		flex-wrap: nowrap;
 	}
 
+	/* ---- Actions ---- */
+	.nav-actions {
+		display: flex;
+		flex-direction: row;
+		flex-grow: 1;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 0.5rem;
+	}
+
 	/* ---- Title ---- */
 	.nav-title {
 		transition: font-size 300ms ease-out;
@@ -142,11 +149,8 @@
 		opacity: 1;
 		filter: blur(0);
 		transform: translateY(0);
-		transition:
-			max-height 300ms ease-out,
-			opacity 300ms ease-out,
-			filter 300ms ease-out,
-			transform 300ms ease-out;
+		transition: max-height 300ms ease-out;
+		animation: blur-in-y 500ms ease-out;
 	}
 
 	/* ---- ≤370px overrides ---- */
@@ -163,9 +167,45 @@
 		}
 	}
 
+	@keyframes fade-blur-in-y {
+		0% {
+			opacity: 1;
+			filter: blur(0);
+			transform: translateY(0);
+		}
+		30% {
+			opacity: 0;
+			filter: blur(0);
+			transform: translateY(0);
+		}
+		31% {
+			opacity: 0;
+			filter: blur(4px);
+			transform: translateY(6px);
+		}
+		100% {
+			opacity: 1;
+			filter: blur(0);
+			transform: translateY(0);
+		}
+	}
+
 	@media (max-width: 370px) {
+		.nav-actions {
+			position: absolute;
+			top: 1rem;
+			right: 1rem;
+		}
+
+		/* Push title below the abs-positioned buttons */
+		.nav-inner {
+			padding-top: 5rem;
+			transition: padding-top 300ms ease-out;
+		}
+
 		.nav-inner.scrolled {
 			flex-wrap: wrap-reverse;
+			padding-top: 1rem;
 		}
 
 		.nav-bg.scrolled {
@@ -193,7 +233,7 @@
 
 		.nav-title.scrolled {
 			font-size: var(--text-lg);
-			animation: blur-in-y 300ms ease-out backwards;
+			animation: fade-blur-in-y 500ms ease-out;
 		}
 	}
 </style>
