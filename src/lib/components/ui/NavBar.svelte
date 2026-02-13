@@ -2,7 +2,10 @@
 	import { ThemeToggle } from '$lib';
 	import { scrollY } from 'svelte/reactivity/window';
 
+	// Phase 1: layout snap (font-size, flex-wrap, padding) — instant, one reflow
 	let scrolled = $derived((scrollY.current ?? 0) > 0);
+	// Phase 2: subtitle reveal — delayed so layout is already settled
+	let settled = $derived((scrollY.current ?? 0) > 24);
 </script>
 
 <nav class="nav" class:scrolled>
@@ -26,7 +29,7 @@
 		"
 		>
 			<h1 class="nav-title" class:scrolled>Jason Coawette</h1>
-			<p class="nav-subtitle" class:scrolled>Design Engineer</p>
+			<p class="nav-subtitle" class:settled>Design Engineer</p>
 		</div>
 
 		<div class="nav-actions">
@@ -228,14 +231,10 @@
 		justify-content: space-between;
 		padding: 1rem;
 		gap: 0.75rem;
-		transition:
-			flex-wrap 300ms ease-out,
-			padding 300ms ease-out;
 	}
 
 	.nav-inner.scrolled {
 		flex-wrap: nowrap;
-		padding: 1rem 1rem;
 	}
 
 	/* ---- Actions ---- */
@@ -249,6 +248,7 @@
 	}
 
 	/* ---- Title ---- */
+	/* Phase 1: font-size snaps instantly on scroll — no transition, one clean reflow */
 	.nav-title {
 		transition: font-size 300ms 20ms ease-out;
 	}
@@ -258,6 +258,8 @@
 	}
 
 	/* ---- Subtitle ---- */
+	/* Phase 2: reveals AFTER layout has settled (scrollY > 24px)
+	   Only animates compositor-friendly props: opacity, filter, transform */
 	.nav-subtitle {
 		font-size: var(--text-sm);
 		letter-spacing: var(--tracking-tight);
@@ -273,7 +275,7 @@
 			transform 0ms;
 	}
 
-	.nav-subtitle.scrolled {
+	.nav-subtitle.settled {
 		max-height: 1.5rem;
 		opacity: 1;
 		filter: blur(0);
