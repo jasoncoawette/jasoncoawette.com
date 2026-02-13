@@ -5,6 +5,10 @@ html,
 body {
 	scrollbar-width: none;
 	-ms-overflow-style: none;
+	-webkit-overflow-scrolling: touch;
+}
+html {
+	scroll-behavior: smooth;
 }
 
 ::view-transition-old(root),
@@ -19,7 +23,7 @@ body {
 	--color-secondary-fg: oklch(37.1% 0 0);
 	--color-primary-bg: oklch(97% 0 0);
 	--color-secondary-bg: oklch(92.2% 0 0);
-	--color-nav-tint: oklch(97% 0 0 / 0.7);
+	--color-nav-tint: oklch(97% 0 0 / 0.92);
 	--color-glass: oklch(100% 0 0 / 0.6);
 	--color-glass-border: oklch(from var(--color-primary-fg) l c h / 0.1);
 	--color-shadow: oklch(0 0 0 / 0.06);
@@ -29,7 +33,7 @@ body {
 	--color-secondary-fg: oklch(87% 0 0);
 	--color-primary-bg: oklch(20.5% 0 0);
 	--color-secondary-bg: oklch(37.1% 0 0);
-	--color-nav-tint: oklch(20.5% 0 0 / 0.7);
+	--color-nav-tint: oklch(20.5% 0 0 / 0.92);
 	--color-glass: oklch(30% 0 0 / 0.5);
 	--color-glass-border: oklch(from var(--color-primary-fg) l c h / 0.1);
 	--color-shadow: oklch(0 0 0 / 0.24);
@@ -61,6 +65,10 @@ button {
 		border-color: oklch(from var(--color-primary-fg) l c h / 0.16);
 	}
 	@apply cursor-pointer;
+	&:focus-visible {
+		outline: 2px solid oklch(from var(--color-primary-fg) l c h / 0.2);
+		outline-offset: 2px;
+	}
 }
 
 /* ---------- Animation Styles --------------------------- */

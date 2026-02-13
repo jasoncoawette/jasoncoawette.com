@@ -49,25 +49,15 @@
 		position: absolute;
 		inset: 0;
 		z-index: 30;
-		backdrop-filter: blur(4px) saturate(0);
-		-webkit-backdrop-filter: blur(4px) saturate(0);
+		backdrop-filter: blur(4px) saturate(0.6);
+		-webkit-backdrop-filter: blur(4px) saturate(0.6);
 		background: linear-gradient(
 			to bottom,
-			var(--color-nav-tint),
-			transparent
-		);
-		mask-image: linear-gradient(
-			to bottom,
-			black 0%,
-			black 60%,
+			var(--color-nav-tint) 80%,
 			transparent 100%
 		);
-		-webkit-mask-image: linear-gradient(
-			to bottom,
-			black 0%,
-			black 60%,
-			transparent 100%
-		);
+		mask-image: linear-gradient(to bottom, black 0%, black 30%, rgba(0,0,0,0.5) 55%, rgba(0,0,0,0.3) 75%, transparent 100%);
+		-webkit-mask-image: linear-gradient(to bottom, black 0%, black 30%, rgba(0,0,0,0.5) 55%, rgba(0,0,0,0.3) 75%, transparent 100%);
 	}
 
 	.nav-title {
