@@ -20,7 +20,7 @@
 <NavBar />
 <main
 	class="
-		mt-3 flex
+		flex
 		min-h-screen w-full max-w-2xl flex-col
 		items-center justify-start
 	"

@@ -5,86 +5,84 @@
 	let scrolled = $derived((scrollY.current ?? 0) > 20);
 </script>
 
-<nav class="nav">
-	<div class="nav-glass"></div>
+<nav class="nav" class:scrolled>
+	<div class="
+		flex flex-col w-fit h-fit shrink-0
+		items-start justify-center
+		transition-all duration-300 ease-out
+	">
+		<h1 class="nav-title" class:scrolled>
+			Jason Coawette
+		</h1>
+		<p class="nav-subtitle" class:scrolled>
+			Design Engineer
+		</p>
+	</div>
 
-	<div class="z-40 flex flex-col sm:flex-row
-		w-full max-w-3xl items-center sm:justify-between">
-		<div class="
-			flex flex-col w-full sm:w-fit h-fit
-			items-start justify-center
-			transition-all duration-300 ease-out
-		">
-			<h1 class="nav-title" class:scrolled>
-				Jason Coawette
-			</h1>
-			<p class="nav-subtitle" class:scrolled>
-				Design Engineer
-			</p>
-		</div>
-
-		<div class="
-			flex flex-row
-			w-full sm:w-fit items-center justify-end gap-x-2
-		">
-			<ThemeToggle/>
-			<button>
-				Email
-			</button>
-			<button>
-				X
-			</button>
-		</div>
+	<div class="
+		flex flex-row grow
+		items-center justify-end gap-x-2
+	">
+		<ThemeToggle/>
+		<button>
+			Email
+		</button>
 	</div>
 </nav>
 
 <style>
 	.nav {
-		--nav-tint: oklch(97% 0 0 / 0.92);
+		--nav-tint: oklch(97% 0 0 / 0.7);
 		position: sticky;
 		top: 0;
-		z-index: 30;
+		z-index: 4;
 		display: flex;
+		flex-wrap: wrap-reverse;
+		gap: 0.75rem;
 		align-items: center;
-		justify-content: center;
+		justify-content: space-between;
 		width: 100%;
+		max-width: 48rem;
+		margin: 0 auto;
 		padding: 1rem;
+		-webkit-backdrop-filter: blur(0px) saturate(1);
+		backdrop-filter: blur(0px) saturate(1);
+		background: transparent;
+		mask-image: none;
+		-webkit-mask-image: none;
+		transition:
+			flex-wrap 300ms ease-out,
+			backdrop-filter 300ms ease-out,
+			-webkit-backdrop-filter 300ms ease-out,
+			background 300ms ease-out;
 	}
 
 	:global(.dark) .nav {
-		--nav-tint: oklch(20.5% 0 0 / 0.92);
+		--nav-tint: oklch(20.5% 0 0 / 0.65);
 	}
 
-	.nav-glass {
-		pointer-events: none;
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: -2rem;
-		z-index: 30;
-		backdrop-filter: blur(4px) saturate(0.6);
-		-webkit-backdrop-filter: blur(4px) saturate(0.6);
+	.nav.scrolled {
+		flex-wrap: nowrap;
+		-webkit-backdrop-filter: blur(20px) saturate(1.8);
+		backdrop-filter: blur(20px) saturate(1.8);
 		background: linear-gradient(
 			to bottom,
 			var(--nav-tint) 0%,
-			var(--nav-tint) 60%,
+			var(--nav-tint) 80%,
 			transparent 100%
 		);
 		mask-image: linear-gradient(
 			to bottom,
 			black 0%,
-			black 50%,
-			rgba(0,0,0,0.4) 70%,
-			rgba(0,0,0,0.15) 85%,
+			black 70%,
+			rgba(0,0,0,0.4) 85%,
 			transparent 100%
 		);
 		-webkit-mask-image: linear-gradient(
 			to bottom,
 			black 0%,
-			black 50%,
-			rgba(0,0,0,0.4) 70%,
-			rgba(0,0,0,0.15) 85%,
+			black 70%,
+			rgba(0,0,0,0.4) 85%,
 			transparent 100%
 		);
 	}
@@ -94,7 +92,7 @@
 	}
 
 	.nav-title.scrolled {
-		font-size: var(--text-base);
+		font-size: var(--text-lg);
 	}
 
 	.nav-subtitle {
