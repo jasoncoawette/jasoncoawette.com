@@ -22,7 +22,8 @@
 	<div class="nav-bg"></div>
 
 	<div class="nav-inner" class:scrolled>
-		<div
+		<a
+			href="https://jasoncoawette.com/"
 			class="
 			flex h-fit w-fit shrink-0 flex-col
 			items-start justify-center
@@ -30,7 +31,7 @@
 		>
 			<h1 class="nav-title" class:scrolled>Jason Coawette</h1>
 			<p class="nav-subtitle" class:settled>Design Engineer</p>
-		</div>
+		</a>
 
 		<div class="nav-actions">
 			<ThemeToggle />
@@ -42,7 +43,6 @@
 <style>
 	/* ---- Nav container — sticky ---- */
 	.nav {
-		--nav-tint: oklch(97% 0 0 / 0.7);
 		position: sticky;
 		top: 0;
 		z-index: 40;
@@ -52,15 +52,11 @@
 		width: 100%;
 	}
 
-	:global(.dark) .nav {
-		--nav-tint: oklch(20.5% 0 0 / 0.65);
-	}
-
 	/* ---- Progressive blur wrapper ---- */
 	.blur-wrap {
 		position: absolute;
 		inset: 0;
-		z-index: 0;
+		z-index: 1;
 		pointer-events: none;
 	}
 
@@ -216,7 +212,7 @@
 	/* ---- Content ---- */
 	.nav-inner {
 		position: relative;
-		z-index: 1;
+		z-index: 2;
 		display: flex;
 		flex-wrap: wrap-reverse;
 		width: 100%;
@@ -242,7 +238,6 @@
 	}
 
 	/* ---- Title ---- */
-	/* Phase 1: font-size snaps instantly on scroll — no transition, one clean reflow */
 	.nav-title {
 		transition: font-size 300ms 1ms ease-out;
 	}
@@ -252,8 +247,6 @@
 	}
 
 	/* ---- Subtitle ---- */
-	/* Phase 2: reveals AFTER layout has settled (scrollY > 24px)
-	   Only animates compositor-friendly props: opacity, filter, transform */
 	.nav-subtitle {
 		font-size: var(--text-sm);
 		letter-spacing: var(--tracking-tight);
@@ -308,12 +301,9 @@
 			flex-wrap: wrap-reverse;
 			padding-top: 1rem;
 		}
-
-		/* font-size snaps instantly after 155ms delay —
-		   timed to the invisible phase of fade-blur-in-y
-		   (30% of 500ms + 5ms anim delay = 155ms) */
+		
 		.nav-title {
-			transition: font-size 300ms ease-in-out;
+			transition: font-size 300ms 1ms ease-out;
 		}
 
 		.nav-title.scrolled {
