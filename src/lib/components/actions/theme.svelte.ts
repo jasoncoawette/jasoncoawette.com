@@ -17,7 +17,15 @@ export function toggleTheme() {
 	};
 
 	if (document.startViewTransition) {
-		document.startViewTransition(apply);
+		// Freeze backdrop-filter layers during transition to prevent flicker.
+		// backdrop-filter does a live compositor read — during a view transition
+		// the backing content is in an unstable intermediate state, causing
+		// the 6 blur layers to momentarily sample garbage.
+		document.documentElement.classList.add('theme-transitioning');
+		const transition = document.startViewTransition(apply);
+		transition.finished.then(() => {
+			document.documentElement.classList.remove('theme-transitioning');
+		});
 	} else {
 		apply();
 	}

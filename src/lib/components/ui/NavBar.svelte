@@ -2,7 +2,7 @@
 	import { ThemeToggle } from '$lib';
 	import { ChevronLeft } from '$lib';
 	import { scrollY } from 'svelte/reactivity/window';
-	import { cubicOut } from 'svelte/easing';
+	import { blur } from 'svelte/transition';
 
 	let { title, subtitle, variant = 'default' }: {
 		title: string;
@@ -11,36 +11,21 @@
 	} = $props();
 
 	let scrolled = $derived((scrollY.current ?? 0) > 72);
-
-	/**
-	 * Custom transition: blur + translateY + opacity
-	 */
-	function blurFly(
-		_node: Element,
-		{ delay = 0, duration = 300, y = -6, amount = 4, easing = cubicOut }: {
-			delay?: number;
-			duration?: number;
-			y?: number;
-			amount?: number;
-			easing?: (t: number) => number;
-		} = {}
-	) {
-		return {
-			delay,
-			duration,
-			easing,
-			css: (t: number) => `
-				opacity: ${t};
-				filter: blur(${(1 - t) * amount}px);
-				transform: translateY(${(1 - t) * y}px);
-			`
-		};
-	}
 </script>
 
-<nav class="sticky z-10 top-0 flex w-full items-center justify-center sm:mt-8 md:mt-12">
-	<!-- Progressive blur: 6 stacked layers -->
-	<div class="blur-wrap">
+<!-- Fixed nav actions - always visible -->
+<div class="fixed top-6 right-0 left-0 z-30 flex justify-center pointer-events-none">
+	<div class="w-full max-w-3xl px-4 flex justify-end pointer-events-auto">
+		<div class="flex items-center gap-2">
+			<ThemeToggle />
+			<button class="glass btn-text"> Email </button>
+		</div>
+	</div>
+</div>
+
+<!-- Sticky nav with progressive blur -->
+<nav class="sticky z-10 top-0 flex w-full items-center justify-center">
+	<div class="absolute inset-0 z-10 pointer-events-none">
 		<div class="blur-layer bl-1"></div>
 		<div class="blur-layer bl-2"></div>
 		<div class="blur-layer bl-3"></div>
@@ -51,40 +36,26 @@
 
 	<div class="nav-bg"></div>
 
-	<div class="nav-inner pt-6 px-4 pb-6 sm:pb-0">
-		<div class="title-area">
+	<div class="relative z-20 w-full max-w-3xl pt-6 px-4 pb-6 sm:transition-[padding] sm:duration-300 sm:ease-in-out {scrolled ? '' : 'sm:pb-0'}">
+		<div class="flex items-center gap-1 min-h-10 relative">
 			{#if variant === 'cms'}
-				<a href="https://jasoncoawette.com" class="back-button" aria-label="Back to home">
+				<a href="https://jasoncoawette.com" class="flex items-center justify-center text-primary-fg opacity-70 shrink-0 transition-opacity duration-200 ease-in-out hover:opacity-100" aria-label="Back to home">
 					<ChevronLeft size={20} strokeWidth={2.5} />
 				</a>
 			{/if}
 
 			{#if scrolled}
-				<div class="scrolled-content"
-					out:blurFly={{ y: -6, amount: 4, duration: 500 }}
-				>
-					<h1 class="scrolled-title whitespace-nowrap" in:blurFly={{ y: 6, amount: 4, duration: 500, delay: 200 }}>{title}</h1>
-					<p class="whitespace-nowrap text-sm tracking-tight" in:blurFly={{ y: 6, amount: 4, duration: 500, delay: 300 }}>{subtitle}</p>
+				<div class="scrolled-content" out:blur={{ amount: 4, duration: 500 }}>
+					<h1 class="text-lg! font-semibold whitespace-nowrap" in:blur={{ amount: 4, duration: 500, delay: 200 }}>{title}</h1>
+					<p class="whitespace-nowrap text-sm tracking-tight" in:blur={{ amount: 4, duration: 500, delay: 300 }}>{subtitle}</p>
 				</div>
 			{/if}
-		</div>
-
-		<div class="nav-actions">
-			<ThemeToggle />
-			<button class="glass btn-text"> Email </button>
 		</div>
 	</div>
 </nav>
 
 <style>
-	/* ---- Progressive blur wrapper ---- */
-	.blur-wrap {
-		position: absolute;
-		inset: 0;
-		z-index: 1;
-		pointer-events: none;
-	}
-
+	/* ---- Progressive blur layers (mask gradients not expressible in Tailwind) ---- */
 	.blur-layer {
 		position: absolute;
 		inset: 0;
@@ -93,203 +64,61 @@
 	.bl-1 {
 		-webkit-backdrop-filter: blur(4px) saturate(1.8);
 		backdrop-filter: blur(4px) saturate(1.8);
-		mask: linear-gradient(
-			to bottom,
-			rgba(0, 0, 0, 1) 0%,
-			rgba(0, 0, 0, 1) 20%,
-			rgba(0, 0, 0, 0) 35%
-		);
-		-webkit-mask: linear-gradient(
-			to bottom,
-			rgba(0, 0, 0, 1) 0%,
-			rgba(0, 0, 0, 1) 20%,
-			rgba(0, 0, 0, 0) 35%
-		);
+		mask: linear-gradient(to bottom, #000 0%, #000 20%, transparent 35%);
+		-webkit-mask: linear-gradient(to bottom, #000 0%, #000 20%, transparent 35%);
 	}
 
 	.bl-2 {
 		-webkit-backdrop-filter: blur(4px) saturate(1.6);
 		backdrop-filter: blur(4px) saturate(1.6);
-		mask: linear-gradient(
-			to bottom,
-			rgba(0, 0, 0, 0) 10%,
-			rgba(0, 0, 0, 1) 25%,
-			rgba(0, 0, 0, 1) 40%,
-			rgba(0, 0, 0, 0) 55%
-		);
-		-webkit-mask: linear-gradient(
-			to bottom,
-			rgba(0, 0, 0, 0) 10%,
-			rgba(0, 0, 0, 1) 25%,
-			rgba(0, 0, 0, 1) 40%,
-			rgba(0, 0, 0, 0) 55%
-		);
+		mask: linear-gradient(to bottom, transparent 10%, #000 25%, #000 40%, transparent 55%);
+		-webkit-mask: linear-gradient(to bottom, transparent 10%, #000 25%, #000 40%, transparent 55%);
 	}
 
 	.bl-3 {
 		-webkit-backdrop-filter: blur(4px) saturate(1.4);
 		backdrop-filter: blur(4px) saturate(1.4);
-		mask: linear-gradient(
-			to bottom,
-			rgba(0, 0, 0, 0) 25%,
-			rgba(0, 0, 0, 1) 40%,
-			rgba(0, 0, 0, 1) 55%,
-			rgba(0, 0, 0, 0) 70%
-		);
-		-webkit-mask: linear-gradient(
-			to bottom,
-			rgba(0, 0, 0, 0) 25%,
-			rgba(0, 0, 0, 1) 40%,
-			rgba(0, 0, 0, 1) 55%,
-			rgba(0, 0, 0, 0) 70%
-		);
+		mask: linear-gradient(to bottom, transparent 25%, #000 40%, #000 55%, transparent 70%);
+		-webkit-mask: linear-gradient(to bottom, transparent 25%, #000 40%, #000 55%, transparent 70%);
 	}
 
 	.bl-4 {
 		-webkit-backdrop-filter: blur(2px) saturate(1.2);
 		backdrop-filter: blur(2px) saturate(1.2);
-		mask: linear-gradient(
-			to bottom,
-			rgba(0, 0, 0, 0) 40%,
-			rgba(0, 0, 0, 1) 55%,
-			rgba(0, 0, 0, 1) 70%,
-			rgba(0, 0, 0, 0) 85%
-		);
-		-webkit-mask: linear-gradient(
-			to bottom,
-			rgba(0, 0, 0, 0) 40%,
-			rgba(0, 0, 0, 1) 55%,
-			rgba(0, 0, 0, 1) 70%,
-			rgba(0, 0, 0, 0) 85%
-		);
+		mask: linear-gradient(to bottom, transparent 40%, #000 55%, #000 70%, transparent 85%);
+		-webkit-mask: linear-gradient(to bottom, transparent 40%, #000 55%, #000 70%, transparent 85%);
 	}
 
 	.bl-5 {
 		-webkit-backdrop-filter: blur(1px) saturate(1.1);
 		backdrop-filter: blur(1px) saturate(1.1);
-		mask: linear-gradient(
-			to bottom,
-			rgba(0, 0, 0, 0) 55%,
-			rgba(0, 0, 0, 1) 70%,
-			rgba(0, 0, 0, 1) 85%,
-			rgba(0, 0, 0, 0) 100%
-		);
-		-webkit-mask: linear-gradient(
-			to bottom,
-			rgba(0, 0, 0, 0) 55%,
-			rgba(0, 0, 0, 1) 70%,
-			rgba(0, 0, 0, 1) 85%,
-			rgba(0, 0, 0, 0) 100%
-		);
+		mask: linear-gradient(to bottom, transparent 55%, #000 70%, #000 85%, transparent 100%);
+		-webkit-mask: linear-gradient(to bottom, transparent 55%, #000 70%, #000 85%, transparent 100%);
 	}
+
 	.bl-6 {
 		-webkit-backdrop-filter: blur(0);
 		backdrop-filter: blur(0);
-		mask: linear-gradient(
-			to bottom,
-			rgba(0, 0, 0, 0) 70%,
-			rgba(0, 0, 0, 1) 85%,
-			rgba(0, 0, 0, 1) 100%
-		);
-		-webkit-mask: linear-gradient(
-			to bottom,
-			rgba(0, 0, 0, 0) 70%,
-			rgba(0, 0, 0, 1) 85%,
-			rgba(0, 0, 0, 1) 100%
-		);
+		mask: linear-gradient(to bottom, transparent 70%, #000 85%, #000 100%);
+		-webkit-mask: linear-gradient(to bottom, transparent 70%, #000 85%, #000 100%);
 	}
 
-	/* ---- Background tint + mask fade ---- */
+	/* ---- Background tint (complex gradient mask) ---- */
 	.nav-bg {
 		position: absolute;
 		inset: 0;
-		bottom: -24px;
+		bottom: -40px;
 		z-index: 0;
-		background: transparent;
 		pointer-events: none;
-		background: linear-gradient(
-			to bottom,
-			var(--nav-tint) 0%,
-			var(--nav-tint) 60%,
-			transparent 100%
-		);
-		mask-image: linear-gradient(
-			to bottom,
-			black 0%,
-			black 60%,
-			rgba(0, 0, 0, 0.4) 80%,
-			transparent 100%
-		);
-		-webkit-mask-image: linear-gradient(
-			to bottom,
-			black 0%,
-			black 60%,
-			rgba(0, 0, 0, 0.4) 80%,
-			transparent 100%
-		);
+		background: linear-gradient(to bottom, var(--nav-tint) 0%, var(--nav-tint) 60%, transparent 100%);
+		mask-image: linear-gradient(to bottom, black 0%, black 60%, rgba(0, 0, 0, 0.4) 80%, transparent 100%);
+		-webkit-mask-image: linear-gradient(to bottom, black 0%, black 60%, rgba(0, 0, 0, 0.4) 80%, transparent 100%);
 	}
 
-	/* ---- Content ---- */
-	.nav-inner {
-		position: relative;
-		z-index: 2;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		width: 100%;
-		max-width: 48rem;
-		gap: 0.75rem;
-	}
-
-  /* Below 400px: stack buttons above title */
-  @media (max-width: 400px) {
-      .nav-inner {
-          position: sticky;
-      }
-  }
-
-	.title-area {
-		display: flex;
-		align-items: center;
-		gap: 0.25rem;
-		min-height: 2.5rem;
-		position: relative;
-	}
-
+	/* ---- Scrolled content positioning ---- */
 	.scrolled-content {
 		position: absolute;
 		top: 0;
 		left: 0;
-	}
-
-	.title-area:has(.back-button) .scrolled-content {
-		left: 1.75rem;
-	}
-
-	.back-button {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		color: var(--text-primary);
-		opacity: 0.7;
-		transition: opacity 200ms ease;
-		flex-shrink: 0;
-	}
-
-	.back-button:hover {
-		opacity: 1;
-	}
-
-	.nav-actions {
-		display: flex;
-		flex-shrink: 0;
-		align-items: center;
-		gap: 0.5rem;
-	}
-
-	/* Override global h1 styles for scrolled state */
-	.scrolled-title {
-		font-size: var(--text-lg) !important;
-		font-weight: 600;
 	}
 </style>

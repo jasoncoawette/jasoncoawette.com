@@ -110,10 +110,11 @@ button {
 			inset 0 1px 0 0 var(--color-glass-shine),
 			inset 0 -0.5px 0 0 oklch(0 0 0 / 0.05);
 	}
-	&:focus-visible {
-		outline: 2px solid oklch(from var(--color-primary-fg) l c h / 0.2);
-		outline-offset: 2px;
-	}
+}
+
+:focus-visible {
+	outline: 2px solid oklch(from var(--color-primary-fg) l c h / 0.2);
+	outline-offset: 2px;
 }
 
 .btn-icon {
