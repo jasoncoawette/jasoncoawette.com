@@ -7,9 +7,6 @@ body {
 	-ms-overflow-style: none;
 	-webkit-overflow-scrolling: touch;
 }
-html {
-	scroll-behavior: smooth;
-}
 
 ::view-transition-old(root),
 ::view-transition-new(root) {
