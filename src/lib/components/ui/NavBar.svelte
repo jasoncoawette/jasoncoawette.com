@@ -59,10 +59,7 @@
 	/* ---- Progressive blur wrapper ---- */
 	.blur-wrap {
 		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
+		inset: 0;
 		z-index: 0;
 		pointer-events: none;
 	}
@@ -247,7 +244,7 @@
 	/* ---- Title ---- */
 	/* Phase 1: font-size snaps instantly on scroll — no transition, one clean reflow */
 	.nav-title {
-		transition: font-size 800ms ease-out;
+		transition: font-size 300ms 1ms ease-out;
 	}
 
 	.nav-title.scrolled {
@@ -277,8 +274,8 @@
 		opacity: 1;
 		filter: blur(0);
 		transform: translateY(0);
-		transition: max-height 500ms ease-out;
-		animation: blur-in-y 500ms 20ms ease-out;
+		transition: max-height 500ms 25ms ease-out;
+		animation: blur-in-y 500ms 25ms ease-out;
 	}
 
 	/* ---- Animations ---- */
@@ -286,32 +283,9 @@
 		from {
 			opacity: 0;
 			filter: blur(4px);
-			transform: translateY(6px);
+			transform: translateY(8px);
 		}
 		to {
-			opacity: 1;
-			filter: blur(0);
-			transform: translateY(0);
-		}
-	}
-
-	@keyframes fade-blur-in-y {
-		0% {
-			opacity: 1;
-			filter: blur(0);
-			transform: translateY(0);
-		}
-		30% {
-			opacity: 0;
-			filter: blur(0);
-			transform: translateY(0);
-		}
-		31% {
-			opacity: 0;
-			filter: blur(4px);
-			transform: translateY(6px);
-		}
-		100% {
 			opacity: 1;
 			filter: blur(0);
 			transform: translateY(0);
@@ -335,13 +309,15 @@
 			padding-top: 1rem;
 		}
 
+		/* font-size snaps instantly after 155ms delay —
+		   timed to the invisible phase of fade-blur-in-y
+		   (30% of 500ms + 5ms anim delay = 155ms) */
 		.nav-title {
-			transition: font-size 800ms ease-out;
+			transition: font-size 300ms ease-in-out;
 		}
 
 		.nav-title.scrolled {
 			font-size: var(--text-lg);
-			animation: fade-blur-in-y 800ms ease-out;
 		}
 	}
 </style>
