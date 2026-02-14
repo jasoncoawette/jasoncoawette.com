@@ -1,7 +1,14 @@
 <script lang="ts">
 	import { ThemeToggle } from '$lib';
+	import { ChevronLeft } from '$lib';
 	import { scrollY } from 'svelte/reactivity/window';
 	import { cubicOut } from 'svelte/easing';
+
+	let { title, subtitle, variant = 'default' }: {
+		title: string;
+		subtitle?: string;
+		variant?: 'default' | 'cms';
+	} = $props();
 
 	let scrolled = $derived((scrollY.current ?? 0) > 72);
 
@@ -31,7 +38,7 @@
 	}
 </script>
 
-<nav class="nav">
+<nav class="sticky z-10 top-0 flex w-full items-center justify-center sm:mt-8 md:mt-12">
 	<!-- Progressive blur: 6 stacked layers -->
 	<div class="blur-wrap">
 		<div class="blur-layer bl-1"></div>
@@ -44,26 +51,23 @@
 
 	<div class="nav-bg"></div>
 
-	<div class="nav-inner">
-		<a href="https://jasoncoawette.com/" class="title-block">
-			{#if !scrolled}
-				<div class="title-default"
-					in:blurFly={{ y: 16, amount: 4, duration: 500 }}
-					out:blurFly={{ y: -16, amount: 4, duration: 500 }}
-				>
-					<h1>Jason Coawette</h1>
-				</div>
+	<div class="nav-inner pt-6 px-4 pb-6 sm:pb-0">
+		<div class="title-area">
+			{#if variant === 'cms'}
+				<a href="https://jasoncoawette.com" class="back-button" aria-label="Back to home">
+					<ChevronLeft size={20} strokeWidth={2.5} />
+				</a>
 			{/if}
 
 			{#if scrolled}
-				<div class="title-scrolled"
+				<div class="scrolled-content"
 					out:blurFly={{ y: -6, amount: 4, duration: 500 }}
 				>
-					<h1 in:blurFly={{ y: 6, amount: 4, duration: 500, delay: 200 }}>Jason Coawette</h1>
-					<p class="nav-subtitle" in:blurFly={{ y: 6, amount: 4, duration: 500, delay: 300 }}>Design Engineer</p>
+					<h1 class="scrolled-title whitespace-nowrap" in:blurFly={{ y: 6, amount: 4, duration: 500, delay: 200 }}>{title}</h1>
+					<p class="whitespace-nowrap text-sm tracking-tight" in:blurFly={{ y: 6, amount: 4, duration: 500, delay: 300 }}>{subtitle}</p>
 				</div>
 			{/if}
-		</a>
+		</div>
 
 		<div class="nav-actions">
 			<ThemeToggle />
@@ -73,17 +77,6 @@
 </nav>
 
 <style>
-	/* ---- Nav container — sticky ---- */
-	.nav {
-		position: sticky;
-		top: 0;
-		z-index: 40;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-	}
-
 	/* ---- Progressive blur wrapper ---- */
 	.blur-wrap {
 		position: absolute;
@@ -241,50 +234,62 @@
 		position: relative;
 		z-index: 2;
 		display: flex;
-		flex-wrap: nowrap;
-		width: 100%;
-		max-width: 48rem;
 		align-items: center;
 		justify-content: space-between;
-		padding: 1.5rem 1rem 1rem 1rem;
+		width: 100%;
+		max-width: 48rem;
 		gap: 0.75rem;
 	}
 
-	/* ---- Actions ---- */
+  /* Below 400px: stack buttons above title */
+  @media (max-width: 400px) {
+      .nav-inner {
+          position: sticky;
+      }
+  }
+
+	.title-area {
+		display: flex;
+		align-items: center;
+		gap: 0.25rem;
+		min-height: 2.5rem;
+		position: relative;
+	}
+
+	.scrolled-content {
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+
+	.title-area:has(.back-button) .scrolled-content {
+		left: 1.75rem;
+	}
+
+	.back-button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: var(--text-primary);
+		opacity: 0.7;
+		transition: opacity 200ms ease;
+		flex-shrink: 0;
+	}
+
+	.back-button:hover {
+		opacity: 1;
+	}
+
 	.nav-actions {
 		display: flex;
-		flex-direction: row;
 		flex-shrink: 0;
 		align-items: center;
-		justify-content: flex-end;
 		gap: 0.5rem;
 	}
 
-	/* ---- Title block: grid overlap so both titles share the same cell ---- */
-	.title-block {
-		display: grid;
-		align-items: center;
-		min-height: 2.5rem;
-		overflow: hidden;
-	}
-
-	.title-block > * {
-		grid-area: 1 / 1;
-	}
-
-	.title-default h1 {
-		white-space: nowrap;
-	}
-
-	.title-scrolled h1 {
-		font-size: var(--text-lg);
-		white-space: nowrap;
-	}
-
-	/* ---- Subtitle ---- */
-	.nav-subtitle {
-		font-size: var(--text-sm);
-		letter-spacing: var(--tracking-tight);
-		white-space: nowrap;
+	/* Override global h1 styles for scrolled state */
+	.scrolled-title {
+		font-size: var(--text-lg) !important;
+		font-weight: 600;
 	}
 </style>
