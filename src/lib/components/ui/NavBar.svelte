@@ -277,8 +277,8 @@
 		opacity: 1;
 		filter: blur(0);
 		transform: translateY(0);
-		transition: max-height 300ms ease-out;
-		animation: blur-in-y 500ms 50ms ease-out;
+		transition: max-height 500ms ease-out;
+		animation: blur-in-y 500ms 20ms ease-out;
 	}
 
 	/* ---- Animations ---- */
@@ -336,12 +336,12 @@
 		}
 
 		.nav-title {
-			transition: font-size 300ms ease-out;
+			transition: font-size 800ms ease-out;
 		}
 
 		.nav-title.scrolled {
 			font-size: var(--text-lg);
-			animation: fade-blur-in-y 500ms ease-out;
+			animation: fade-blur-in-y 800ms ease-out;
 		}
 	}
 </style>
