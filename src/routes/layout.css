@@ -3,6 +3,7 @@
 /* ---------- Root Defaults ------------------------------ */
 html,
 body {
+	scroll-behavior: smooth;
 	scrollbar-width: none;
 	-ms-overflow-style: none;
 	-webkit-overflow-scrolling: touch;
@@ -59,6 +60,7 @@ h1 {
 	@apply text-3xl leading-tight font-semibold tracking-tight;
 }
 
+span,
 p {
 	@apply text-base leading-relaxed font-normal tracking-normal text-secondary-fg;
 }
@@ -82,6 +84,7 @@ p {
 .glass-action {
 	-webkit-backdrop-filter: blur(16px) saturate(1.8);
 	backdrop-filter: blur(16px) saturate(1.8);
+	color: oklch(100% 0 0);
 	background: linear-gradient(
 		135deg,
 		oklch(from var(--color-accent) l c h / 0.25) 0%,

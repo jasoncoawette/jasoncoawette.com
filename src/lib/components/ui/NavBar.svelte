@@ -1,15 +1,38 @@
 <script lang="ts">
 	import { ThemeToggle } from '$lib';
 	import { scrollY } from 'svelte/reactivity/window';
+	import { cubicOut } from 'svelte/easing';
 
-	// Phase 1: layout snap (font-size, flex-wrap, padding) — instant, one reflow
-	let scrolled = $derived((scrollY.current ?? 0) > 0);
-	// Phase 2: subtitle reveal — delayed so layout is already settled
-	let settled = $derived((scrollY.current ?? 0) > 24);
+	let scrolled = $derived((scrollY.current ?? 0) > 72);
+
+	/**
+	 * Custom transition: blur + translateY + opacity
+	 */
+	function blurFly(
+		_node: Element,
+		{ delay = 0, duration = 300, y = -6, amount = 4, easing = cubicOut }: {
+			delay?: number;
+			duration?: number;
+			y?: number;
+			amount?: number;
+			easing?: (t: number) => number;
+		} = {}
+	) {
+		return {
+			delay,
+			duration,
+			easing,
+			css: (t: number) => `
+				opacity: ${t};
+				filter: blur(${(1 - t) * amount}px);
+				transform: translateY(${(1 - t) * y}px);
+			`
+		};
+	}
 </script>
 
-<nav class="nav" class:scrolled>
-	<!-- Progressive blur: 6 stacked layers, exponential blur, top-heavy -->
+<nav class="nav">
+	<!-- Progressive blur: 6 stacked layers -->
 	<div class="blur-wrap">
 		<div class="blur-layer bl-1"></div>
 		<div class="blur-layer bl-2"></div>
@@ -21,16 +44,25 @@
 
 	<div class="nav-bg"></div>
 
-	<div class="nav-inner" class:scrolled>
-		<a
-			href="https://jasoncoawette.com/"
-			class="
-			flex h-fit w-fit shrink-0 flex-col
-			items-start justify-center
-		"
-		>
-			<h1 class="nav-title" class:scrolled>Jason Coawette</h1>
-			<p class="nav-subtitle" class:settled>Design Engineer</p>
+	<div class="nav-inner">
+		<a href="https://jasoncoawette.com/" class="title-block">
+			{#if !scrolled}
+				<div class="title-default"
+					in:blurFly={{ y: 16, amount: 4, duration: 500 }}
+					out:blurFly={{ y: -16, amount: 4, duration: 500 }}
+				>
+					<h1>Jason Coawette</h1>
+				</div>
+			{/if}
+
+			{#if scrolled}
+				<div class="title-scrolled"
+					out:blurFly={{ y: -6, amount: 4, duration: 500 }}
+				>
+					<h1 in:blurFly={{ y: 6, amount: 4, duration: 500, delay: 200 }}>Jason Coawette</h1>
+					<p class="nav-subtitle" in:blurFly={{ y: 6, amount: 4, duration: 500, delay: 400 }}>Design Engineer</p>
+				</div>
+			{/if}
 		</a>
 
 		<div class="nav-actions">
@@ -65,14 +97,9 @@
 		inset: 0;
 	}
 
-	/*
-		Exponential blur: 16 → 8 → 4 → 2 → 1 → 0.5 px
-		Top = strongest blur, fades toward bottom + bleed zone.
-		Overlapping mask bands for smooth transitions.
-	*/
 	.bl-1 {
-		-webkit-backdrop-filter: blur(16px) saturate(1.8);
-		backdrop-filter: blur(16px) saturate(1.8);
+		-webkit-backdrop-filter: blur(4px) saturate(1.8);
+		backdrop-filter: blur(4px) saturate(1.8);
 		mask: linear-gradient(
 			to bottom,
 			rgba(0, 0, 0, 1) 0%,
@@ -88,8 +115,8 @@
 	}
 
 	.bl-2 {
-		-webkit-backdrop-filter: blur(8px) saturate(1.6);
-		backdrop-filter: blur(8px) saturate(1.6);
+		-webkit-backdrop-filter: blur(4px) saturate(1.6);
+		backdrop-filter: blur(4px) saturate(1.6);
 		mask: linear-gradient(
 			to bottom,
 			rgba(0, 0, 0, 0) 10%,
@@ -163,8 +190,8 @@
 		);
 	}
 	.bl-6 {
-		-webkit-backdrop-filter: blur(1px);
-		backdrop-filter: blur(1px);
+		-webkit-backdrop-filter: blur(0);
+		backdrop-filter: blur(0);
 		mask: linear-gradient(
 			to bottom,
 			rgba(0, 0, 0, 0) 70%,
@@ -190,7 +217,7 @@
 		background: linear-gradient(
 			to bottom,
 			var(--nav-tint) 0%,
-			var(--nav-tint) 70%,
+			var(--nav-tint) 60%,
 			transparent 100%
 		);
 		mask-image: linear-gradient(
@@ -214,100 +241,50 @@
 		position: relative;
 		z-index: 2;
 		display: flex;
-		flex-wrap: wrap-reverse;
+		flex-wrap: nowrap;
 		width: 100%;
 		max-width: 48rem;
 		align-items: center;
 		justify-content: space-between;
-		padding: 1rem;
+		padding: 1.5rem 1rem 1rem 1rem;
 		gap: 0.75rem;
-	}
-
-	.nav-inner.scrolled {
-		flex-wrap: nowrap;
 	}
 
 	/* ---- Actions ---- */
 	.nav-actions {
 		display: flex;
 		flex-direction: row;
-		flex-grow: 1;
+		flex-shrink: 0;
 		align-items: center;
 		justify-content: flex-end;
 		gap: 0.5rem;
 	}
 
-	/* ---- Title ---- */
-	.nav-title {
-		transition: font-size 300ms 1ms ease-out;
+	/* ---- Title block: grid overlap so both titles share the same cell ---- */
+	.title-block {
+		display: grid;
+		align-items: center;
+		min-height: 2.5rem;
+		overflow: hidden;
 	}
 
-	.nav-title.scrolled {
+	.title-block > * {
+		grid-area: 1 / 1;
+	}
+
+	.title-default h1 {
+		white-space: nowrap;
+	}
+
+	.title-scrolled h1 {
 		font-size: var(--text-lg);
+		white-space: nowrap;
 	}
 
 	/* ---- Subtitle ---- */
 	.nav-subtitle {
 		font-size: var(--text-sm);
 		letter-spacing: var(--tracking-tight);
-		max-height: 0;
-		opacity: 0;
-		filter: blur(4px);
-		transform: translateY(6px);
-		overflow: hidden;
-		transition:
-			max-height 0ms,
-			opacity 0ms,
-			filter 0ms,
-			transform 0ms;
-	}
-
-	.nav-subtitle.settled {
-		max-height: 1.5rem;
-		opacity: 1;
-		filter: blur(0);
-		transform: translateY(0);
-		transition: max-height 500ms 25ms ease-out;
-		animation: blur-in-y 500ms 25ms ease-out;
-	}
-
-	/* ---- Animations ---- */
-	@keyframes blur-in-y {
-		from {
-			opacity: 0;
-			filter: blur(4px);
-			transform: translateY(8px);
-		}
-		to {
-			opacity: 1;
-			filter: blur(0);
-			transform: translateY(0);
-		}
-	}
-
-	@media (max-width: 400px) {
-		.nav-actions {
-			position: absolute;
-			top: 1rem;
-			right: 1rem;
-		}
-
-		.nav-inner {
-			padding-top: 5rem;
-			transition: padding-top 300ms ease-out;
-		}
-
-		.nav-inner.scrolled {
-			flex-wrap: wrap-reverse;
-			padding-top: 1rem;
-		}
-		
-		.nav-title {
-			transition: font-size 300ms 1ms ease-out;
-		}
-
-		.nav-title.scrolled {
-			font-size: var(--text-lg);
-		}
+		white-space: nowrap;
 	}
 </style>
