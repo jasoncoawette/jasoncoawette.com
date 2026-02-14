@@ -65,7 +65,6 @@
 		bottom: 0;
 		z-index: 0;
 		pointer-events: none;
-		transition: opacity 300ms ease-out;
 	}
 
 	.blur-layer {
@@ -170,10 +169,9 @@
 			rgba(0, 0, 0, 0) 100%
 		);
 	}
-
 	.bl-6 {
-		-webkit-backdrop-filter: blur(0.5px);
-		backdrop-filter: blur(0.5px);
+		-webkit-backdrop-filter: blur(1px);
+		backdrop-filter: blur(1px);
 		mask: linear-gradient(
 			to bottom,
 			rgba(0, 0, 0, 0) 70%,
@@ -195,7 +193,6 @@
 		bottom: -24px;
 		z-index: 0;
 		background: transparent;
-		transition: background 300ms ease-out;
 		pointer-events: none;
 		background: linear-gradient(
 			to bottom,
@@ -250,7 +247,7 @@
 	/* ---- Title ---- */
 	/* Phase 1: font-size snaps instantly on scroll — no transition, one clean reflow */
 	.nav-title {
-		transition: font-size 300ms 20ms ease-out;
+		transition: font-size 800ms ease-out;
 	}
 
 	.nav-title.scrolled {
