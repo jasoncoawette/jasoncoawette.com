@@ -60,7 +60,7 @@
 					out:blurFly={{ y: -6, amount: 4, duration: 500 }}
 				>
 					<h1 in:blurFly={{ y: 6, amount: 4, duration: 500, delay: 200 }}>Jason Coawette</h1>
-					<p class="nav-subtitle" in:blurFly={{ y: 6, amount: 4, duration: 500, delay: 400 }}>Design Engineer</p>
+					<p class="nav-subtitle" in:blurFly={{ y: 6, amount: 4, duration: 500, delay: 300 }}>Design Engineer</p>
 				</div>
 			{/if}
 		</a>
