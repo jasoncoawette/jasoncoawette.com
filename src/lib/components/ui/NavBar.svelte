@@ -321,7 +321,7 @@
 		}
 	}
 
-	@media (max-width: 370px) {
+	@media (max-width: 400px) {
 		.nav-actions {
 			position: absolute;
 			top: 1rem;
