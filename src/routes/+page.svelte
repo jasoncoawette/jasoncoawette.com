@@ -15,6 +15,33 @@
 			scrolled = false;
 		}
 	});
+
+	const cases = ['Boeing', 'Clovis', 'Studygenie'];
+	let caseContainer: HTMLDivElement;
+	let activeIndex = $state(-1);
+
+	$effect(() => {
+		void scrollY.current; // subscribe to scroll updates
+		if (!mobile.current || !caseContainer) {
+			activeIndex = -1;
+			return;
+		}
+		const rect = caseContainer.getBoundingClientRect();
+		const viewportMid = window.innerHeight * 0.6;
+		if (rect.top > viewportMid) {
+			activeIndex = -1;
+		} else {
+			const buttons = caseContainer.children;
+			let idx = -1;
+			for (let i = 0; i < buttons.length; i++) {
+				const btn = buttons[i] as HTMLElement;
+				if (btn.getBoundingClientRect().top < viewportMid) {
+					idx = i;
+				}
+			}
+			activeIndex = idx;
+		}
+	});
 </script>
 
 <section>
@@ -30,16 +57,22 @@
 		tech entrepreneur at Arizona State University.
 	</p>
 	<p class="mt-3">Currently, a Software Engineer at Boeing.</p>
-	
-	<div class="flex flex-col items-start justify-start gap-2 mt-16">
-		<button class="glass btn-text" use:shine>
-			Boeing
-		</button>
-		<button class="glass btn-text" use:shine>
-			Clovis
-		</button>
-		<button class="glass btn-text" use:shine>
-			Studygenie
-		</button>
+
+	<div class="flex flex-col items-start justify-start gap-2 mt-16" bind:this={caseContainer}>
+		{#each cases as name, i}
+			<button class="glass-ghost btn-text" class:stroke-active={mobile.current && activeIndex >= i}>
+				{name}
+			</button>
+		{/each}
 	</div>
 </section>
+
+<style>
+	.stroke-active {
+		border-color: var(--color-primary-fg);
+		background: transparent;
+		box-shadow: none;
+		-webkit-backdrop-filter: none;
+		backdrop-filter: none;
+	}
+</style>

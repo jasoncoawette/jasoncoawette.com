@@ -3,7 +3,7 @@
 </script>
 
 <button
-	class="glass btn-icon"
+	class="glass btn-icon btn-scale"
 	use:shine
 	aria-label="Toggle theme"
 	onclick={toggleTheme}

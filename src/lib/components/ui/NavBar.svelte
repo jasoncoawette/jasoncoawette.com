@@ -33,7 +33,7 @@
 		<div class="flex items-center gap-4 h-fit relative pointer-events-auto">
 			{#if variant === 'cms'}
 				<a href="https://jasoncoawette.com" aria-label="Back to home">
-					<button class="glass btn-icon" use:shine>
+					<button class="glass btn-icon btn-scale" use:shine>
 						<ChevronLeft color="var(--color-primary-fg)" />
 					</button>
 				</a>
@@ -52,7 +52,7 @@
 			<div class="flex items-center justify-end gap-2 w-full">
 				<ThemeToggle />
 				<a href="mailto:jason.coawette@gmail.com" aria-label="Email me">
-					<button class="glass-action btn-text" use:shine> Email </button>
+					<button class="glass-action btn-text btn-scale" use:shine> Email </button>
 				</a>
 			</div>
 		</div>
