@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { scrollY } from 'svelte/reactivity/window';
 	import { MediaQuery } from 'svelte/reactivity';
+	import { onMount } from 'svelte';
 	import { flyBlur } from '$lib';
 	import { BlurText, BlurBlock } from '$lib/components/ui';
 	import { page } from '$app/state';
@@ -24,12 +25,25 @@
 	const blurEnd = (delay: number, len: number) => delay + (len - 1) * CHAR_DELAY + DURATION;
 
 	const h1Text = 'Jason Coawette';
-	const p1Text = 'Design-forward software engineer building tasteful interfaces for humans and agentic AI. Recognized as a top fifteen tech entrepreneur at Arizona State University.';
+	const p1aText = 'Design-forward software engineer building tasteful interfaces for humans and agentic AI.';
+	const p1bText = 'Recognized as a top fifteen tech entrepreneur at Arizona State University.';
 	const p2Text = 'Currently, a Software Engineer at Boeing.';
 
-	const p1Delay = blurEnd(0, h1Text.length);
-	const p2Delay = blurEnd(p1Delay, p1Text.length);
+	const p1aDelay = blurEnd(0, h1Text.length);
+	const p1bDelay = blurEnd(p1aDelay, p1aText.length);
+	const p2Delay = blurEnd(p1bDelay, p1bText.length);
 	const restDelay = blurEnd(p2Delay, p2Text.length);
+
+	onMount(() => {
+		document.documentElement.style.overflow = 'hidden';
+		const timer = setTimeout(() => {
+			document.documentElement.style.overflow = '';
+		}, restDelay + 3 * 100 + DURATION + DURATION);
+		return () => {
+			clearTimeout(timer);
+			document.documentElement.style.overflow = '';
+		};
+	});
 
 	const cases = ['Boeing', 'Clovis', 'Studygenie'];
 	let caseButtons: HTMLButtonElement[] = $state([]);
@@ -65,9 +79,14 @@
 		</div>
 		<BlurText
 			tag="p"
-			text={p1Text}
-			delay={p1Delay}
+			text={p1aText}
+			delay={p1aDelay}
 			class="mt-3"
+		/>
+		<BlurText
+			tag="p"
+			text={p1bText}
+			delay={p1bDelay}
 		/>
 		<BlurText
 			tag="p"
