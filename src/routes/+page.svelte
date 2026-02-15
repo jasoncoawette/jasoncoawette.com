@@ -67,9 +67,9 @@
 </script>
 
 {#key page.url.pathname}
-<div class="flex flex-col h-full justify-start items-start gap-y-8 sm:gap-y-32 pt-8 sm:pt-0 pb-8 sm:pb-32">
+<div class="flex flex-col w-full h-full justify-start items-start gap-y-8 sm:gap-y-32 pt-8 sm:pt-0 pb-8 sm:pb-32">
 	<!--TOP HEADING AND PARAGRAPH-->
-	<section>
+	<section class="flex flex-col w-full">
 		<div class="h-9">
 			{#if !scrolled}
 				<div out:flyBlur={{ y: 8, amount: 4, duration: 400 }}>

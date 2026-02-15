@@ -35,7 +35,7 @@
 	{@render children()}
 </main>
 {#if isHome}
-	<BlurBlock class="flex w-full items-center justify-center" delay={footerDelay}>
+	<BlurBlock class="flex w-full px-4 items-center justify-center" delay={footerDelay}>
 		<Footer />
 	</BlurBlock>
 {:else}
