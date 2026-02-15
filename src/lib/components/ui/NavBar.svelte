@@ -1,9 +1,7 @@
 <script lang="ts">
-	import { ThemeToggle } from '$lib';
-	import { ChevronLeft } from '$lib';
+	import { ThemeToggle, ChevronLeft, flyBlur } from '$lib';
 	import { scrollY } from 'svelte/reactivity/window';
 	import { MediaQuery } from 'svelte/reactivity';
-	import { flyBlur } from '$lib/transitions';
 
 	let { title, subtitle, link = 'https://jasoncoawette.com', variant = 'default' }: {
 		title: string;

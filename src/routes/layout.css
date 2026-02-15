@@ -118,7 +118,7 @@ button {
 }
 
 .btn-icon {
-	@apply rounded-full p-3 w-fit h-fit;
+	@apply rounded-full p-3;
 }
 
 .btn-text {
