@@ -37,7 +37,7 @@
 	});
 </script>
 
-<div class="flex flex-col h-full justify-start items-start gap-y-16 sm:gap-y-32 pb-16 sm:pb-32">
+<div class="flex flex-col h-full justify-start items-start gap-y-8 sm:gap-y-32 pt-8 sm:pt-0 pb-8 sm:pb-32">
 	<!--TOP HEADING AND PARAGRAPH-->
 	<section>
 		<div class="h-9">
@@ -56,7 +56,7 @@
 
 	<!--CASE STUDY SHOWCASE-->
 	<section class="
-		flex flex-col sm:flex-row w-full h-fit items-start items-cetner py-16 gap-y-32 sm:justify-between
+		flex flex-col sm:flex-row w-full h-fit items-start items-cetner py-8 gap-y-16 sm:py-16 sm:gap-y-32 sm:justify-between
 	">
 		<div class="flex flex-col items-start justify-start gap-2">
 			{#each cases as name, i (name)}
