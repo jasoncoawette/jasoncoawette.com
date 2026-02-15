@@ -2,7 +2,7 @@
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
 	import { initTheme } from '$lib';
-	import { NavBar } from '$lib';
+	import { NavBar, Footer } from '$lib';
 	import { onMount } from 'svelte';
 
 	let { children } = $props();
@@ -19,10 +19,10 @@
 <NavBar title="Jason Coawette" subtitle="Design Engineer" link="https://jasoncoawette.com"/>
 <main
 	class="
-		flex
-		min-h-screen w-full max-w-3xl flex-col items-center
+		flex w-full h-fit max-w-3xl flex-col items-center
 		justify-start px-4
 	"
 >
 	{@render children()}
 </main>
+<Footer />

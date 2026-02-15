@@ -11,13 +11,13 @@
 		const y = scrollY.current ?? 0;
 		if (!scrolled && y > threshold) {
 			scrolled = true;
-		} else if (scrolled && y < threshold - 20) {
+		} else if (scrolled && y < threshold - 40) {
 			scrolled = false;
 		}
 	});
 </script>
 
-<section class="h-500">
+<section>
 	<div class="h-9">
 		{#if !scrolled}
 			<h1
@@ -30,4 +30,8 @@
 		tech entrepreneur at Arizona State University.
 	</p>
 	<p class="mt-3">Currently, a Software Engineer at Boeing.</p>
+	
+	<button class="glass btn-text">
+		Clovis
+	</button>
 </section>
