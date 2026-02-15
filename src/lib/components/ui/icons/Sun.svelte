@@ -1,5 +1,4 @@
 <script>
-	
 	let {
 		color = 'currentColor',
 		size = undefined,
@@ -43,7 +42,7 @@
 		stroke-linecap="round"
 		stroke-linejoin="round"
 		class="sun-icon"
-		class:animate={animate}
+		class:animate
 	>
 		<circle cx="12" cy="12" r="4" />
 		{#each sunRays as ray, i (i)}

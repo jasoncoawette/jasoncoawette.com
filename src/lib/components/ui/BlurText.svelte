@@ -25,8 +25,8 @@
 		<span
 			class="blur-char"
 			style:--delay="{delay + i * charDelay}ms"
-			style:--duration="{duration}ms"
-		>{char === ' ' ? '\u00A0' : char}</span>
+			style:--duration="{duration}ms">{char === ' ' ? '\u00A0' : char}</span
+		>
 	{/each}
 </svelte:element>
 

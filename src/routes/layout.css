@@ -3,7 +3,11 @@
 /* ---------- Root Defaults ------------------------------ */
 html,
 body {
-	font-family: 'Inter', system-ui, -apple-system, sans-serif;
+	font-family:
+		'Inter',
+		system-ui,
+		-apple-system,
+		sans-serif;
 	scroll-behavior: smooth;
 	scrollbar-width: none;
 	-ms-overflow-style: none;
@@ -17,7 +21,7 @@ body {
 }
 
 :focus-visible {
-	outline: 1px solid oklch(from var(--color-primary-fg) l c h / 0.50);
+	outline: 1px solid oklch(from var(--color-primary-fg) l c h / 0.5);
 	outline-offset: 2px;
 }
 

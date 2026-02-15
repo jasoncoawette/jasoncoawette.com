@@ -12,7 +12,8 @@
 	const isHome = $derived(page.url.pathname === '/');
 
 	// Chain footer after home page animations (must match +page.svelte timing)
-	const CD = 30, DUR = 400;
+	const CD = 30,
+		DUR = 400;
 	const end = (d: number, n: number) => d + (n - 1) * CD + DUR;
 	const footerDelay = end(end(end(end(0, 14), 88), 74), 41) + 3 * 100 + DUR;
 
@@ -25,7 +26,7 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-<NavBar title="Jason Coawette" subtitle="Design Engineer" link="https://jasoncoawette.com"/>
+<NavBar title="Jason Coawette" subtitle="Design Engineer" link="https://jasoncoawette.com" />
 <main
 	class="
 		flex w-full max-w-3xl flex-col items-center
@@ -35,7 +36,7 @@
 	{@render children()}
 </main>
 {#if isHome}
-	<BlurBlock class="flex w-full px-4 items-center justify-center" delay={footerDelay}>
+	<BlurBlock class="flex w-full items-center justify-center px-4" delay={footerDelay}>
 		<Footer />
 	</BlurBlock>
 {:else}

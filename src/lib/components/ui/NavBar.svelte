@@ -3,7 +3,12 @@
 	import { scrollY } from 'svelte/reactivity/window';
 	import { MediaQuery } from 'svelte/reactivity';
 
-	let { title, subtitle, link = 'https://jasoncoawette.com', variant = 'default' }: {
+	let {
+		title,
+		subtitle,
+		link = 'https://jasoncoawette.com',
+		variant = 'default'
+	}: {
 		title: string;
 		subtitle?: string;
 		link?: string;
@@ -26,9 +31,8 @@
 </script>
 
 <!-- Sticky nav with progressive blur -->
-<nav class="sticky z-20 top-0 flex w-full items-center justify-center sm:mt-12">
-	
-	<div class="absolute inset-0 z-20 pointer-events-none">
+<nav class="sticky top-0 z-20 flex w-full items-center justify-center sm:mt-12">
+	<div class="pointer-events-none absolute inset-0 z-20">
 		<div class="blur-layer bl-1"></div>
 		<div class="blur-layer bl-2"></div>
 		<div class="blur-layer bl-3"></div>
@@ -39,8 +43,8 @@
 
 	<div class="nav-bg"></div>
 
-	<div class="sticky top-0 z-30 w-full h-fit max-w-3xl pt-6 px-4 pb-4">
-		<div class="flex items-center gap-4 h-fit relative pointer-events-auto">
+	<div class="sticky top-0 z-30 h-fit w-full max-w-3xl px-4 pt-6 pb-4">
+		<div class="pointer-events-auto relative flex h-fit items-center gap-4">
 			{#if variant === 'cms'}
 				<a href="https://jasoncoawette.com" aria-label="Back to home">
 					<button class="glass btn-icon btn-scale" use:shine>
@@ -52,14 +56,22 @@
 			{#if scrolled}
 				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 				<a href={link} class="relative flex flex-col items-start">
-					<h1 class="text-lg! whitespace-nowrap"
-							transition:flyBlur={{ y: 8, amount: 4, duration: 400, delay: 50 }}>{title}</h1>
-					<p class="whitespace-nowrap leading-tight!"
-						 transition:flyBlur={{ y: 8, amount: 4, duration: 400, delay: 200 }}>{subtitle}</p>
+					<h1
+						class="text-lg! whitespace-nowrap"
+						transition:flyBlur={{ y: 8, amount: 4, duration: 400, delay: 50 }}
+					>
+						{title}
+					</h1>
+					<p
+						class="leading-tight! whitespace-nowrap"
+						transition:flyBlur={{ y: 8, amount: 4, duration: 400, delay: 200 }}
+					>
+						{subtitle}
+					</p>
 				</a>
 			{/if}
-			
-			<div class="flex items-center justify-end gap-2 w-full">
+
+			<div class="flex w-full items-center justify-end gap-2">
 				<ThemeToggle />
 				<a href="mailto:jason.coawette@gmail.com" aria-label="Email me" class="rounded-full">
 					<button class="glass btn-text btn-scale" use:shine> Get in touch </button>
@@ -125,8 +137,25 @@
 		bottom: -32px;
 		z-index: 0;
 		pointer-events: none;
-		background: linear-gradient(to bottom, var(--nav-tint) 0%, var(--nav-tint) 60%, transparent 100%);
-		mask-image: linear-gradient(to bottom, black 0%, black 60%, rgba(0, 0, 0, 0.4) 80%, transparent 100%);
-		-webkit-mask-image: linear-gradient(to bottom, black 0%, black 60%, rgba(0, 0, 0, 0.4) 80%, transparent 100%);
+		background: linear-gradient(
+			to bottom,
+			var(--nav-tint) 0%,
+			var(--nav-tint) 60%,
+			transparent 100%
+		);
+		mask-image: linear-gradient(
+			to bottom,
+			black 0%,
+			black 60%,
+			rgba(0, 0, 0, 0.4) 80%,
+			transparent 100%
+		);
+		-webkit-mask-image: linear-gradient(
+			to bottom,
+			black 0%,
+			black 60%,
+			rgba(0, 0, 0, 0.4) 80%,
+			transparent 100%
+		);
 	}
 </style>

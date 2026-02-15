@@ -1,5 +1,4 @@
 <script lang="ts">
-
 	let {
 		color = 'currentColor',
 		size = undefined,
@@ -39,15 +38,15 @@
 </div>
 
 <style>
-    div {
-        display: inline-block;
-    }
-    .chevrons-left-icon {
-        overflow: visible;
-        transition: all 0.2s ease-in;
-    }
+	div {
+		display: inline-block;
+	}
+	.chevrons-left-icon {
+		overflow: visible;
+		transition: all 0.2s ease-in;
+	}
 
-    .chevron-left {
-        transform: translateX(-3px);
-    }
+	.chevron-left {
+		transform: translateX(-3px);
+	}
 </style>

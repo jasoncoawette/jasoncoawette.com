@@ -25,7 +25,8 @@
 	const blurEnd = (delay: number, len: number) => delay + (len - 1) * CHAR_DELAY + DURATION;
 
 	const h1Text = 'Jason Coawette';
-	const p1aText = 'Design-forward software engineer building tasteful interfaces for humans and agentic AI.';
+	const p1aText =
+		'Design-forward software engineer building tasteful interfaces for humans and agentic AI.';
 	const p1bText = 'Recognized as a top fifteen tech entrepreneur at Arizona State University.';
 	const p2Text = 'Currently, a Software Engineer at Boeing.';
 
@@ -36,9 +37,12 @@
 
 	onMount(() => {
 		document.documentElement.style.overflow = 'hidden';
-		const timer = setTimeout(() => {
-			document.documentElement.style.overflow = '';
-		}, restDelay + 3 * 100 + DURATION + DURATION);
+		const timer = setTimeout(
+			() => {
+				document.documentElement.style.overflow = '';
+			},
+			restDelay + 3 * 100 + DURATION + DURATION
+		);
 		return () => {
 			clearTimeout(timer);
 			document.documentElement.style.overflow = '';
@@ -67,59 +71,57 @@
 </script>
 
 {#key page.url.pathname}
-<div class="flex flex-col w-full h-full justify-start items-start gap-y-8 sm:gap-y-32 pt-8 sm:pt-0 pb-32">
-	<!--TOP HEADING AND PARAGRAPH-->
-	<section class="flex flex-col w-full">
-		<div class="h-9">
-			{#if !scrolled}
-				<div out:flyBlur={{ y: 8, amount: 4, duration: 400 }}>
-					<BlurText tag="h1" text={h1Text} delay={0} />
-				</div>
-			{/if}
-		</div>
-		<BlurText
-			tag="p"
-			text={p1aText}
-			delay={p1aDelay}
-			class="mt-3"
-		/>
-		<BlurText
-			tag="p"
-			text={p1bText}
-			delay={p1bDelay}
-		/>
-		<BlurText
-			tag="p"
-			text={p2Text}
-			delay={p2Delay}
-			class="mt-3"
-		/>
-	</section>
+	<div
+		class="flex h-full w-full flex-col items-start justify-start gap-y-8 pt-8 pb-32 sm:gap-y-32 sm:pt-0"
+	>
+		<!--TOP HEADING AND PARAGRAPH-->
+		<section class="flex w-full flex-col">
+			<div class="h-9">
+				{#if !scrolled}
+					<div out:flyBlur={{ y: 8, amount: 4, duration: 400 }}>
+						<BlurText tag="h1" text={h1Text} delay={0} />
+					</div>
+				{/if}
+			</div>
+			<BlurText tag="p" text={p1aText} delay={p1aDelay} class="mt-3" />
+			<BlurText tag="p" text={p1bText} delay={p1bDelay} />
+			<BlurText tag="p" text={p2Text} delay={p2Delay} class="mt-3" />
+		</section>
 
-	<!--CASE STUDY SHOWCASE-->
-	<section class="
-		flex flex-col sm:flex-row w-full h-fit items-start items-cetner py-8 gap-y-16 sm:py-16 sm:gap-y-32 sm:justify-between
-	">
-		<div class="flex flex-col items-start justify-start gap-2">
-			{#each cases as name, i (name)}
-				<BlurBlock delay={restDelay + i * 100}>
-					<button
-						class="glass-ghost btn-text"
-						class:active={activeIndex >= i}
-						bind:this={caseButtons[i]}
-					>
-						{name}
-					</button>
-				</BlurBlock>
-			{/each}
-		</div>
+		<!--CASE STUDY SHOWCASE-->
+		<section
+			class="
+		items-cetner flex h-fit w-full flex-col items-start gap-y-16 py-8 sm:flex-row sm:justify-between sm:gap-y-32 sm:py-16
+	"
+		>
+			<div class="flex flex-col items-start justify-start gap-2">
+				{#each cases as name, i (name)}
+					<BlurBlock delay={restDelay + i * 100}>
+						<button
+							class="glass-ghost btn-text"
+							class:active={activeIndex >= i}
+							bind:this={caseButtons[i]}
+						>
+							{name}
+						</button>
+					</BlurBlock>
+				{/each}
+			</div>
 
-		<BlurBlock delay={restDelay + cases.length * 100} class="flex flex-col w-full max-w-sm sm:ml-auto text-start">
-			<blockquote>
-				<p class="italic">"Jason consistently demonstrates strong design judgment and sound architectural decisions"</p>
-				<p class="mt-5 ml-2 text-sm! whitespace-nowrap">"— Dr. Ray Hsu, Founder & CEO, Ada Analytics"</p>
-			</blockquote>
-		</BlurBlock>
-	</section>
-</div>
+			<BlurBlock
+				delay={restDelay + cases.length * 100}
+				class="flex w-full max-w-sm flex-col text-start sm:ml-auto"
+			>
+				<blockquote>
+					<p class="italic">
+						"Jason consistently demonstrates strong design judgment and sound architectural
+						decisions"
+					</p>
+					<p class="mt-5 ml-2 text-sm! whitespace-nowrap">
+						"— Dr. Ray Hsu, Founder & CEO, Ada Analytics"
+					</p>
+				</blockquote>
+			</BlurBlock>
+		</section>
+	</div>
 {/key}

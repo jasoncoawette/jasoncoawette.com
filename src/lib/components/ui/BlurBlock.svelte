@@ -8,19 +8,10 @@
 		class?: string;
 	}
 
-	let {
-		delay = 0,
-		duration = 400,
-		children,
-		class: className = ''
-	}: Props = $props();
+	let { delay = 0, duration = 400, children, class: className = '' }: Props = $props();
 </script>
 
-<div
-	class="blur-block {className}"
-	style:--delay="{delay}ms"
-	style:--duration="{duration}ms"
->
+<div class="blur-block {className}" style:--delay="{delay}ms" style:--duration="{duration}ms">
 	{@render children()}
 </div>
 
