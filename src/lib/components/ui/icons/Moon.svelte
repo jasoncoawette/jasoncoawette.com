@@ -18,6 +18,7 @@
 	} = $props();
 
 	function handleMouseEnter() {
+		if (isHovered) return;
 		isHovered = true;
 
 		setTimeout(() => {

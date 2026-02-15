@@ -13,22 +13,14 @@
 	} = $props();
 
 	const mobile = new MediaQuery('max-width: 640px', false);
-	let threshold = $derived(mobile.current ? 60 : 88);
+	let threshold = $derived(mobile.current ? 88 : 128);
 	let scrolled = $derived((scrollY.current ?? 0) > threshold);
 </script>
 
-<!-- Fixed nav actions - always visible -->
-<div class="fixed top-6 right-0 left-0 z-30 flex justify-center pointer-events-none">
-	<div class="flex items-center gap-2 w-full max-w-3xl px-4 justify-end pointer-events-auto">
-		<ThemeToggle />
-		<button class="glass btn-text"> Email </button>
-	</div>
-</div>
-
 <!-- Sticky nav with progressive blur -->
-<nav class="sticky z-10 top-0 flex w-full items-center justify-center">
+<nav class="sticky z-20 top-0 flex w-full items-center justify-center lg:mt-16">
 	
-	<div class="absolute inset-0 z-10 pointer-events-none">
+	<div class="absolute inset-0 z-20 pointer-events-none">
 		<div class="blur-layer bl-1"></div>
 		<div class="blur-layer bl-2"></div>
 		<div class="blur-layer bl-3"></div>
@@ -39,23 +31,28 @@
 
 	<div class="nav-bg"></div>
 
-	<div class="relative z-20 w-full max-w-3xl pt-6 px-4 pb-6 sm:transition-[padding] sm:duration-300 sm:ease-in-out {scrolled ? '' : 'sm:pb-0'}">
-		<div class="flex items-center gap-1 min-h-10 relative">
+	<div class="sticky top-0 z-30 w-full h-fit max-w-3xl pt-6 px-4 pb-6 lg:pb-4">
+		<div class="flex items-center gap-4 h-fit relative pointer-events-auto">
 			{#if variant === 'cms'}
-				<a href="https://jasoncoawette.com" class="flex items-center justify-center text-primary-fg opacity-70 shrink-0 transition-opacity duration-200 ease-in-out hover:opacity-100" aria-label="Back to home">
-					<ChevronLeft size={20} strokeWidth={2.5} />
+				<a href="https://jasoncoawette.com" class="glass btn-icon" aria-label="Back to home">
+					<ChevronLeft />
 				</a>
 			{/if}
 
 			{#if scrolled}
 				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
-				<a href={link} class="scrolled-content">
-					<h1 class="text-lg! whitespace-nowrap leading-none!"
+				<a href={link} class="relative flex flex-col items-start">
+					<h1 class="text-lg! whitespace-nowrap"
 							transition:flyBlur={{ y: 8, amount: 4, duration: 400, delay: 50 }}>{title}</h1>
-					<p class="whitespace-nowrap"
+					<p class="whitespace-nowrap leading-tight!"
 						 transition:flyBlur={{ y: 8, amount: 4, duration: 400, delay: 200 }}>{subtitle}</p>
 				</a>
 			{/if}
+			
+			<div class="flex items-center justify-end gap-2 w-full">
+				<ThemeToggle />
+				<button class="glass btn-text"> Email </button>
+			</div>
 		</div>
 	</div>
 </nav>
@@ -113,18 +110,11 @@
 	.nav-bg {
 		position: absolute;
 		inset: 0;
-		bottom: -24px;
+		bottom: -32px;
 		z-index: 0;
 		pointer-events: none;
 		background: linear-gradient(to bottom, var(--nav-tint) 0%, var(--nav-tint) 60%, transparent 100%);
 		mask-image: linear-gradient(to bottom, black 0%, black 60%, rgba(0, 0, 0, 0.4) 80%, transparent 100%);
 		-webkit-mask-image: linear-gradient(to bottom, black 0%, black 60%, rgba(0, 0, 0, 0.4) 80%, transparent 100%);
-	}
-
-	/* ---- Scrolled content positioning ---- */
-	.scrolled-content {
-		position: absolute;
-		top: 0.375rem;
-		left: 0;
 	}
 </style>

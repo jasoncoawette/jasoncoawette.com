@@ -16,7 +16,7 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-<NavBar title="Jason Coawette" subtitle="Design Engineer" />
+<NavBar title="Jason Coawette" subtitle="Design Engineer" variant="cms" />
 <main
 	class="
 		flex
