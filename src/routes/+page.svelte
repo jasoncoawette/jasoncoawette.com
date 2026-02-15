@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { scrollY } from 'svelte/reactivity/window';
 	import { MediaQuery } from 'svelte/reactivity';
-	import { flyBlur } from '$lib';
+	import { flyBlur, shine } from '$lib';
 
 	const mobile = new MediaQuery('max-width: 640px', true);
 	let threshold = $derived(mobile.current ? 60 : 120);
@@ -31,7 +31,15 @@
 	</p>
 	<p class="mt-3">Currently, a Software Engineer at Boeing.</p>
 	
-	<button class="glass btn-text">
-		Clovis
-	</button>
+	<div class="flex flex-col items-start justify-start gap-2 mt-16">
+		<button class="glass btn-text" use:shine>
+			Boeing
+		</button>
+		<button class="glass btn-text" use:shine>
+			Clovis
+		</button>
+		<button class="glass btn-text" use:shine>
+			Studygenie
+		</button>
+	</div>
 </section>

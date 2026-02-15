@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { Sun, Moon, theme, toggleTheme } from '$lib';
+	import { Sun, Moon, theme, toggleTheme, shine } from '$lib';
 </script>
 
 <button
 	class="glass btn-icon"
+	use:shine
 	aria-label="Toggle theme"
 	onclick={toggleTheme}
 >
