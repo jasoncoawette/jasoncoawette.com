@@ -71,9 +71,9 @@
 			{/each}
 		</div>
 		
-		<blockquote class="flex flex-col w-full max-w-sm sm:ml-auto">
-			<p class="leading-tight! italic">"Jason consistently demonstrates strong design judgment and sound architectural decisions."</p>
-			<p class="mt-5 ml-2 text-sm! whitespace-nowrap">- Dr. Ray Hsu, Founder & CEO, Ada Analytics</p>
+		<blockquote class="flex flex-col w-full max-w-sm sm:ml-auto text-start">
+			<p class="italic">"Jason consistently demonstrates strong design judgment and sound architectural decisions."</p>
+			<p class="mt-5 ml-2 text-sm! whitespace-nowrap">— Dr. Ray Hsu, Founder & CEO, Ada Analytics</p>
 		</blockquote>
 	</section>
 </div>

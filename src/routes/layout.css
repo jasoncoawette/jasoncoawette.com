@@ -25,6 +25,7 @@ body {
 @theme {
 	--color-primary-fg: oklch(14.5% 0 0);
 	--color-secondary-fg: oklch(37.1% 0 0);
+	--color-tertiary-fg: oklch(70.8% 0 0);
 	--color-primary-bg: oklch(97% 0 0);
 	--color-secondary-bg: oklch(92.2% 0 0);
 	--color-glass: oklch(100% 0 0 / 0.35);
@@ -37,6 +38,7 @@ body {
 .dark {
 	--color-primary-fg: oklch(98.5% 0 0);
 	--color-secondary-fg: oklch(87% 0 0);
+	--color-tertiary-fg: oklch(43.9% 0 0);
 	--color-primary-bg: oklch(20.5% 0 0);
 	--color-secondary-bg: oklch(37.1% 0 0);
 	--color-glass: oklch(30% 0 0 / 0.3);

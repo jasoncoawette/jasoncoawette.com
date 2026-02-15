@@ -12,7 +12,17 @@
 
 	const mobile = new MediaQuery('max-width: 640px', false);
 	let threshold = $derived(mobile.current ? 88 : 128);
-	let scrolled = $derived((scrollY.current ?? 0) > threshold);
+	let hysteresis = $derived(mobile.current ? 70 : 40);
+	let scrolled = $state(false);
+
+	$effect(() => {
+		const y = scrollY.current ?? 0;
+		if (!scrolled && y > threshold) {
+			scrolled = true;
+		} else if (scrolled && y < threshold - hysteresis) {
+			scrolled = false;
+		}
+	});
 </script>
 
 <!-- Sticky nav with progressive blur -->
