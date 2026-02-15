@@ -42,6 +42,10 @@
 		transform: translateY(8px);
 		animation: blur-in var(--duration) ease forwards;
 		animation-delay: var(--delay);
+		font: inherit;
+		color: inherit;
+		letter-spacing: inherit;
+		line-height: inherit;
 	}
 
 	@keyframes blur-in {

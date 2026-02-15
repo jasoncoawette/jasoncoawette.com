@@ -1,8 +1,6 @@
-<script>
-</script>
 
 <footer class="
-	flex flex-row items-start justify-between
+	flex flex-row items-center justify-between
 	w-full max-w-3xl h-fit px-4 pb-48 sm:pb-80
 ">
 	<span class="text-sm!">© 2026 Jason Coawette</span>

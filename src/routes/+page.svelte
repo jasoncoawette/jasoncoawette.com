@@ -19,6 +19,18 @@
 		}
 	});
 
+	const CHAR_DELAY = 30;
+	const DURATION = 400;
+	const blurEnd = (delay: number, len: number) => delay + (len - 1) * CHAR_DELAY + DURATION;
+
+	const h1Text = 'Jason Coawette';
+	const p1Text = 'Design-forward software engineer building tasteful interfaces for humans and agentic AI. Recognized as a top fifteen tech entrepreneur at Arizona State University.';
+	const p2Text = 'Currently, a Software Engineer at Boeing.';
+
+	const p1Delay = blurEnd(0, h1Text.length);
+	const p2Delay = blurEnd(p1Delay, p1Text.length);
+	const restDelay = blurEnd(p2Delay, p2Text.length);
+
 	const cases = ['Boeing', 'Clovis', 'Studygenie'];
 	let caseButtons: HTMLButtonElement[] = $state([]);
 	let activeIndex = $state(-1);
@@ -46,21 +58,21 @@
 	<section>
 		<div class="h-9">
 			{#if !scrolled}
-				<h1
-					transition:flyBlur={{ y: 8, amount: 4, duration: 400 }}
-				>Jason Coawette</h1>
+				<div out:flyBlur={{ y: 8, amount: 4, duration: 400 }}>
+					<BlurText tag="h1" text={h1Text} delay={0} />
+				</div>
 			{/if}
 		</div>
 		<BlurText
 			tag="p"
-			text="Design-forward software engineer building tasteful interfaces for humans and agentic AI. Recognized as a top fifteen tech entrepreneur at Arizona State University."
-			delay={200}
+			text={p1Text}
+			delay={p1Delay}
 			class="mt-3"
 		/>
 		<BlurText
 			tag="p"
-			text="Currently, a Software Engineer at Boeing."
-			delay={400}
+			text={p2Text}
+			delay={p2Delay}
 			class="mt-3"
 		/>
 	</section>
@@ -71,7 +83,7 @@
 	">
 		<div class="flex flex-col items-start justify-start gap-2">
 			{#each cases as name, i (name)}
-				<BlurBlock delay={600 + i * 100}>
+				<BlurBlock delay={restDelay + i * 100}>
 					<button
 						class="glass-ghost btn-text"
 						class:active={activeIndex >= i}
@@ -83,20 +95,10 @@
 			{/each}
 		</div>
 
-		<BlurBlock delay={900} class="flex flex-col w-full max-w-sm sm:ml-auto text-start">
+		<BlurBlock delay={restDelay + cases.length * 100} class="flex flex-col w-full max-w-sm sm:ml-auto text-start">
 			<blockquote>
-				<BlurText
-					tag="p"
-					text={'\u201CJason consistently demonstrates strong design judgment and sound architectural decisions.\u201D'}
-					delay={950}
-					class="italic"
-				/>
-				<BlurText
-					tag="p"
-					text="— Dr. Ray Hsu, Founder & CEO, Ada Analytics"
-					delay={1150}
-					class="mt-5 ml-2 text-sm! whitespace-nowrap"
-				/>
+				<p class="italic">"Jason consistently demonstrates strong design judgment and sound architectural decisions"</p>
+				<p class="mt-5 ml-2 text-sm! whitespace-nowrap">"— Dr. Ray Hsu, Founder & CEO, Ada Analytics"</p>
 			</blockquote>
 		</BlurBlock>
 	</section>
