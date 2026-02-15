@@ -1,28 +1,19 @@
 <script>
-	/**
-	 * @typedef {Object} Props
-	 * @property {string} [color]
-	 * @property {number} [size]
-	 * @property {number} [strokeWidth]
-	 * @property {boolean} [isHovered]
-	 * @property {string} [class]
-	 */
 
-	/** @type {Props} */
 	let {
 		color = 'currentColor',
 		size = undefined,
 		strokeWidth = 2,
-		isHovered = false,
+		animate = false,
 		class: className = ''
 	} = $props();
 
 	function handleMouseEnter() {
-		if (isHovered) return;
-		isHovered = true;
+		if (animate) return;
+		animate = true;
 
 		setTimeout(() => {
-			isHovered = false;
+			animate = false;
 		}, 1200);
 	}
 </script>
@@ -41,7 +32,7 @@
 		stroke-linecap="round"
 		stroke-linejoin="round"
 		class="moon-icon"
-		class:animate={isHovered}
+		class:animate={animate}
 	>
 		<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
 	</svg>

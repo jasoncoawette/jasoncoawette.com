@@ -29,11 +29,13 @@
 
 	<div class="nav-bg"></div>
 
-	<div class="sticky top-0 z-30 w-full h-fit max-w-3xl pt-6 px-4 pb-6 lg:pb-4">
+	<div class="sticky top-0 z-30 w-full h-fit max-w-3xl pt-6 px-4 pb-4">
 		<div class="flex items-center gap-4 h-fit relative pointer-events-auto">
 			{#if variant === 'cms'}
-				<a href="https://jasoncoawette.com" class="glass btn-icon" aria-label="Back to home">
-					<ChevronLeft />
+				<a href="https://jasoncoawette.com" aria-label="Back to home">
+					<button class="glass btn-icon">
+						<ChevronLeft />
+					</button>
 				</a>
 			{/if}
 

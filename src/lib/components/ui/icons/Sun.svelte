@@ -1,28 +1,19 @@
 <script>
-	/**
-	 * @typedef {Object} Props
-	 * @property {string} [color]
-	 * @property {number} [size]
-	 * @property {number} [strokeWidth]
-	 * @property {boolean} [isHovered]
-	 * @property {string} [class]
-	 */
-
-	/** @type {Props} */
+	
 	let {
 		color = 'currentColor',
 		size = undefined,
 		strokeWidth = 2,
-		isHovered = false,
+		animate = false,
 		class: className = ''
 	} = $props();
 
 	function handleMouseEnter() {
-		if (isHovered) return;
-		isHovered = true;
+		if (animate) return;
+		animate = true;
 
 		setTimeout(() => {
-			isHovered = false;
+			animate = false;
 		}, 1200);
 	}
 
@@ -52,7 +43,7 @@
 		stroke-linecap="round"
 		stroke-linejoin="round"
 		class="sun-icon"
-		class:animate={isHovered}
+		class:animate={animate}
 	>
 		<circle cx="12" cy="12" r="4" />
 		{#each sunRays as ray, i (i)}

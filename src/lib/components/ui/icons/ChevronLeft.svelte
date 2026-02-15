@@ -1,33 +1,23 @@
-<script>
-	/**
-	 * @typedef {Object} Props
-	 * @property {string} [color]
-	 * @property {number} [size]
-	 * @property {number} [strokeWidth]
-	 * @property {boolean} [isHovered]
-	 * @property {string} [class]
-	 */
+<script lang="ts">
 
-	/** @type {Props} */
 	let {
 		color = 'currentColor',
 		size = undefined,
 		strokeWidth = 2,
-		isHovered = false,
+		animate = false,
 		class: className = ''
 	} = $props();
 
 	function handleMouseEnter() {
-		if (isHovered) return;
-		isHovered = true;
-
+		if (animate) return;
+		animate = true;
 		setTimeout(() => {
-			isHovered = false;
-		}, 300);
+			animate = false;
+		}, 200);
 	}
 </script>
 
-<div class={className} aria-label="chevron-left" role="img" onmouseenter={handleMouseEnter}>
+<div class={className} aria-label="chevrons-left" role="img" onmouseenter={handleMouseEnter}>
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		width={size}
@@ -40,27 +30,24 @@
 		stroke-width={strokeWidth}
 		stroke-linecap="round"
 		stroke-linejoin="round"
-		class="chevron-icon"
-		class:animate={isHovered}
+		class="chevrons-left-icon"
+		class:chevron-left={animate}
 	>
-		<path d="m15 18-6-6 6-6" />
+		<path d="m11 17-5-5 5-5" />
+		<path d="m18 17-5-5 5-5" />
 	</svg>
 </div>
 
 <style>
-	div {
-		display: inline-block;
-	}
+    div {
+        display: inline-block;
+    }
+    .chevrons-left-icon {
+        overflow: visible;
+        transition: all 0.2s ease-in;
+    }
 
-	.chevron-icon {
-		overflow: visible;
-	}
-
-	.chevron-icon.animate path {
-		transform: translateX(-3px);
-	}
-
-	path {
-		transition: all 0.2s ease-in;
-	}
+    .chevron-left {
+        transform: translateX(-3px);
+    }
 </style>
