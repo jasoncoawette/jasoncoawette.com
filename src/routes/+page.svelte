@@ -5,13 +5,14 @@
 
 	const mobile = new MediaQuery('max-width: 640px', true);
 	let threshold = $derived(mobile.current ? 60 : 120);
+	let hysteresis = $derived(mobile.current ? 50 : 40);
 	let scrolled = $state(false);
 
 	$effect(() => {
 		const y = scrollY.current ?? 0;
 		if (!scrolled && y > threshold) {
 			scrolled = true;
-		} else if (scrolled && y < threshold - 40) {
+		} else if (scrolled && y < threshold - hysteresis) {
 			scrolled = false;
 		}
 	});
@@ -71,8 +72,8 @@
 		</div>
 		
 		<blockquote class="flex flex-col w-full max-w-sm sm:ml-auto">
-			"Jason consistently demonstrates strong design judgment and sound architectural decisions."
-			<p class="mt-3">- Dr. Ray Hsu, Founder & CEO, Ada Analytics</p>
+			<p class="leading-tight! italic">"Jason consistently demonstrates strong design judgment and sound architectural decisions."</p>
+			<p class="mt-5 ml-2 text-sm! whitespace-nowrap">- Dr. Ray Hsu, Founder & CEO, Ada Analytics</p>
 		</blockquote>
 	</section>
 </div>

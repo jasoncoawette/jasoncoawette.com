@@ -17,7 +17,7 @@ body {
 }
 
 :focus-visible {
-	outline: 1px solid oklch(from var(--color-accent) l c h / 0.64);
+	outline: 1px solid oklch(from var(--color-primary-fg) l c h / 0.50);
 	outline-offset: 2px;
 }
 
