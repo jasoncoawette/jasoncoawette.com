@@ -34,7 +34,7 @@
 			{#if variant === 'cms'}
 				<a href="https://jasoncoawette.com" aria-label="Back to home">
 					<button class="glass btn-icon">
-						<ChevronLeft />
+						<ChevronLeft color="var(--color-primary-fg)" />
 					</button>
 				</a>
 			{/if}

@@ -9,11 +9,13 @@
 </script>
 
 <section class="h-500">
-	{#if !scrolled}
-		<h1
-			transition:flyBlur={{ y: 8, amount: 4, duration: 400 }}
-		>Jason Coawette</h1>
-	{/if}
+	<div class="h-9">
+		{#if !scrolled}
+			<h1
+				transition:flyBlur={{ y: 8, amount: 4, duration: 400 }}
+			>Jason Coawette</h1>
+		{/if}
+	</div>
 	<p class="mt-3">
 		Design-forward software engineer building tasteful interfaces for humans and agentic AI. Recognized as a top fifteen
 		tech entrepreneur at Arizona State University and a multi-year Venture Devils funding recipient.
