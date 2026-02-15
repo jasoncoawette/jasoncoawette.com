@@ -2,29 +2,32 @@
 	import { ThemeToggle } from '$lib';
 	import { ChevronLeft } from '$lib';
 	import { scrollY } from 'svelte/reactivity/window';
-	import { blur } from 'svelte/transition';
+	import { MediaQuery } from 'svelte/reactivity';
+	import { flyBlur } from '$lib/transitions';
 
-	let { title, subtitle, variant = 'default' }: {
+	let { title, subtitle, link = 'https://jasoncoawette.com', variant = 'default' }: {
 		title: string;
 		subtitle?: string;
+		link?: string;
 		variant?: 'default' | 'cms';
 	} = $props();
 
-	let scrolled = $derived((scrollY.current ?? 0) > 72);
+	const mobile = new MediaQuery('max-width: 640px', false);
+	let threshold = $derived(mobile.current ? 60 : 88);
+	let scrolled = $derived((scrollY.current ?? 0) > threshold);
 </script>
 
 <!-- Fixed nav actions - always visible -->
 <div class="fixed top-6 right-0 left-0 z-30 flex justify-center pointer-events-none">
-	<div class="w-full max-w-3xl px-4 flex justify-end pointer-events-auto">
-		<div class="flex items-center gap-2">
-			<ThemeToggle />
-			<button class="glass btn-text"> Email </button>
-		</div>
+	<div class="flex items-center gap-2 w-full max-w-3xl px-4 justify-end pointer-events-auto">
+		<ThemeToggle />
+		<button class="glass btn-text"> Email </button>
 	</div>
 </div>
 
 <!-- Sticky nav with progressive blur -->
 <nav class="sticky z-10 top-0 flex w-full items-center justify-center">
+	
 	<div class="absolute inset-0 z-10 pointer-events-none">
 		<div class="blur-layer bl-1"></div>
 		<div class="blur-layer bl-2"></div>
@@ -45,10 +48,13 @@
 			{/if}
 
 			{#if scrolled}
-				<div class="scrolled-content" out:blur={{ amount: 4, duration: 500 }}>
-					<h1 class="text-lg! font-semibold whitespace-nowrap" in:blur={{ amount: 4, duration: 500, delay: 200 }}>{title}</h1>
-					<p class="whitespace-nowrap text-sm tracking-tight" in:blur={{ amount: 4, duration: 500, delay: 300 }}>{subtitle}</p>
-				</div>
+				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
+				<a href={link} class="scrolled-content">
+					<h1 class="text-lg! whitespace-nowrap leading-none!"
+							transition:flyBlur={{ y: 8, amount: 4, duration: 400, delay: 50 }}>{title}</h1>
+					<p class="whitespace-nowrap"
+						 transition:flyBlur={{ y: 8, amount: 4, duration: 400, delay: 200 }}>{subtitle}</p>
+				</a>
 			{/if}
 		</div>
 	</div>
@@ -107,7 +113,7 @@
 	.nav-bg {
 		position: absolute;
 		inset: 0;
-		bottom: -40px;
+		bottom: -24px;
 		z-index: 0;
 		pointer-events: none;
 		background: linear-gradient(to bottom, var(--nav-tint) 0%, var(--nav-tint) 60%, transparent 100%);
@@ -118,7 +124,7 @@
 	/* ---- Scrolled content positioning ---- */
 	.scrolled-content {
 		position: absolute;
-		top: 0;
+		top: 0.375rem;
 		left: 0;
 	}
 </style>
