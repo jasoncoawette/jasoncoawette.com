@@ -51,8 +51,8 @@
 			
 			<div class="flex items-center justify-end gap-2 w-full">
 				<ThemeToggle />
-				<a href="mailto:jason.coawette@gmail.com" aria-label="Email me">
-					<button class="glass-action btn-text btn-scale" use:shine> Email </button>
+				<a href="mailto:jason.coawette@gmail.com" aria-label="Email me" class="rounded-full">
+					<button class="glass btn-text btn-scale" use:shine> Get in touch </button>
 				</a>
 			</div>
 		</div>

@@ -17,24 +17,10 @@ Currently, a Software Engineer at Boeing.
 
 # Boeing Defense, Space & Security — Vertical Lift
 
-Aerospace · Internal Systems  
+Aerospace · Internal Systems
 2026 — Present
 
-## Context
-
-I work as a Software Engineer on systems for the Vertical Lift division at Boeing. The role sits in the Technical Excellence group and supports manufacturing.
-
-## Problem
-
-In aerospace manufacturing, unclear screens cause human mistakes. These systems must favor clarity and correctness over speed.
-
-## Role
-
-I help build front-end systems that turn requirements into clear rules and tests.
-
-## Outcome
-
-The systems reduce manual checks and rework in production. Early validation and UI testing help catch issues sooner and improve build quality.
+WE can not disclouse anthign we do here at all except for working as a software engineer here.
 
 ## Learning
 

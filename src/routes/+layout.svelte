@@ -19,7 +19,7 @@
 <NavBar title="Jason Coawette" subtitle="Design Engineer" link="https://jasoncoawette.com"/>
 <main
 	class="
-		flex w-full h-fit max-w-3xl flex-col items-center
+		flex w-full max-w-3xl flex-col items-center
 		justify-start px-4
 	"
 >
