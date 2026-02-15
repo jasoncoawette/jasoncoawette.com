@@ -67,7 +67,7 @@
 </script>
 
 {#key page.url.pathname}
-<div class="flex flex-col w-full h-full justify-start items-start gap-y-8 sm:gap-y-32 pt-8 sm:pt-0 pb-8 sm:pb-32">
+<div class="flex flex-col w-full h-full justify-start items-start gap-y-8 sm:gap-y-32 pt-8 sm:pt-0 pb-32">
 	<!--TOP HEADING AND PARAGRAPH-->
 	<section class="flex flex-col w-full">
 		<div class="h-9">
