@@ -13,9 +13,10 @@ body {
 	-ms-overflow-style: none;
 	-webkit-overflow-scrolling: touch;
 }
-
-::view-transition-old(root),
-::view-transition-new(root) {
+html,
+body::view-transition-old(root),
+html,
+body::view-transition-new(root) {
 	animation-duration: 250ms;
 	animation-timing-function: ease-in-out;
 }
