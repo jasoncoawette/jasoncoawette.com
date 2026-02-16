@@ -12,6 +12,11 @@
 	let _scrolled = $state(false);
 	let introComplete = $state(false);
 	let scrolled = $derived(introComplete && _scrolled);
+	let hasScrolledOnce = $state(false);
+
+	$effect(() => {
+		if (scrolled) hasScrolledOnce = true;
+	});
 
 	$effect(() => {
 		const y = scrollY.current ?? 0;
@@ -85,7 +90,10 @@
 				{#if !introComplete}
 					<BlurText tag="h1" text={h1Text} delay={0} />
 				{:else if !scrolled}
-					<div transition:flyBlur={{ y: 8, amount: 4, duration: 400 }}>
+					<div
+						in:flyBlur={{ y: 8, amount: 4, duration: hasScrolledOnce ? 400 : 0 }}
+						out:flyBlur={{ y: 8, amount: 4, duration: 400 }}
+					>
 						<h1>{h1Text}</h1>
 					</div>
 				{/if}
