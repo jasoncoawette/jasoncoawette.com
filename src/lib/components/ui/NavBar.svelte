@@ -73,8 +73,8 @@
 
 			<div class="flex w-full items-center justify-end gap-2">
 				<ThemeToggle />
-				<a href="mailto:jason.coawette@gmail.com" aria-label="Email me" class="rounded-full">
-					<button class="glass btn-text btn-scale" use:shine> Get in touch </button>
+				<a href="https://cal.com/jason-coawette/lets-connect" aria-label="Contact" class="rounded-full">
+					<button class="glass btn-text btn-scale" use:shine>Contact</button>
 				</a>
 			</div>
 		</div>
