@@ -7,7 +7,7 @@
 - [x] ~~After intro. Make normal flyblur for h1~~
 - [x] ~~Ensure words don’t wrap with the new blur text also on mobile~~
 - [x] ~~Move dark mode to bottom with no Liquid Glass. Add x, remove founder of stratus~~
-- [ ] Only on first ever cahced page load. then offer a skip button that skips the rest of the text load (just flyin Blur)
+- [x] ~~Only on first ever cahced page load. then offer a skip button that skips the rest of the text load (just flyin Blur)~~
 
 ---
 - [ ] Favicon, meta tags and preview images & twitter images

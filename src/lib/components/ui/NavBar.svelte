@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ThemeToggle, ChevronLeft, flyBlur, shine } from '$lib';
+	import { Chat, ChevronLeft, flyBlur, shine } from '$lib';
 	import { scrollY } from 'svelte/reactivity/window';
 	import { MediaQuery } from 'svelte/reactivity';
 
@@ -72,7 +72,9 @@
 			{/if}
 
 			<div class="flex w-full items-center justify-end gap-2">
-				<ThemeToggle />
+				<button class="glass btn-icon inline-flex" use:shine>
+					<Chat />
+				</button>
 				<a href="https://cal.com/jason-coawette/lets-connect" aria-label="Contact" class="rounded-full">
 					<button class="glass btn-text btn-scale" use:shine>Connect</button>
 				</a>
