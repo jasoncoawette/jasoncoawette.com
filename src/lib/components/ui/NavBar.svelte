@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { Chat, ChevronLeft, flyBlur, shine } from '$lib';
+	import { Chat, ChevronLeft, shine } from '$lib';
 	import { scrollY } from 'svelte/reactivity/window';
 	import { MediaQuery } from 'svelte/reactivity';
+	import { onMount } from 'svelte';
 
 	let {
 		title,
@@ -16,9 +17,21 @@
 	} = $props();
 
 	const mobile = new MediaQuery('max-width: 640px', false);
-	let threshold = $derived(mobile.current ? 88 : 128);
-	let hysteresis = $derived(mobile.current ? 70 : 40);
+	let pageTitleBottom = $state(88);
+	let threshold = $derived(mobile.current ? pageTitleBottom : 128);
+	let hysteresis = $derived(mobile.current ? 8 : 40);
 	let scrolled = $state(false);
+
+	function measureTitle() {
+		const el = document.getElementById('page-title');
+		if (el) pageTitleBottom = el.offsetTop + el.offsetHeight;
+	}
+
+	onMount(() => {
+		measureTitle();
+		window.addEventListener('resize', measureTitle);
+		return () => window.removeEventListener('resize', measureTitle);
+	});
 
 	$effect(() => {
 		const y = scrollY.current ?? 0;
@@ -53,30 +66,21 @@
 				</a>
 			{/if}
 
-			{#if scrolled}
-				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
-				<a href={link} class="relative flex flex-col items-start">
-					<h1
-						class="text-lg! whitespace-nowrap"
-						transition:flyBlur={{ y: 8, amount: 4, duration: 400, delay: 50 }}
-					>
-						{title}
-					</h1>
-					<p
-						class="leading-tight! whitespace-nowrap"
-						transition:flyBlur={{ y: 8, amount: 4, duration: 400, delay: 200 }}
-					>
-						{subtitle}
-					</p>
-				</a>
-			{/if}
+			<a
+				href={link}
+				class="nav-title relative flex flex-col items-start"
+				class:visible={scrolled}
+			>
+				<h1 class="text-lg! whitespace-nowrap">{title}</h1>
+				<p class="leading-tight! whitespace-nowrap">{subtitle}</p>
+			</a>
 
 			<div class="flex w-full items-center justify-end gap-2">
 				<button class="glass btn-icon inline-flex" use:shine>
 					<Chat />
 				</button>
 				<a href="https://cal.com/jason-coawette/lets-connect" aria-label="Contact" class="rounded-full">
-					<button class="glass btn-text btn-scale" use:shine>Connect</button>
+					<button class="glass btn-text btn-scale" use:shine>Book Time</button>
 				</a>
 			</div>
 		</div>
@@ -130,6 +134,25 @@
 		backdrop-filter: blur(0);
 		mask: linear-gradient(to bottom, transparent 70%, #000 85%, #000 100%);
 		-webkit-mask: linear-gradient(to bottom, transparent 70%, #000 85%, #000 100%);
+	}
+
+	/* ---- Nav title slide (CSS-only, no DOM mount/unmount) ---- */
+	.nav-title {
+		opacity: 0;
+		filter: blur(4px);
+		transform: translateY(8px);
+		pointer-events: none;
+		transition:
+			opacity 400ms ease,
+			filter 400ms ease,
+			transform 400ms ease;
+	}
+
+	.nav-title.visible {
+		opacity: 1;
+		filter: blur(0);
+		transform: translateY(0);
+		pointer-events: auto;
 	}
 
 	/* ---- Background tint (complex gradient mask) ---- */

@@ -17,24 +17,17 @@
 	let showSkip = $derived(!introComplete && isReturningVisitor);
 	let skipped = $state(false);
 
-	$effect(() => {
-		if (scrolled) hasScrolledOnce = true;
-	});
-
 	const CHAR_DELAY = 30;
 	const DURATION = 400;
 	const blurEnd = (delay: number, len: number) => delay + (len - 1) * CHAR_DELAY + DURATION;
 
 	const h1Text = 'Jason Coawette';
 	const p1aText =
-		'Is a design-obsessed software engineer building tasteful interfaces for humans and agentic AI.';
-	const p1bText = 'Recognized as a top fifteen tech entrepreneur at Arizona State University.';
-	const p2Text = 'Currently, a Software Engineer at Boeing.';
+		'Design-obsessed software engineer building tasteful interfaces for humans and agentic AI.';
+	const p2Text = 'Software Engineer at Boeing.';
 
 	const p1aDelay = blurEnd(0, h1Text.length);
-	const p1bDelay = blurEnd(p1aDelay, p1aText.length);
-	const p2Delay = blurEnd(p1bDelay, p1bText.length);
-	const restDelay = blurEnd(p2Delay, p2Text.length);
+	const restDelay = blurEnd(p1aDelay, p2Text.length);
 
 	function skipIntro() {
 		skipped = true;
@@ -47,6 +40,7 @@
 		const y = scrollY.current ?? 0;
 		if (!_scrolled && y > threshold) {
 			_scrolled = true;
+			hasScrolledOnce = true;
 		} else if (_scrolled && y < threshold - hysteresis) {
 			_scrolled = false;
 		}
@@ -99,7 +93,7 @@
 	>
 		<!--TOP HEADING AND PARAGRAPH-->
 		<section class="flex w-full flex-col">
-			<div class="flex h-9 w-full items-center">
+			<div id="page-title" class="flex h-9 w-full items-center">
 				{#if !introComplete}
 					<BlurText tag="h1" text={h1Text} delay={0} />
 				{:else if !scrolled}
@@ -112,21 +106,19 @@
 				{/if}
 				{#if showSkip}
 					<button class="skip-intro" onclick={skipIntro}>
-						<p>skip &rarr;</p>
+						<span>skip &rarr;</span>
 					</button>
 				{/if}
 			</div>
 
 			{#if !introComplete}
-				<div out:flyBlur={{ y: 8, amount: 4, duration: skipped ? 300 : 0 }}>
+				<div out:flyBlur={{ y: 8, amount: 4, duration: skipped ? 400 : 0 }}>
 					<BlurText tag="p" text={p1aText} delay={p1aDelay} class="mt-3" />
-					<BlurText tag="p" text={p1bText} delay={p1bDelay} />
-					<BlurText tag="p" text={p2Text} delay={p2Delay} class="mt-3" />
+					<BlurText tag="p" text={p2Text} delay={restDelay} class="mt-3" />
 				</div>
 			{:else}
 				<div in:flyBlur={{ y: 8, amount: 4, duration: skipped ? 400 : 0, delay: skipped ? 200 : 0 }}>
 					<p class="mt-3">{p1aText}</p>
-					<p>{p1bText}</p>
 				</div>
 				<div in:flyBlur={{ y: 8, amount: 4, duration: skipped ? 400 : 0, delay: skipped ? 350 : 0 }}>
 					<p class="mt-3">{p2Text}</p>
@@ -217,13 +209,13 @@
 		animation-delay: 800ms;
 	}
 
-	.skip-intro p {
+	.skip-intro span {
 		font-size: 0.875rem;
 		opacity: 0.4;
 		transition: opacity 150ms ease;
 	}
 
-	.skip-intro:hover p {
+	.skip-intro:hover span {
 		opacity: 0.8;
 	}
 
