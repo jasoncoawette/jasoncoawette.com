@@ -117,8 +117,8 @@
 						"Jason consistently demonstrates strong design judgment and sound architectural
 						decisions"
 					</p>
-					<p class="mt-5 ml-2 text-sm! whitespace-nowrap">
-						"— Dr. Ray Hsu, Founder & CEO, Ada Analytics"
+					<p class="mt-5 text-sm! whitespace-nowrap">
+						— Dr. Ray Hsu, Founder & CEO, Ada Analytics
 					</p>
 				</blockquote>
 			</BlurBlock>

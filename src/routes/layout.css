@@ -52,6 +52,7 @@ body {
 	--color-accent: oklch(0.5967 0.2212 258.03);
 	--nav-tint: oklch(20.5% 0 0 / 0.65);
 }
+html,
 body {
 	background-color: var(--color-primary-bg);
 	color: var(--color-primary-fg);
