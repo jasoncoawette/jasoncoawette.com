@@ -4,21 +4,20 @@
 - [x] ~~Footer mobile padding. And switch margin to top for footer. Keeping uniform padding on bottom~~
 - [x] ~~Skip animation of footer. On mobile.~~
 - [x] ~~Make reload start at top of page to ensure no cutoff.~~
-- [ ] After intro. Make normal flyblur for h1
+- [x] ~~After intro. Make normal flyblur for h1~~
+- [x] ~~Ensure words don’t wrap with the new blur text also on mobile~~
+- [x] ~~Move dark mode to bottom with no Liquid Glass. Add x, remove founder of stratus~~
+- [ ] Only on first ever cahced page load. then offer a skip button that skips the rest of the text load (just flyin Blur)
 
 ---
-- [ ] Only on first ever cahced page load. then offer a skip button that skips the rest of the text load (just flyin Blur)
 - [ ] Favicon, meta tags and preview images & twitter images
-- [ ] Ensure words don’t wrap with the new blur text also on mobile,  
 - [ ] bottom blur on viewContaier
-- [ ] Move dark mode to bottom with no Liquid Glass. Add x, remove founder of stratus
 - [ ] Tech stack drawer slide overlway. 
 - [ ] AI chat window. From where theme toggle is now With voice clone of me. Tries to convert them to reach out. With voice… like “Hey what’s up?”
 - [ ] Line up animation title on nav w h1 disappear
 - [ ] Remove stutter on entry title nav scroll on mobile.
 - [ ] Realignemnt of quote, Case Study Preview and buttons
 - [ ] Ensure only one highlight at a time on mobile scroll. bottom left. With Quote Below.
-- [ ] Only LG preview of case studies
 - [ ] Case Study Page
 - [ ] Test for edge cases. Create unit tests integration etc.
 - [ ] 3d Phone & Mac with interactions.

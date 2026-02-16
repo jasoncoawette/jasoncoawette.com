@@ -7,7 +7,7 @@
 	flex h-fit w-full max-w-3xl gap-y-2 px-4 pb-16 flex-row items-center justify-between lg:pb-64
 "
 >
-	<span class="text-sm!">© 2026 Jason Coawette</span>
+	<span class="text-sm! text-tertiary-fg">© 2026 Jason Coawette</span>
 	
 	<div class="flex flex-row gap-1 items-center justify-center w-fit">
 		<ThemeToggle />

@@ -13,10 +13,44 @@
 	let introComplete = $state(false);
 	let scrolled = $derived(introComplete && _scrolled);
 	let hasScrolledOnce = $state(false);
+	let isReturningVisitor = $state(false);
+	let showSkip = $derived(!introComplete && isReturningVisitor);
+	let skipped = $state(false);
+	let animKey = $state(0);
 
 	$effect(() => {
 		if (scrolled) hasScrolledOnce = true;
 	});
+
+	// Normal timing
+	const CHAR_DELAY = 30;
+	const DURATION = 400;
+	// Compressed timing for skip
+	const SKIP_CD = 8;
+	const SKIP_DUR = 200;
+
+	const cd = $derived(skipped ? SKIP_CD : CHAR_DELAY);
+	const dur = $derived(skipped ? SKIP_DUR : DURATION);
+	const end = (delay: number, len: number) => delay + (len - 1) * cd + dur;
+
+	const h1Text = 'Jason Coawette';
+	const p1aText =
+		'Is a design-obsessed software engineer building tasteful interfaces for humans and agentic AI.';
+	const p1bText = 'Recognized as a top fifteen tech entrepreneur at Arizona State University.';
+	const p2Text = 'Currently, a Software Engineer at Boeing.';
+
+	const p1aDelay = $derived(end(0, h1Text.length));
+	const p1bDelay = $derived(end(p1aDelay, p1aText.length));
+	const p2Delay = $derived(end(p1bDelay, p1bText.length));
+	const restDelay = $derived(end(p2Delay, p2Text.length));
+
+	function skipIntro() {
+		skipped = true;
+		animKey++;
+		introComplete = true;
+		document.documentElement.style.overflow = '';
+		localStorage.setItem('intro-seen', '1');
+	}
 
 	$effect(() => {
 		const y = scrollY.current ?? 0;
@@ -27,30 +61,19 @@
 		}
 	});
 
-	const CHAR_DELAY = 30;
-	const DURATION = 400;
-	const blurEnd = (delay: number, len: number) => delay + (len - 1) * CHAR_DELAY + DURATION;
-
-	const h1Text = 'Jason Coawette';
-	const p1aText =
-		'Is a design-forward software engineer building tasteful interfaces for humans and agentic AI.';
-	const p1bText = 'Recognized as a top fifteen tech entrepreneur at Arizona State University.';
-	const p2Text = 'Currently, a Software Engineer at Boeing.';
-
-	const p1aDelay = blurEnd(0, h1Text.length);
-	const p1bDelay = blurEnd(p1aDelay, p1aText.length);
-	const p2Delay = blurEnd(p1bDelay, p1bText.length);
-	const restDelay = blurEnd(p2Delay, p2Text.length);
-
 	onMount(() => {
+		isReturningVisitor = localStorage.getItem('intro-seen') === '1';
+
 		// Reset to top on every load/reload to ensure full animation is visible
 		window.scrollTo({ top: 0, behavior: 'smooth' });
 		document.documentElement.style.overflow = 'hidden';
 
-		const introTime = restDelay + 3 * 100 + DURATION + DURATION;
+		const e = (d: number, n: number) => d + (n - 1) * CHAR_DELAY + DURATION;
+		const introTime = e(e(e(e(0, h1Text.length), p1aText.length), p1bText.length), p2Text.length) + 3 * 100 + DURATION + DURATION;
 		const timer = setTimeout(() => {
 			document.documentElement.style.overflow = '';
 			introComplete = true;
+			localStorage.setItem('intro-seen', '1');
 		}, introTime);
 
 		return () => {
@@ -86,7 +109,7 @@
 	>
 		<!--TOP HEADING AND PARAGRAPH-->
 		<section class="flex w-full flex-col">
-			<div class="h-9">
+			<div class="flex h-9 w-full items-center">
 				{#if !introComplete}
 					<BlurText tag="h1" text={h1Text} delay={0} />
 				{:else if !scrolled}
@@ -97,10 +120,18 @@
 						<h1>{h1Text}</h1>
 					</div>
 				{/if}
+				{#if showSkip}
+					<button class="skip-intro" onclick={skipIntro}>
+						<p>skip &rarr;</p>
+					</button>
+				{/if}
 			</div>
-			<BlurText tag="p" text={p1aText} delay={p1aDelay} class="mt-3" />
-			<BlurText tag="p" text={p1bText} delay={p1bDelay} />
-			<BlurText tag="p" text={p2Text} delay={p2Delay} class="mt-3" />
+
+			{#key animKey}
+				<BlurText tag="p" text={p1aText} delay={skipped ? 0 : p1aDelay} charDelay={cd} duration={dur} class="mt-3" />
+				<BlurText tag="p" text={p1bText} delay={skipped ? end(0, p1aText.length) : p1bDelay} charDelay={cd} duration={dur} />
+				<BlurText tag="p" text={p2Text} delay={skipped ? end(end(0, p1aText.length), p1bText.length) : p2Delay} charDelay={cd} duration={dur} class="mt-3" />
+			{/key}
 		</section>
 
 		<!--CASE STUDY SHOWCASE-->
@@ -110,33 +141,67 @@
 	"
 		>
 			<div class="flex flex-col items-start justify-start gap-2">
-				{#each cases as name, i (name)}
-					<BlurBlock delay={restDelay + i * 100}>
-						<button
-							class="glass-ghost btn-text"
-							class:active={activeIndex >= i}
-							bind:this={caseButtons[i]}
-						>
-							{name}
-						</button>
-					</BlurBlock>
-				{/each}
+				{#key animKey}
+					{#each cases as name, i (name)}
+						<BlurBlock delay={skipped ? end(end(end(0, p1aText.length), p1bText.length), p2Text.length) + i * 50 : restDelay + i * 100}>
+							<button
+								class="glass-ghost btn-text"
+								class:active={activeIndex >= i}
+								bind:this={caseButtons[i]}
+							>
+								{name}
+							</button>
+						</BlurBlock>
+					{/each}
+				{/key}
 			</div>
 
-			<BlurBlock
-				delay={restDelay + cases.length * 100}
-				class="flex w-full max-w-sm flex-col text-start sm:ml-auto"
-			>
-				<blockquote>
-					<p class="italic">
-						"Jason consistently demonstrates strong design judgment and sound architectural
-						decisions"
-					</p>
-					<p class="mt-5 text-sm! whitespace-nowrap">
-						— Dr. Ray Hsu, Founder & CEO, Ada Analytics
-					</p>
-				</blockquote>
-			</BlurBlock>
+			{#key animKey}
+				<BlurBlock
+					delay={skipped ? end(end(end(0, p1aText.length), p1bText.length), p2Text.length) + cases.length * 50 : restDelay + cases.length * 100}
+					class="flex w-full max-w-sm flex-col text-start sm:ml-auto"
+				>
+					<blockquote>
+						<p class="italic">
+							"Jason consistently demonstrates strong design judgment and sound architectural
+							decisions"
+						</p>
+						<p class="mt-5 text-sm! whitespace-nowrap">
+							— Dr. Ray Hsu, Founder & CEO, Ada Analytics
+						</p>
+					</blockquote>
+				</BlurBlock>
+			{/key}
 		</section>
 	</div>
 {/key}
+
+<style>
+	.skip-intro {
+		margin-left: auto;
+		cursor: pointer;
+		background: none;
+		border: none;
+		color: inherit;
+		padding: 0;
+		opacity: 0;
+		animation: fade-in 400ms ease forwards;
+		animation-delay: 800ms;
+	}
+
+	.skip-intro p {
+		font-size: 0.875rem;
+		opacity: 0.4;
+		transition: opacity 150ms ease;
+	}
+
+	.skip-intro:hover p {
+		opacity: 0.8;
+	}
+
+	@keyframes fade-in {
+		to {
+			opacity: 1;
+		}
+	}
+</style>
