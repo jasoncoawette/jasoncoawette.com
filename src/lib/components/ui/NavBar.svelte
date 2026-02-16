@@ -72,7 +72,7 @@
 				class:visible={scrolled}
 			>
 				<h1 class="text-lg! whitespace-nowrap">{title}</h1>
-				<p class="leading-tight! whitespace-nowrap">{subtitle}</p>
+				<p class="nav-subtitle leading-tight! whitespace-nowrap">{subtitle}</p>
 			</a>
 
 			<div class="flex w-full items-center justify-end gap-2">
@@ -153,6 +153,24 @@
 		filter: blur(0);
 		transform: translateY(0);
 		pointer-events: auto;
+	}
+
+	/* ---- Staggered subtitle animation ---- */
+	.nav-subtitle {
+		opacity: 0;
+		filter: blur(4px);
+		transform: translateY(4px);
+		transition:
+			opacity 400ms ease,
+			filter 400ms ease,
+			transform 400ms ease;
+	}
+
+	.nav-title.visible .nav-subtitle {
+		opacity: 1;
+		filter: blur(0);
+		transform: translateY(0);
+		transition-delay: 150ms;
 	}
 
 	/* ---- Background tint (complex gradient mask) ---- */

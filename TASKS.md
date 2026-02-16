@@ -18,11 +18,16 @@
 - [ ] Realignemnt of quote, Case Study Preview and buttons
 - [ ] Ensure only one highlight at a time on mobile scroll. bottom left. With Quote Below.
 - [ ] Case Study Page
+- [ ] Smooth Video Preview. 
+- [ ] Click and transiton slideshow of all images on page. Smooth Trnsitions. Like zillow. No one reads all the text.
+- [ ] Define Buiness goals, Etc.
+- [ ] Typography Hiarchy. Make it Skimmable. 
+- [ ] Highlight cards
 - [ ] Case Study Preview.
 - [ ] CMS for My view. Auth with Resend.
 - [ ] Test for edge cases. Create unit tests integration etc.
 - [ ] bottom blur on viewContaier
-- [ ] Tech stack drawer slide overlway. 
+- [ ] Tech stack Section under Case Study preview.
 - [ ] AI chat window. From where theme toggle is now With voice clone of me. Tries to convert them to reach out. With voice… like “Hey what’s up?”
 - [ ] For Voice make an API global rate limit of $50 per month on 11 labs max.
 - [ ] 3d Phone & Mac with interactions.

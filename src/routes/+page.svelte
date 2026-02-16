@@ -114,14 +114,14 @@
 			{#if !introComplete}
 				<div out:flyBlur={{ y: 8, amount: 4, duration: skipped ? 400 : 0 }}>
 					<BlurText tag="p" text={p1aText} delay={p1aDelay} class="mt-3" />
-					<BlurText tag="p" text={p2Text} delay={restDelay} class="mt-3" />
+					<BlurText tag="p" text={p2Text} delay={restDelay} class="mt-1" />
 				</div>
 			{:else}
 				<div in:flyBlur={{ y: 8, amount: 4, duration: skipped ? 400 : 0, delay: skipped ? 200 : 0 }}>
 					<p class="mt-3">{p1aText}</p>
 				</div>
 				<div in:flyBlur={{ y: 8, amount: 4, duration: skipped ? 400 : 0, delay: skipped ? 350 : 0 }}>
-					<p class="mt-3">{p2Text}</p>
+					<p class="mt-1">{p2Text}</p>
 				</div>
 			{/if}
 		</section>
