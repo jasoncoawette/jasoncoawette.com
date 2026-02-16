@@ -9,14 +9,16 @@
 	const mobile = new MediaQuery('max-width: 640px', true);
 	let threshold = $derived(mobile.current ? 60 : 120);
 	let hysteresis = $derived(mobile.current ? 30 : 40);
-	let scrolled = $state(false);
+	let _scrolled = $state(false);
+	let introComplete = $state(false);
+	let scrolled = $derived(introComplete && _scrolled);
 
 	$effect(() => {
 		const y = scrollY.current ?? 0;
-		if (!scrolled && y > threshold) {
-			scrolled = true;
-		} else if (scrolled && y < threshold - hysteresis) {
-			scrolled = false;
+		if (!_scrolled && y > threshold) {
+			_scrolled = true;
+		} else if (_scrolled && y < threshold - hysteresis) {
+			_scrolled = false;
 		}
 	});
 
@@ -26,7 +28,7 @@
 
 	const h1Text = 'Jason Coawette';
 	const p1aText =
-		'Design-forward software engineer building tasteful interfaces for humans and agentic AI.';
+		'Is a design-forward software engineer building tasteful interfaces for humans and agentic AI.';
 	const p1bText = 'Recognized as a top fifteen tech entrepreneur at Arizona State University.';
 	const p2Text = 'Currently, a Software Engineer at Boeing.';
 
@@ -36,13 +38,16 @@
 	const restDelay = blurEnd(p2Delay, p2Text.length);
 
 	onMount(() => {
+		// Reset to top on every load/reload to ensure full animation is visible
+		window.scrollTo({ top: 0, behavior: 'smooth' });
 		document.documentElement.style.overflow = 'hidden';
-		const timer = setTimeout(
-			() => {
-				document.documentElement.style.overflow = '';
-			},
-			restDelay + 3 * 100 + DURATION + DURATION
-		);
+
+		const introTime = restDelay + 3 * 100 + DURATION + DURATION;
+		const timer = setTimeout(() => {
+			document.documentElement.style.overflow = '';
+			introComplete = true;
+		}, introTime);
+
 		return () => {
 			clearTimeout(timer);
 			document.documentElement.style.overflow = '';
@@ -77,9 +82,11 @@
 		<!--TOP HEADING AND PARAGRAPH-->
 		<section class="flex w-full flex-col">
 			<div class="h-9">
-				{#if !scrolled}
-					<div out:flyBlur={{ y: 8, amount: 4, duration: 400 }}>
-						<BlurText tag="h1" text={h1Text} delay={0} />
+				{#if !introComplete}
+					<BlurText tag="h1" text={h1Text} delay={0} />
+				{:else if !scrolled}
+					<div transition:flyBlur={{ y: 8, amount: 4, duration: 400 }}>
+						<h1>{h1Text}</h1>
 					</div>
 				{/if}
 			</div>

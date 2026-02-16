@@ -1,22 +1,23 @@
 - [x] ~~Rename “get in touch” to contact change to cal.com link. For outreach. Change cal.com~~'
 - [x] ~~remove ml on author~~
 - [x] ~~bg of root html copy stratus solution for theme bg no reload.~~
-- [ ] Footer mobile padding. And switch margin to top for footer. Keeping uniform padding on bottom
+- [x] ~~Footer mobile padding. And switch margin to top for footer. Keeping uniform padding on bottom~~
+- [x] ~~Skip animation of footer. On mobile.~~
+- [x] ~~Make reload start at top of page to ensure no cutoff.~~
+- [ ] After intro. Make normal flyblur for h1
 
 ---
-- [ ] Make reload start at top of page to ensure no cutoff.
 - [ ] Only on first ever cahced page load. then offer a skip button that skips the rest of the text load (just flyin Blur)
-- [ ] After intro. Make normal flyblur for h1
 - [ ] Favicon, meta tags and preview images & twitter images
-- [ ] Ensure words don’t break with the new blur text also on mobile,  
+- [ ] Ensure words don’t wrap with the new blur text also on mobile,  
 - [ ] bottom blur on viewContaier
 - [ ] Move dark mode to bottom with no Liquid Glass. Add x, remove founder of stratus
-- [ ] Skip animation of footer. On mobile.
-- [ ] Tech stack drawer slide overlway. with List
+- [ ] Tech stack drawer slide overlway. 
 - [ ] AI chat window. From where theme toggle is now With voice clone of me. Tries to convert them to reach out. With voice… like “Hey what’s up?”
 - [ ] Line up animation title on nav w h1 disappear
-- [ ] Remove stutter on entry title nav scroll on mobile. 
-- [ ] Scroll buttons on mobile only one. Move to bottom left corner. Move quote on mobile below that. Also exclude from animation on mobile
+- [ ] Remove stutter on entry title nav scroll on mobile.
+- [ ] Realignemnt of quote, Case Study Preview and buttons
+- [ ] Ensure only one highlight at a time on mobile scroll. bottom left. With Quote Below.
 - [ ] Only LG preview of case studies
 - [ ] Case Study Page
 - [ ] Test for edge cases. Create unit tests integration etc.
@@ -24,3 +25,4 @@
 - [ ] Case Study Preview. 
 - [ ] CMS for My view. Auth. URL encoded form
 - [ ] Refactor Code. Componentilize stuff. Clean up code.
+- [ ] Serious Audit, Layout, clean code, yeah.

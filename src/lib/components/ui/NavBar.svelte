@@ -74,7 +74,7 @@
 			<div class="flex w-full items-center justify-end gap-2">
 				<ThemeToggle />
 				<a href="https://cal.com/jason-coawette/lets-connect" aria-label="Contact" class="rounded-full">
-					<button class="glass btn-text btn-scale" use:shine>Contact</button>
+					<button class="glass btn-text btn-scale" use:shine>Connect</button>
 				</a>
 			</div>
 		</div>

@@ -17,22 +17,50 @@
 		class: className = ''
 	}: Props = $props();
 
-	const chars = $derived(text.split(''));
+	const words = $derived.by(() => {
+		const result: { word: string; startIndex: number }[] = [];
+		let idx = 0;
+		for (const segment of text.split(' ')) {
+			if (idx > 0) {
+				// space between words — its own inline element so wrapping happens here
+				result.push({ word: ' ', startIndex: idx });
+				idx += 1;
+			}
+			result.push({ word: segment, startIndex: idx });
+			idx += segment.length;
+		}
+		return result;
+	});
 </script>
 
 <svelte:element this={tag} class="blur-text {className}">
-	{#each chars as char, i (i)}
-		<span
-			class="blur-char"
-			style:--delay="{delay + i * charDelay}ms"
-			style:--duration="{duration}ms">{char === ' ' ? '\u00A0' : char}</span
-		>
+	{#each words as { word, startIndex } (startIndex)}
+		{#if word === ' '}
+			<span
+				class="blur-char blur-space"
+				style:--delay="{delay + startIndex * charDelay}ms"
+				style:--duration="{duration}ms">&nbsp;</span
+			>
+		{:else}
+			<span class="blur-word"
+				>{#each word.split('') as char, j (j)}<span
+						class="blur-char"
+						style:--delay="{delay + (startIndex + j) * charDelay}ms"
+						style:--duration="{duration}ms">{char}</span
+					>{/each}</span
+			>
+		{/if}
 	{/each}
 </svelte:element>
 
 <style>
 	.blur-text {
 		overflow: hidden;
+	}
+
+	.blur-word {
+		display: inline-block;
+		white-space: nowrap;
 	}
 
 	.blur-char {

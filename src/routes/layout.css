@@ -75,7 +75,6 @@ h1 {
 }
 
 blockquote,
-span,
 p {
 	@apply text-base leading-relaxed font-normal tracking-normal text-secondary-fg;
 }

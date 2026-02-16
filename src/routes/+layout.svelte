@@ -1,14 +1,16 @@
 <script lang="ts">
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
+	import { MediaQuery } from 'svelte/reactivity';
 	import { initTheme } from '$lib';
 	import { NavBar, Footer } from '$lib';
-	import { BlurBlock } from '$lib/components/ui';
+	import { BlurBlock } from '$lib';
 	import { page } from '$app/state';
 	import { onMount } from 'svelte';
 
 	let { children } = $props();
 
+	const isMobile = new MediaQuery('max-width: 640px', true);
 	const isHome = $derived(page.url.pathname === '/');
 
 	// Chain footer after home page animations (must match +page.svelte timing)
@@ -35,10 +37,12 @@
 >
 	{@render children()}
 </main>
-{#if isHome}
-	<BlurBlock class="flex w-full items-center justify-center px-4" delay={footerDelay}>
+{#if !isMobile.current && isHome}
+	<BlurBlock class="flex w-full items-center justify-center sm:px-4" delay={footerDelay}>
 		<Footer />
 	</BlurBlock>
 {:else}
-	<Footer />
+	<div class="flex w-full items-center justify-center sm:px-4">
+		<Footer />
+	</div>
 {/if}
