@@ -11,17 +11,20 @@
 
 ---
 - [ ] Favicon, meta tags and preview images & twitter images
-- [ ] bottom blur on viewContaier
-- [ ] Tech stack drawer slide overlway. 
-- [ ] AI chat window. From where theme toggle is now With voice clone of me. Tries to convert them to reach out. With voice… like “Hey what’s up?”
 - [ ] Line up animation title on nav w h1 disappear
 - [ ] Remove stutter on entry title nav scroll on mobile.
 - [ ] Realignemnt of quote, Case Study Preview and buttons
 - [ ] Ensure only one highlight at a time on mobile scroll. bottom left. With Quote Below.
 - [ ] Case Study Page
-- [ ] Test for edge cases. Create unit tests integration etc.
-- [ ] 3d Phone & Mac with interactions.
-- [ ] Case Study Preview. 
+- [ ] Case Study Preview.
 - [ ] CMS for My view. Auth. URL encoded form
+- [ ] Test for edge cases. Create unit tests integration etc.
+
+
+## nice to haves (only if time remains)
+- [ ] bottom blur on viewContaier
+- [ ] Tech stack drawer slide overlway. 
+- [ ] AI chat window. From where theme toggle is now With voice clone of me. Tries to convert them to reach out. With voice… like “Hey what’s up?”
+- [ ] 3d Phone & Mac with interactions.
 - [ ] Refactor Code. Componentilize stuff. Clean up code.
 - [ ] Serious Audit, Layout, clean code, yeah.

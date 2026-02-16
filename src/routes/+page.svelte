@@ -16,22 +16,14 @@
 	let isReturningVisitor = $state(false);
 	let showSkip = $derived(!introComplete && isReturningVisitor);
 	let skipped = $state(false);
-	let animKey = $state(0);
 
 	$effect(() => {
 		if (scrolled) hasScrolledOnce = true;
 	});
 
-	// Normal timing
 	const CHAR_DELAY = 30;
 	const DURATION = 400;
-	// Compressed timing for skip
-	const SKIP_CD = 8;
-	const SKIP_DUR = 200;
-
-	const cd = $derived(skipped ? SKIP_CD : CHAR_DELAY);
-	const dur = $derived(skipped ? SKIP_DUR : DURATION);
-	const end = (delay: number, len: number) => delay + (len - 1) * cd + dur;
+	const blurEnd = (delay: number, len: number) => delay + (len - 1) * CHAR_DELAY + DURATION;
 
 	const h1Text = 'Jason Coawette';
 	const p1aText =
@@ -39,14 +31,13 @@
 	const p1bText = 'Recognized as a top fifteen tech entrepreneur at Arizona State University.';
 	const p2Text = 'Currently, a Software Engineer at Boeing.';
 
-	const p1aDelay = $derived(end(0, h1Text.length));
-	const p1bDelay = $derived(end(p1aDelay, p1aText.length));
-	const p2Delay = $derived(end(p1bDelay, p1bText.length));
-	const restDelay = $derived(end(p2Delay, p2Text.length));
+	const p1aDelay = blurEnd(0, h1Text.length);
+	const p1bDelay = blurEnd(p1aDelay, p1aText.length);
+	const p2Delay = blurEnd(p1bDelay, p1bText.length);
+	const restDelay = blurEnd(p2Delay, p2Text.length);
 
 	function skipIntro() {
 		skipped = true;
-		animKey++;
 		introComplete = true;
 		document.documentElement.style.overflow = '';
 		localStorage.setItem('intro-seen', '1');
@@ -68,8 +59,7 @@
 		window.scrollTo({ top: 0, behavior: 'smooth' });
 		document.documentElement.style.overflow = 'hidden';
 
-		const e = (d: number, n: number) => d + (n - 1) * CHAR_DELAY + DURATION;
-		const introTime = e(e(e(e(0, h1Text.length), p1aText.length), p1bText.length), p2Text.length) + 3 * 100 + DURATION + DURATION;
+		const introTime = restDelay + 3 * 100 + DURATION + DURATION;
 		const timer = setTimeout(() => {
 			document.documentElement.style.overflow = '';
 			introComplete = true;
@@ -127,11 +117,21 @@
 				{/if}
 			</div>
 
-			{#key animKey}
-				<BlurText tag="p" text={p1aText} delay={skipped ? 0 : p1aDelay} charDelay={cd} duration={dur} class="mt-3" />
-				<BlurText tag="p" text={p1bText} delay={skipped ? end(0, p1aText.length) : p1bDelay} charDelay={cd} duration={dur} />
-				<BlurText tag="p" text={p2Text} delay={skipped ? end(end(0, p1aText.length), p1bText.length) : p2Delay} charDelay={cd} duration={dur} class="mt-3" />
-			{/key}
+			{#if !introComplete}
+				<div out:flyBlur={{ y: 8, amount: 4, duration: skipped ? 300 : 0 }}>
+					<BlurText tag="p" text={p1aText} delay={p1aDelay} class="mt-3" />
+					<BlurText tag="p" text={p1bText} delay={p1bDelay} />
+					<BlurText tag="p" text={p2Text} delay={p2Delay} class="mt-3" />
+				</div>
+			{:else}
+				<div in:flyBlur={{ y: 8, amount: 4, duration: skipped ? 400 : 0, delay: skipped ? 200 : 0 }}>
+					<p class="mt-3">{p1aText}</p>
+					<p>{p1bText}</p>
+				</div>
+				<div in:flyBlur={{ y: 8, amount: 4, duration: skipped ? 400 : 0, delay: skipped ? 350 : 0 }}>
+					<p class="mt-3">{p2Text}</p>
+				</div>
+			{/if}
 		</section>
 
 		<!--CASE STUDY SHOWCASE-->
@@ -140,10 +140,10 @@
 		items-cetner flex h-fit w-full flex-col items-start gap-y-16 py-8 sm:flex-row sm:justify-between sm:gap-y-32 sm:py-16
 	"
 		>
-			<div class="flex flex-col items-start justify-start gap-2">
-				{#key animKey}
+			{#if !introComplete}
+				<div class="flex flex-col items-start justify-start gap-2" out:flyBlur={{ y: 8, amount: 4, duration: skipped ? 300 : 0 }}>
 					{#each cases as name, i (name)}
-						<BlurBlock delay={skipped ? end(end(end(0, p1aText.length), p1bText.length), p2Text.length) + i * 50 : restDelay + i * 100}>
+						<BlurBlock delay={restDelay + i * 100}>
 							<button
 								class="glass-ghost btn-text"
 								class:active={activeIndex >= i}
@@ -153,12 +153,10 @@
 							</button>
 						</BlurBlock>
 					{/each}
-				{/key}
-			</div>
+				</div>
 
-			{#key animKey}
 				<BlurBlock
-					delay={skipped ? end(end(end(0, p1aText.length), p1bText.length), p2Text.length) + cases.length * 50 : restDelay + cases.length * 100}
+					delay={restDelay + cases.length * 100}
 					class="flex w-full max-w-sm flex-col text-start sm:ml-auto"
 				>
 					<blockquote>
@@ -171,7 +169,37 @@
 						</p>
 					</blockquote>
 				</BlurBlock>
-			{/key}
+			{:else}
+				<div
+					class="flex flex-col items-start justify-start gap-2"
+					in:flyBlur={{ y: 8, amount: 4, duration: skipped ? 400 : 0, delay: skipped ? 500 : 0 }}
+				>
+					{#each cases as name, i (name)}
+						<button
+							class="glass-ghost btn-text"
+							class:active={activeIndex >= i}
+							bind:this={caseButtons[i]}
+						>
+							{name}
+						</button>
+					{/each}
+				</div>
+
+				<div
+					class="flex w-full max-w-sm flex-col text-start sm:ml-auto"
+					in:flyBlur={{ y: 8, amount: 4, duration: skipped ? 400 : 0, delay: skipped ? 650 : 0 }}
+				>
+					<blockquote>
+						<p class="italic">
+							"Jason consistently demonstrates strong design judgment and sound architectural
+							decisions"
+						</p>
+						<p class="mt-5 text-sm! whitespace-nowrap">
+							— Dr. Ray Hsu, Founder & CEO, Ada Analytics
+						</p>
+					</blockquote>
+				</div>
+			{/if}
 		</section>
 	</div>
 {/key}
