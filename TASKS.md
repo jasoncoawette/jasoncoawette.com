@@ -1,15 +1,15 @@
 - [x] ~~Rename “get in touch” to contact change to cal.com link. For outreach. Change cal.com~~'
 - [x] ~~remove ml on author~~
-- [ ] bg of root html copy stratus solution for theme bg no reload.
+- [x] ~~bg of root html copy stratus solution for theme bg no reload.~~
+- [ ] Footer mobile padding. And switch margin to top for footer. Keeping uniform padding on bottom
 
 ---
-- [ ] Footer mobile padding. And switch margin to top for footer. Keeping uniform padding on bottom
 - [ ] Make reload start at top of page to ensure no cutoff.
 - [ ] Only on first ever cahced page load. then offer a skip button that skips the rest of the text load (just flyin Blur)
 - [ ] After intro. Make normal flyblur for h1
 - [ ] Favicon, meta tags and preview images & twitter images
 - [ ] Ensure words don’t break with the new blur text also on mobile,  
-- [ ] bottom blur on screen
+- [ ] bottom blur on viewContaier
 - [ ] Move dark mode to bottom with no Liquid Glass. Add x, remove founder of stratus
 - [ ] Skip animation of footer. On mobile.
 - [ ] Tech stack drawer slide overlway. with List
@@ -20,6 +20,7 @@
 - [ ] Only LG preview of case studies
 - [ ] Case Study Page
 - [ ] Test for edge cases. Create unit tests integration etc.
-- [ ] 3d Phone & Mac with interactions
+- [ ] 3d Phone & Mac with interactions.
+- [ ] Case Study Preview. 
 - [ ] CMS for My view. Auth. URL encoded form
 - [ ] Refactor Code. Componentilize stuff. Clean up code.

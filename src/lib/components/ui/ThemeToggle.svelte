@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { Sun, Moon, theme, toggleTheme, shine } from '$lib';
+	import { Sun, Moon, theme, toggleTheme } from '$lib';
 </script>
 
-<button class="glass btn-icon btn-scale" use:shine aria-label="Toggle theme" onclick={toggleTheme}>
+<button class="btn-icon text-tertiary-fg hover:text-priamry-fg! transition-colors duration-400 ease-out" aria-label="Toggle theme" onclick={toggleTheme}>
 	{#if theme.current === 'light'}
-		<Moon color="var(--color-primary-fg)" />
+		<Moon size={19} />
 	{:else}
-		<Sun color="var(--color-primary-fg)" />
+		<Sun size={19} />
 	{/if}
 </button>
