@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { ChevronLeft, shine, flyBlur } from '$lib';
 	import { scrollY } from 'svelte/reactivity/window';
-	import { MediaQuery } from 'svelte/reactivity';
-	import { onMount } from 'svelte';
 
 	let {
 		title,
@@ -16,30 +14,12 @@
 		variant?: 'default' | 'cms';
 	} = $props();
 
-	const mobile = new MediaQuery('max-width: 640px', false);
-	let pageTitleBottom = $state(88);
-	let threshold = $derived(mobile.current ? pageTitleBottom : 128);
-	let hysteresis = $derived(mobile.current ? 8 : 40);
 	let scrolled = $state(false);
-
-	function measureTitle() {
-		const el = document.getElementById('page-title');
-		if (el) pageTitleBottom = el.offsetTop + el.offsetHeight;
-	}
-
-	onMount(() => {
-		measureTitle();
-		window.addEventListener('resize', measureTitle);
-		return () => window.removeEventListener('resize', measureTitle);
-	});
 
 	$effect(() => {
 		const y = scrollY.current ?? 0;
-		if (!scrolled && y > threshold) {
-			scrolled = true;
-		} else if (scrolled && y < threshold - hysteresis) {
-			scrolled = false;
-		}
+		if (!scrolled && y > 25) scrolled = true;
+		else if (scrolled && y < 15) scrolled = false;
 	});
 </script>
 

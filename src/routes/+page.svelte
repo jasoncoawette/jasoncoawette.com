@@ -10,17 +10,12 @@
 	onMount(() => { mounted = true; });
 
 	const mobile = new MediaQuery('max-width: 640px', true);
-	let threshold = $derived(mobile.current ? 60 : 120);
-	let hysteresis = $derived(mobile.current ? 30 : 40);
 	let scrolled = $state(false);
 
 	$effect(() => {
 		const y = scrollY.current ?? 0;
-		if (!scrolled && y > threshold) {
-			scrolled = true;
-		} else if (scrolled && y < threshold - hysteresis) {
-			scrolled = false;
-		}
+		if (!scrolled && y > 50) scrolled = true;
+		else if (scrolled && y < 25) scrolled = false;
 	});
 
 	let caseItems: HTMLLIElement[] = $state([]);

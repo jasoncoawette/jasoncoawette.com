@@ -10,14 +10,13 @@
 - [x] ~~Only on first ever cahced page load. then offer a skip button that skips the rest of the text load (just flyin Blur)~~
 - [x] ~~Favicon, meta tags and preview images & twitter images~~
 - [x] ~~Put a link with Boeing on the Software Engineer at [Boeing Link with Logo icon] and right up arrow.~~
-- [x] bottom blur on viewContaier
+- [x] ~~bottom blur on viewContaier~~
+- [x] ~~Animation timing for rest of components.~~
+
+---
 - [ ] Refactor Code. Componentilize stuff. Clean up code.
 - [ ] Serious Audit, Layout, clean code, yeah.
 - [ ] Remove AI Code issues, unessesary effets, updatestae direcrly, key vs ID values.
-
----
-- [ ] Animation timing for rest of components. In and out of skip. 
-- [ ] Make animations smoother after skip.
 - [ ] Line up animation title on nav w h1 disappear
 - [ ] Remove stutter on entry title nav scroll on mobile.
 - [ ] Remove tap zoom on mobile. and link previews.
