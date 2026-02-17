@@ -37,15 +37,17 @@
 	<div class="nav-bg"></div>
 
 	<div class="sticky top-0 z-30 h-fit w-full max-w-3xl px-4 pt-6 pb-4">
-		<div class="pointer-events-auto relative flex h-fit items-center justify-between gap-4">
+		<div class="pointer-events-auto relative flex h-fit items-center justify-center gap-4">
 			{#if variant === 'cms'}
+				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 				<a href="/" aria-label="Back to home" in:flyBlur={{ y: 0, amount: 4, duration: 400, opacity: 0 }}>
 					<button class="glass btn-icon btn-scale" use:shine>
 						<ChevronLeft color="var(--color-primary-fg)" />
 					</button>
 				</a>
 			{/if}
-
+			
+			<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 			<a
 				href={link}
 				class="nav-title relative flex flex-col items-start"
@@ -55,7 +57,7 @@
 				<p class="nav-subtitle leading-tight! whitespace-nowrap">{subtitle}</p>
 			</a>
 			
-			<a href="https://cal.com/jason-coawette/lets-connect" aria-label="Contact" class="rounded-full">
+			<a href="https://cal.com/jason-coawette/lets-connect" aria-label="Contact" class="ml-auto rounded-full">
 				<button class="glass-action btn-text btn-scale w-fit h-fit" use:shine>Book Time</button>
 			</a>
 		</div>

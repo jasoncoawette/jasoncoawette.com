@@ -3,8 +3,10 @@
 	import { onMount } from 'svelte';
 	import { flyBlur } from '$lib';
 	import { getCaseStudy } from '$lib/content/case-studies';
+	import { isFirstLoad } from '$lib/first-load';
 
-	let mounted = $state(false);
+	const firstLoad = isFirstLoad();
+	let mounted = $state(!firstLoad);
 	onMount(() => { mounted = true; });
 
 	let study = $derived(getCaseStudy(page.params.slug));

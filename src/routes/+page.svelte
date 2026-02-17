@@ -4,9 +4,11 @@
 	import { onMount } from 'svelte';
 	import { flyBlur } from '$lib';
 	import { caseStudies } from '$lib/content/case-studies';
+	import { isFirstLoad } from '$lib/first-load';
 	import boeingLogo from '$lib/assets/boeing-logo.avif';
 
-	let mounted = $state(false);
+	const firstLoad = isFirstLoad();
+	let mounted = $state(!firstLoad);
 	onMount(() => { mounted = true; });
 
 	const mobile = new MediaQuery('max-width: 640px', true);
@@ -60,8 +62,8 @@
 		</div>
 
 		{#if mounted}
-			<div class="flex flex-wrap sm:flex-row items-center justify-start w-fit h-fit gap-1.5" in:flyBlur={{ y: 8, amount: 4, duration: 400, delay: 200 }}>
-				<span class="text-base leading-relaxed font-normal tracking-normal text-secondary-fg">Currently, a Software Engineer at</span>
+			<div class="mt-1 flex flex-wrap sm:flex-row items-center justify-start w-fit h-fit gap-1.5" in:flyBlur={{ y: 8, amount: 4, duration: 400, delay: 200 }}>
+				<span class="text-base leading-relaxed font-normal tracking-normal text-secondary-fg">Software Engineer at</span>
 				<a href="https://boeing.com" class="flex flex-row items-center justify-center gap-1.5">
 					<img src={boeingLogo} alt="link to boeing" class="w-8 h-8 rounded-full border border-tertiary-fg/20 antialiased" />
 					<span class="
@@ -76,7 +78,7 @@
 	<!--CASE STUDY SHOWCASE-->
 	<section
 		class="
-			flex h-200 sm:h-100 w-full flex-col items-start justify-end sm:justify-center sm:flex-row gap-8 sm:gap-16
+			flex h-160 sm:h-100 w-full flex-col items-start justify-end sm:justify-center sm:flex-row gap-8 sm:gap-16
 		"
 	>
 		{#if mounted}

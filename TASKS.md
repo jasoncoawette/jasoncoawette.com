@@ -12,16 +12,16 @@
 - [x] ~~Put a link with Boeing on the Software Engineer at [Boeing Link with Logo icon] and right up arrow.~~
 - [x] ~~bottom blur on viewContaier~~
 - [x] ~~Animation timing for rest of components.~~
+- [x] ~~Remove tap zoom on mobile. and link previews.~~
+- [x] ~~Remove stutter on entry title nav scroll on mobile.~~
+- [x] ~~Line up animation title on nav w h1 disappear~~
+- [x] ~~Case Study Page~~
+- [x] ~~Ensure only one highlight at a time on mobile scroll. bottom left. With Quote Below.~~
 
 ---
 - [ ] Refactor Code. Componentilize stuff. Clean up code.
 - [ ] Serious Audit, Layout, clean code, yeah.
 - [ ] Remove AI Code issues, unessesary effets, updatestae direcrly, key vs ID values.
-- [ ] Line up animation title on nav w h1 disappear
-- [ ] Remove stutter on entry title nav scroll on mobile.
-- [ ] Remove tap zoom on mobile. and link previews.
-- [ ] Ensure only one highlight at a time on mobile scroll. bottom left. With Quote Below.
-- [ ] Case Study Page
 - [ ] Smooth Video Preview. 
 - [ ] Click and transiton slideshow of all images on page. Smooth Trnsitions. Like zillow. No one reads all the text.
 - [ ] Define Buiness goals, Etc.

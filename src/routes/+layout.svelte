@@ -76,6 +76,7 @@
 	<div class="bb-layer bb-1"></div>
 	<div class="bb-layer bb-2"></div>
 	<div class="bb-layer bb-3"></div>
+	<div class="bb-layer bb-4"></div>
 </div>
 
 <style>
@@ -141,5 +142,12 @@
 		backdrop-filter: blur(1px) saturate(1.1);
 		mask: linear-gradient(to top, transparent 50%, #000 75%, #000 100%);
 		-webkit-mask: linear-gradient(to top, transparent 50%, #000 75%, #000 100%);
+	}
+
+	.bb-4 {
+		-webkit-backdrop-filter: blur(0);
+		backdrop-filter: blur(0);
+		mask: linear-gradient(to top, transparent 75%, #000 90%, #000 100%);
+		-webkit-mask: linear-gradient(to top, transparent 75%, #000 90%, #000 100%);
 	}
 </style>
