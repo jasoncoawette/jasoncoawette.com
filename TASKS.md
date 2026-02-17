@@ -8,14 +8,19 @@
 - [X] ~~Ensure words don’t wrap with the new blur text also on mobile~~
 - [x] ~~Move dark mode to bottom with no Liquid Glass. Add x, remove founder of stratus~~
 - [x] ~~Only on first ever cahced page load. then offer a skip button that skips the rest of the text load (just flyin Blur)~~
-- [x] Favicon, meta tags and preview images & twitter images
-- [ ] Put a link with Boeing on the Software Engineer at [Boeing Link with Logo icon] and right up arrow.
+- [x] ~~Favicon, meta tags and preview images & twitter images~~
+- [x] ~~Put a link with Boeing on the Software Engineer at [Boeing Link with Logo icon] and right up arrow.~~
+- [x] bottom blur on viewContaier
+- [ ] Refactor Code. Componentilize stuff. Clean up code.
+- [ ] Serious Audit, Layout, clean code, yeah.
+- [ ] Remove AI Code issues, unessesary effets, updatestae direcrly, key vs ID values.
 
 ---
+- [ ] Animation timing for rest of components. In and out of skip. 
+- [ ] Make animations smoother after skip.
 - [ ] Line up animation title on nav w h1 disappear
 - [ ] Remove stutter on entry title nav scroll on mobile.
 - [ ] Remove tap zoom on mobile. and link previews.
-- [ ] Realignemnt of quote, Case Study Preview and buttons
 - [ ] Ensure only one highlight at a time on mobile scroll. bottom left. With Quote Below.
 - [ ] Case Study Page
 - [ ] Smooth Video Preview. 
@@ -26,12 +31,5 @@
 - [ ] Case Study Preview.
 - [ ] CMS for My view. Auth with Resend.
 - [ ] Test for edge cases. Create unit tests integration etc.
-- [ ] bottom blur on viewContaier
 - [ ] Tech stack Section under Case Study preview.
-- [ ] AI chat window. From where theme toggle is now With voice clone of me. Tries to convert them to reach out. With voice… like “Hey what’s up?”
-- [ ] For Voice make an API global rate limit of $50 per month on 11 labs max.
-- [ ] 3d Phone & Mac with interactions.
-- [ ] Refactor Code. Componentilize stuff. Clean up code.
-- [ ] Serious Audit, Layout, clean code, yeah.
-- [ ] Remove AI Code issues, unessesary effets, updatestae direcrly, key vs ID values.
 - [ ] Submit to awwwards, coolfolios and other sites.

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Chat, ChevronLeft, shine } from '$lib';
+	import { ChevronLeft, shine, flyBlur } from '$lib';
 	import { scrollY } from 'svelte/reactivity/window';
 	import { MediaQuery } from 'svelte/reactivity';
 	import { onMount } from 'svelte';
@@ -57,9 +57,9 @@
 	<div class="nav-bg"></div>
 
 	<div class="sticky top-0 z-30 h-fit w-full max-w-3xl px-4 pt-6 pb-4">
-		<div class="pointer-events-auto relative flex h-fit items-center gap-4">
+		<div class="pointer-events-auto relative flex h-fit items-center justify-between gap-4">
 			{#if variant === 'cms'}
-				<a href="https://jasoncoawette.com" aria-label="Back to home">
+				<a href="/" aria-label="Back to home" in:flyBlur={{ y: 0, amount: 4, duration: 400, opacity: 0 }}>
 					<button class="glass btn-icon btn-scale" use:shine>
 						<ChevronLeft color="var(--color-primary-fg)" />
 					</button>
@@ -74,15 +74,10 @@
 				<h1 class="text-lg! whitespace-nowrap">{title}</h1>
 				<p class="nav-subtitle leading-tight! whitespace-nowrap">{subtitle}</p>
 			</a>
-
-			<div class="flex w-full items-center justify-end gap-2">
-				<button class="glass btn-icon inline-flex" use:shine>
-					<Chat />
-				</button>
-				<a href="https://cal.com/jason-coawette/lets-connect" aria-label="Contact" class="rounded-full">
-					<button class="glass btn-text btn-scale" use:shine>Book Time</button>
-				</a>
-			</div>
+			
+			<a href="https://cal.com/jason-coawette/lets-connect" aria-label="Contact" class="rounded-full">
+				<button class="glass-action btn-text btn-scale w-fit h-fit" use:shine>Book Time</button>
+			</a>
 		</div>
 	</div>
 </nav>

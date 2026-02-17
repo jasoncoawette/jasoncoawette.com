@@ -17,11 +17,4 @@ export function shine(node: HTMLElement) {
 	node.addEventListener('mouseenter', onEnter);
 	node.addEventListener('mouseleave', onLeave);
 
-	return {
-		destroy() {
-			node.removeEventListener('mousemove', onMove);
-			node.removeEventListener('mouseenter', onEnter);
-			node.removeEventListener('mouseleave', onLeave);
-		}
-	};
 }

@@ -1,11 +1,19 @@
 <script lang="ts">
+	interface IconProps {
+		color?: string;
+		size?: number;
+		strokeWidth?: number;
+		animate?: boolean;
+		class?: string;
+	}
+
 	let {
 		color = 'currentColor',
 		size = undefined,
 		strokeWidth = 2,
 		animate = false,
 		class: className = ''
-	} = $props();
+	}: IconProps = $props();
 
 	function handleMouseEnter() {
 		if (animate) return;
@@ -38,15 +46,15 @@
 </div>
 
 <style>
-	div {
-		display: inline-block;
-	}
-	.chevrons-left-icon {
-		overflow: visible;
-		transition: all 0.2s ease-in;
-	}
+    div {
+        display: inline-block;
+    }
+    .chevrons-left-icon {
+        overflow: visible;
+        transition: all 0.2s ease-in;
+    }
 
-	.chevron-left {
-		transform: translateX(-3px);
-	}
+    .chevron-left {
+        transform: translateX(-3px);
+    }
 </style>
