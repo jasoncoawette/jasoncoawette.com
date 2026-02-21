@@ -23,11 +23,12 @@
 				var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 				var theme =
 					stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
+				var isDark = theme === 'dark';
 				document.documentElement.classList.add(theme);
-				var bg = theme === 'dark' ? 'oklch(20.5% 0 0)' : 'oklch(92.2% 0 0)';
-				document.documentElement.style.backgroundColor = bg;
+				document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+				document.documentElement.style.backgroundColor = isDark ? 'oklch(20.5% 0 0)' : 'oklch(92.2% 0 0)';
 				var meta = document.querySelector('meta[name="theme-color"]');
-				if (meta) meta.setAttribute('content', theme === 'dark' ? '#353535' : '#ebebeb');
+				if (meta) meta.setAttribute('content', isDark ? '#353535' : '#ebebeb');
 			})();
 		</script>
 		%sveltekit.head%
