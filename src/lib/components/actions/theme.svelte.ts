@@ -1,14 +1,13 @@
 export const theme = $state({ current: 'light' as 'light' | 'dark' });
 
-const themeColor = { light: '#ebebeb', dark: '#353535' };
-
-function syncMeta(t: 'light' | 'dark') {
-	document.querySelector('meta[name="theme-color"]')?.setAttribute('content', themeColor[t]);
+function syncMeta() {
+	const bg = getComputedStyle(document.documentElement).getPropertyValue('--color-primary-bg').trim();
+	document.querySelector('meta[name="theme-color"]')?.setAttribute('content', bg);
 }
 
 export function initTheme() {
 	theme.current = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
-	syncMeta(theme.current);
+	syncMeta();
 }
 
 export function toggleTheme() {
@@ -19,7 +18,7 @@ export function toggleTheme() {
 		localStorage.setItem('theme', next);
 		document.documentElement.classList.remove('light', 'dark');
 		document.documentElement.classList.add(next);
-		syncMeta(next);
+		syncMeta();
 	}
 
 	if (document.startViewTransition) {
