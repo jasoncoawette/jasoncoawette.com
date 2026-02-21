@@ -14,8 +14,8 @@
 </script>
 
 <!-- Sticky nav with progressive blur -->
-<nav class="sticky top-0 z-20 flex w-full items-center justify-center sm:pt-4">
-	<div class="pointer-events-none absolute inset-0 z-20">
+<nav class="sticky top-0 z-50 flex w-full items-center justify-center sm:pt-4">
+	<div class="pointer-events-none absolute inset-0">
 		<div class="blur-layer bl-1"></div>
 		<div class="blur-layer bl-2"></div>
 		<div class="blur-layer bl-3"></div>
@@ -26,7 +26,7 @@
 
 	<div class="nav-bg"></div>
 
-	<div class="sticky top-0 z-30 h-fit w-full max-w-3xl px-4 pt-6 pb-4">
+	<div class="sticky top-0 z-10 h-fit w-full max-w-3xl px-4 pt-6 pb-4">
 		<div class="pointer-events-auto relative flex h-fit items-center justify-start gap-4">
 			<a
 				href="/"

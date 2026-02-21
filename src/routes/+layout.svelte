@@ -60,7 +60,7 @@
 		left: 0;
 		right: 0;
 		height: 70px;
-		z-index: 20;
+		z-index: 10;
 		pointer-events: none;
 	}
 

@@ -34,18 +34,20 @@
 		<h1 bind:this={h1El} in:flyBlur class:past={pastHeading}>Jason Coawette</h1>
 	{/if}
 	{#if mounted}
-		<span in:flyBlur={{ delay: 80 }} class="gap-x-4 text-start">
-			Software engineer at <BoeingLink /> &middot; Design obsessed &middot; Subtraction first
+		<span in:flyBlur={{ delay: 80 }} class="text-start">
+			<span class="whitespace-nowrap">Software engineer at <BoeingLink /></span>
+			<span class="whitespace-nowrap">&middot; Design obsessed</span>
+			<span class="whitespace-nowrap">&middot; Subtraction first</span>
 		</span>
 	{/if}
 </section>
 
 <!-- QUOTE -->
-<section class="flex h-200 flex-col items-center justify-center py-32">
-	<div class="flex w-full flex-col items-start sm:items-center justify-center gap-2 sm:text-center">
+<section class="flex h-150 flex-col items-center justify-end py-32 sm:h-200 sm:justify-center">
+	<div class="flex w-full flex-col items-start justify-center gap-2 sm:items-center sm:text-center">
 		{#if mounted}
-			<blockquote in:flyBlur={{ delay: 160 }} class="text-lg! italic">
-				"Jason makes consistently sound decisions that scale"
+			<blockquote in:flyBlur={{ delay: 160 }} class="italic sm:text-lg!">
+				"Jason makes consistently sound decisions that scale."
 			</blockquote>
 			<p in:flyBlur={{ delay: 240 }}>&#8212; &#160; Dr. Ray Hsu</p>
 		{/if}
