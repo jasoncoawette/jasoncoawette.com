@@ -22,7 +22,7 @@
 
 	<link rel="icon" href={favicon} />
 	<link rel="apple-touch-icon" href={appleIcon} />
-	
+
 	<!-- OpenGraph Meta Tags -->
 	<meta property="og:title" content="Jason Coawette - Software Engineer" />
 	<meta

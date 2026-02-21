@@ -7,8 +7,6 @@ export function initTheme() {
 export function toggleTheme() {
 	theme.current = theme.current === 'light' ? 'dark' : 'light';
 	localStorage.setItem('theme', theme.current);
-	document.documentElement.classList.add('theme-changing');
 	document.documentElement.classList.remove('light', 'dark');
 	document.documentElement.classList.add(theme.current);
-	setTimeout(() => document.documentElement.classList.remove('theme-changing'), 350);
 }
