@@ -1,65 +1,35 @@
 <script lang="ts">
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
-	import banner from '$lib/assets/banner.svg';
-	import appleIcon from '$lib/assets/apple-icon.svg';
 	import { initTheme } from '$lib';
 	import { NavBar, Footer } from '$lib';
 	import { onMount } from 'svelte';
-	import { onNavigate } from '$app/navigation';
-	import { page } from '$app/state';
-	import { getCaseStudy } from '$lib/content/case-studies';
 
 	let { children } = $props();
-
-	// Derive NavBar props from current route
-	let isCms = $derived(page.url.pathname.startsWith('/case-studies/'));
-	let caseStudy = $derived(
-		isCms ? getCaseStudy(page.params.slug ?? '') : undefined
-	);
-	let navTitle = $derived(caseStudy?.title ?? 'Jason Coawette');
-	let navSubtitle = $derived(isCms ? undefined : 'Design Engineer');
-	let navVariant = $derived<'default' | 'cms'>(isCms ? 'cms' : 'default');
-	let navLink = $derived(page.url.pathname);
 
 	onMount(() => {
 		initTheme();
 	});
-
-	// View Transitions API for smooth page transitions
-	onNavigate((navigation) => {
-		if (!document.startViewTransition) return;
-		return new Promise((resolve) => {
-			document.startViewTransition(async () => {
-				resolve();
-				await navigation.complete;
-			});
-		});
-	});
 </script>
 
 <svelte:head>
-	<meta name="description" content="Jason Coawette is a design-obsessed software engineer building tasteful interfaces for humans and agentic AI." />
+	<meta name="description" content="Software engineer at Boeing - Design obsessed - Subtraction first" />
 
 	<link rel="icon" href={favicon} />
-	<link rel="apple-touch-icon" href={appleIcon} />
 
 	<!-- OpenGraph Meta Tags -->
 	<meta property="og:title" content="Jason Coawette - Design Engineer" />
-	<meta property="og:description" content="Jason Coawette is a design-obsessed software engineer building tasteful interfaces for humans and agentic AI." />
-	<meta property="og:image" content={banner} />
+	<meta property="og:description" content="Software engineer at Boeing - Design obsessed - Subtraction first" />
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="https://jasoncoawette.com" />
 
 	<!-- Twitter Card Meta Tags -->
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content="Jason Coawette - Design Engineer" />
-	<meta name="twitter:description" content="Jason Coawette is a design-obsessed software engineer building tasteful interfaces for humans and agentic AI." />
-	<meta name="twitter:image" content={banner} />
-
+	<meta name="twitter:description" content="Software engineer at Boeing - Design obsessed - Subtraction first" />
 </svelte:head>
 
-<NavBar title={navTitle} subtitle={navSubtitle} variant={navVariant} link={navLink} />
+<NavBar title="Jason Coawette" subtitle="Design Engineer" />
 <main
 	class="
 		flex w-full max-w-3xl flex-col items-center

@@ -7,8 +7,8 @@
 	flex h-fit w-full max-w-3xl gap-y-2 px-4 pb-16 flex-row items-center justify-between
 "
 >
-	<span class="text-sm! text-tertiary-fg">© 2026 Jason Coawette</span>
-	
+	<span class="text-sm! text-tertiary-fg! select-none!">© 2026 Jason Coawette</span>
+
 	<div class="flex flex-row gap-1 items-center justify-center w-fit">
 		<ThemeToggle />
 		<a href="https://x.com/jasoncoawette" class="inline-flex p-2 text-tertiary-fg! hover:text-primary-fg! transition-colors duration-400 ease-out">

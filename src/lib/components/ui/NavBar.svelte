@@ -1,30 +1,20 @@
 <script lang="ts">
-	import { ChevronLeft, shine, flyBlur } from '$lib';
+	import { shine } from '$lib';
 	import { scrollY } from 'svelte/reactivity/window';
 
 	let {
 		title,
-		subtitle,
-		link = 'https://jasoncoawette.com',
-		variant = 'default'
+		subtitle
 	}: {
 		title: string;
 		subtitle?: string;
-		link?: string;
-		variant?: 'default' | 'cms';
 	} = $props();
 
-	let scrolled = $state(false);
-
-	$effect(() => {
-		const y = scrollY.current ?? 0;
-		if (!scrolled && y > 25) scrolled = true;
-		else if (scrolled && y < 15) scrolled = false;
-	});
+	let scrolled = $derived((scrollY.current ?? 0) > 20);
 </script>
 
 <!-- Sticky nav with progressive blur -->
-<nav class="sticky top-0 z-20 flex w-full items-center justify-center sm:mt-12">
+<nav class="sticky top-0 z-20 flex w-full items-center justify-center sm:pt-4">
 	<div class="pointer-events-none absolute inset-0 z-20">
 		<div class="blur-layer bl-1"></div>
 		<div class="blur-layer bl-2"></div>
@@ -37,28 +27,19 @@
 	<div class="nav-bg"></div>
 
 	<div class="sticky top-0 z-30 h-fit w-full max-w-3xl px-4 pt-6 pb-4">
-		<div class="pointer-events-auto relative flex h-fit items-center justify-center gap-4">
-			{#if variant === 'cms'}
-				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
-				<a href="/" aria-label="Back to home" in:flyBlur={{ y: 0, amount: 4, duration: 400, opacity: 0 }}>
-					<button class="glass btn-icon btn-scale" use:shine>
-						<ChevronLeft color="var(--color-primary-fg)" />
-					</button>
-				</a>
-			{/if}
-			
+		<div class="pointer-events-auto relative flex h-fit items-center justify-start gap-4">
 			<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 			<a
-				href={link}
-				class="nav-title relative flex flex-col items-start"
+				href="/"
+				class="nav-title relative flex flex-col items-start justify-start"
 				class:visible={scrolled}
 			>
 				<h1 class="text-lg! whitespace-nowrap">{title}</h1>
 				<p class="nav-subtitle leading-tight! whitespace-nowrap">{subtitle}</p>
 			</a>
-			
-			<a href="https://cal.com/jason-coawette/lets-connect" aria-label="Contact" class="ml-auto rounded-full">
-				<button class="glass-action btn-text btn-scale w-fit h-fit" use:shine>Book Time</button>
+
+			<a href="https://cal.com/jason-coawette/lets-connect" aria-label="Contact" class="btn-pos ml-auto rounded-full" class:scrolled={scrolled}>
+				<button class="glass btn-text btn-scale w-fit h-fit" use:shine>Book Time</button>
 			</a>
 		</div>
 	</div>
@@ -148,6 +129,20 @@
 		filter: blur(0);
 		transform: translateY(0);
 		transition-delay: 150ms;
+	}
+
+	/* ---- Book Time button: aligns with H1 at top, slides into nav on scroll ---- */
+	@media (min-width: 640px) {
+		.btn-pos {
+			position: absolute;
+			right: 0;
+			top: 3.375rem; /* ~54px: button center ≈ H1 center on initial load */
+			transition: top 350ms ease;
+		}
+
+		.btn-pos.scrolled {
+			top: -3px; /* button center ≈ nav-title center */
+		}
 	}
 
 	/* ---- Background tint (complex gradient mask) ---- */
