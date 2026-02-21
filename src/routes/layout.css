@@ -1,8 +1,12 @@
 @import 'tailwindcss';
 
 /* ---------- Root Defaults ------------------------------ */
+/* Direct values (not variables) so iOS Safari repaints the canvas on class swap */
 html {
-	background-color: var(--color-primary-bg);
+	background-color: oklch(92.2% 0 0);
+}
+html.dark {
+	background-color: oklch(20.5% 0 0);
 }
 
 html,
