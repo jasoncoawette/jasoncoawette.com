@@ -4,7 +4,7 @@
 
 <footer
 	class="
-	flex h-fit w-full max-w-3xl flex-row items-center justify-between gap-y-2 px-4 pb-16
+	flex h-fit w-full max-w-3xl flex-row items-center justify-between gap-y-2 px-4 pb-24
 "
 >
 	<span class="text-sm! text-tertiary-fg! select-none!">© 2026 Jason Coawette</span>

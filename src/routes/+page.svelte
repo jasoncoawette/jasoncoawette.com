@@ -41,7 +41,7 @@
 </section>
 
 <!-- QUOTE -->
-<section class="flex h-150 flex-col items-center justify-end py-32 sm:h-200 sm:justify-center">
+<section class="flex flex-col h-150 items-center justify-end py-24 sm:h-180 sm:justify-center">
 	<div class="flex w-full flex-col items-start justify-center gap-1 sm:items-center sm:text-center">
 		{#if mounted}
 			<blockquote in:flyBlur={{ delay: 160 }} class="text-lg! italic">

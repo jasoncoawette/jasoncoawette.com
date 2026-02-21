@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { Sun, Moon, theme, toggleTheme } from '$lib';
+	import { Sun, Moon, theme, themeToggle } from '$lib';
 </script>
 
 <button
 	class="p-2 text-tertiary-fg transition-colors duration-400 ease-out hover:text-primary-fg!"
 	aria-label="Toggle theme"
-	onclick={toggleTheme}
+	use:themeToggle
 >
-	{#if theme.current === 'light'}
+	{#if $theme === 'light'}
 		<Moon size={19} />
 	{:else}
 		<Sun size={19} />

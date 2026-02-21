@@ -3,18 +3,15 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import appleIcon from '$lib/assets/apple-icon.png';
 	import banner from '$lib/assets/banner.png';
-	import { initTheme } from '$lib';
 	import { NavBar, Footer } from '$lib';
-	import { onMount } from 'svelte';
 
 	let { children } = $props();
 
-	onMount(() => {
-		initTheme();
-	});
 </script>
 
 <svelte:head>
+	<title>Jason Coawette - Software Engineer</title>
+	
 	<meta
 		name="description"
 		content="Software engineer at Boeing - Design obsessed - Subtraction first"
@@ -64,7 +61,7 @@
 		bottom: 0;
 		left: 0;
 		right: 0;
-		height: 70px;
+		height: 90px;
 		z-index: 10;
 		pointer-events: none;
 		-webkit-transform: translateZ(0);
