@@ -62,6 +62,8 @@
 		height: 70px;
 		z-index: 10;
 		pointer-events: none;
+		-webkit-transform: translateZ(0);
+		transform: translateZ(0);
 	}
 
 	.bb-bg {
@@ -85,11 +87,15 @@
 			rgba(0, 0, 0, 0.4) 75%,
 			transparent 100%
 		);
+		-webkit-transform: translateZ(0);
+		transform: translateZ(0);
 	}
 
 	.bb-layer {
 		position: absolute;
 		inset: 0;
+		-webkit-transform: translateZ(0);
+		transform: translateZ(0);
 	}
 
 	.bb-1 {

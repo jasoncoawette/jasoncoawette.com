@@ -35,9 +35,7 @@
 	{/if}
 	{#if mounted}
 		<span in:flyBlur={{ delay: 80 }} class="text-start">
-			<span class="whitespace-nowrap">Software engineer at <BoeingLink /></span>
-			<span class="whitespace-nowrap">&middot; Design obsessed</span>
-			<span class="whitespace-nowrap">&middot; Subtraction first</span>
+			Software engineer at <BoeingLink /> &middot; Design obsessed &middot; Subtraction first
 		</span>
 	{/if}
 </section>
@@ -46,7 +44,7 @@
 <section class="flex h-150 flex-col items-center justify-end py-32 sm:h-200 sm:justify-center">
 	<div class="flex w-full flex-col items-start justify-center gap-2 sm:items-center sm:text-center">
 		{#if mounted}
-			<blockquote in:flyBlur={{ delay: 160 }} class="italic sm:text-lg!">
+			<blockquote in:flyBlur={{ delay: 160 }} class="italic text-lg!">
 				"Jason makes consistently sound decisions that scale."
 			</blockquote>
 			<p in:flyBlur={{ delay: 240 }}>&#8212; &#160; Dr. Ray Hsu</p>

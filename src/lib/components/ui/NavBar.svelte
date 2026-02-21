@@ -54,6 +54,8 @@
 	.blur-layer {
 		position: absolute;
 		inset: 0;
+		-webkit-transform: translateZ(0);
+		transform: translateZ(0);
 	}
 
 	.bl-1 {
