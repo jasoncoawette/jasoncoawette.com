@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { shine } from '$lib';
-	import { scrollY } from 'svelte/reactivity/window';
+	import { navState } from '$lib/navigation.svelte';
 
 	let {
 		title,
@@ -10,7 +10,7 @@
 		subtitle?: string;
 	} = $props();
 
-	let scrolled = $derived((scrollY.current ?? 0) > 20);
+	let scrolled = $derived(navState.pastHeading);
 </script>
 
 <!-- Sticky nav with progressive blur -->
@@ -28,7 +28,6 @@
 
 	<div class="sticky top-0 z-30 h-fit w-full max-w-3xl px-4 pt-6 pb-4">
 		<div class="pointer-events-auto relative flex h-fit items-center justify-start gap-4">
-			<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 			<a
 				href="/"
 				class="nav-title relative flex flex-col items-start justify-start"
@@ -38,8 +37,13 @@
 				<p class="nav-subtitle leading-tight! whitespace-nowrap">{subtitle}</p>
 			</a>
 
-			<a href="https://cal.com/jason-coawette/lets-connect" aria-label="Contact" class="btn-pos ml-auto rounded-full" class:scrolled={scrolled}>
-				<button class="glass btn-text btn-scale w-fit h-fit" use:shine>Book Time</button>
+			<a
+				href="https://cal.com/jason-coawette/lets-connect"
+				aria-label="Contact"
+				class="btn-pos ml-auto rounded-full"
+				class:scrolled
+			>
+				<button class="glass btn-text btn-scale h-fit w-fit" use:shine>Book Time</button>
 			</a>
 		</div>
 	</div>
@@ -132,7 +136,7 @@
 	}
 
 	/* ---- Book Time button: aligns with H1 at top, slides into nav on scroll ---- */
-	@media (min-width: 640px) {
+	@media (min-width: 780px) {
 		.btn-pos {
 			position: absolute;
 			right: 0;

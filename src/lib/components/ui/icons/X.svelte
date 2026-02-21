@@ -1,10 +1,5 @@
 <script>
-	let {
-		color = 'currentColor',
-		size = 24,
-		animate = false,
-		class: className = ''
-	} = $props();
+	let { color = 'currentColor', size = 24, animate = false, class: className = '' } = $props();
 
 	function handleMouseEnter() {
 		if (animate) return;

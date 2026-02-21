@@ -4,18 +4,24 @@
 
 <footer
 	class="
-	flex h-fit w-full max-w-3xl gap-y-2 px-4 pb-16 flex-row items-center justify-between
+	flex h-fit w-full max-w-3xl flex-row items-center justify-between gap-y-2 px-4 pb-16
 "
 >
 	<span class="text-sm! text-tertiary-fg! select-none!">© 2026 Jason Coawette</span>
 
-	<div class="flex flex-row gap-1 items-center justify-center w-fit">
+	<div class="flex w-fit flex-row items-center justify-center gap-1">
 		<ThemeToggle />
-		<a href="https://x.com/jasoncoawette" class="inline-flex p-2 text-tertiary-fg! hover:text-primary-fg! transition-colors duration-400 ease-out">
-			<X size={16}/>
+		<a
+			href="https://x.com/jasoncoawette"
+			class="inline-flex p-2 text-tertiary-fg! transition-colors duration-400 ease-out hover:text-primary-fg!"
+		>
+			<X size={16} />
 		</a>
-		<a href="mailto:jason.coawette@gmail.com" class="inline-flex p-2 text-tertiary-fg! hover:text-primary-fg! transition-colors duration-400 ease-out">
-			<Email size={18}/>
+		<a
+			href="mailto:jason.coawette@gmail.com"
+			class="inline-flex p-2 text-tertiary-fg! transition-colors duration-400 ease-out hover:text-primary-fg!"
+		>
+			<Email size={18} />
 		</a>
 	</div>
 </footer>

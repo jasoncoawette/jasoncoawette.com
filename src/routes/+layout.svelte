@@ -13,29 +13,33 @@
 </script>
 
 <svelte:head>
-	<meta name="description" content="Software engineer at Boeing - Design obsessed - Subtraction first" />
+	<meta
+		name="description"
+		content="Software engineer at Boeing - Design obsessed - Subtraction first"
+	/>
 
 	<link rel="icon" href={favicon} />
 
 	<!-- OpenGraph Meta Tags -->
 	<meta property="og:title" content="Jason Coawette - Design Engineer" />
-	<meta property="og:description" content="Software engineer at Boeing - Design obsessed - Subtraction first" />
+	<meta
+		property="og:description"
+		content="Software engineer at Boeing - Design obsessed - Subtraction first"
+	/>
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="https://jasoncoawette.com" />
 
 	<!-- Twitter Card Meta Tags -->
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content="Jason Coawette - Design Engineer" />
-	<meta name="twitter:description" content="Software engineer at Boeing - Design obsessed - Subtraction first" />
+	<meta
+		name="twitter:description"
+		content="Software engineer at Boeing - Design obsessed - Subtraction first"
+	/>
 </svelte:head>
 
 <NavBar title="Jason Coawette" subtitle="Design Engineer" />
-<main
-	class="
-		flex w-full max-w-3xl flex-col items-center
-		justify-start px-4
-	"
->
+<main class="flex w-full max-w-3xl flex-1 flex-col items-center justify-start px-4">
 	{@render children()}
 </main>
 <Footer />
@@ -64,14 +68,9 @@
 		position: absolute;
 		inset: 0;
 		top: -16px;
-		z-index: 0;
+		z-index: 1;
 		pointer-events: none;
-		background: linear-gradient(
-			to top,
-			var(--nav-tint) 0%,
-			var(--nav-tint) 50%,
-			transparent 100%
-		);
+		background: linear-gradient(to top, var(--nav-tint) 0%, var(--nav-tint) 50%, transparent 100%);
 		mask-image: linear-gradient(
 			to top,
 			black 0%,
@@ -113,7 +112,6 @@
 		mask: linear-gradient(to top, transparent 50%, #000 75%, #000 100%);
 		-webkit-mask: linear-gradient(to top, transparent 50%, #000 75%, #000 100%);
 	}
-
 	.bb-4 {
 		-webkit-backdrop-filter: blur(0);
 		backdrop-filter: blur(0);
