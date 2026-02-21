@@ -29,22 +29,22 @@
 </script>
 
 <!-- HERO SECTION -->
-<section class="flex h-fit w-full flex-col items-start justify-start gap-2" aria-label="hero">
+<section class="flex h-fit w-full flex-col items-start justify-start gap-1" aria-label="hero">
 	{#if mounted}
 		<h1 bind:this={h1El} in:flyBlur class:past={pastHeading}>Jason Coawette</h1>
 	{/if}
 	{#if mounted}
 		<span in:flyBlur={{ delay: 80 }} class="text-start">
-			Software engineer at <BoeingLink /> &middot; Design obsessed &middot; Subtraction first
+			Software Engineer at <BoeingLink /> &middot; Design Obsessed &middot; Subtraction First
 		</span>
 	{/if}
 </section>
 
 <!-- QUOTE -->
 <section class="flex h-150 flex-col items-center justify-end py-32 sm:h-200 sm:justify-center">
-	<div class="flex w-full flex-col items-start justify-center gap-2 sm:items-center sm:text-center">
+	<div class="flex w-full flex-col items-start justify-center gap-1 sm:items-center sm:text-center">
 		{#if mounted}
-			<blockquote in:flyBlur={{ delay: 160 }} class="italic text-lg!">
+			<blockquote in:flyBlur={{ delay: 160 }} class="text-lg! italic">
 				"Jason makes consistently sound decisions that scale."
 			</blockquote>
 			<p in:flyBlur={{ delay: 240 }}>&#8212; &#160; Dr. Ray Hsu</p>

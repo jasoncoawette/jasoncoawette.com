@@ -21,7 +21,7 @@
 	<link rel="icon" href={favicon} />
 
 	<!-- OpenGraph Meta Tags -->
-	<meta property="og:title" content="Jason Coawette - Design Engineer" />
+	<meta property="og:title" content="Jason Coawette - Software Engineer" />
 	<meta
 		property="og:description"
 		content="Software engineer at Boeing - Design obsessed - Subtraction first"
@@ -31,14 +31,14 @@
 
 	<!-- Twitter Card Meta Tags -->
 	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content="Jason Coawette - Design Engineer" />
+	<meta name="twitter:title" content="Jason Coawette - Software Engineer" />
 	<meta
 		name="twitter:description"
 		content="Software engineer at Boeing - Design obsessed - Subtraction first"
 	/>
 </svelte:head>
 
-<NavBar title="Jason Coawette" subtitle="Design Engineer" />
+<NavBar title="Jason Coawette" subtitle="Software Engineer" />
 <main class="flex w-full max-w-3xl flex-1 flex-col items-center justify-start px-4">
 	{@render children()}
 </main>

@@ -1,6 +1,10 @@
 @import 'tailwindcss';
 
 /* ---------- Root Defaults ------------------------------ */
+html {
+	background-color: var(--color-primary-bg);
+}
+
 html,
 body {
 	font-family:
@@ -15,6 +19,41 @@ body {
 	-webkit-touch-callout: none;
 	touch-action: manipulation;
 }
+
+/* Register --nav-tint as a typed color so CSS can interpolate it in transitions */
+@property --nav-tint {
+	syntax: '<color>';
+	inherits: true;
+	initial-value: oklch(92.2% 0 0 / 0.7);
+}
+
+/* Smooth color transitions scoped to the theme toggle window only */
+.theme-changing,
+.theme-changing * {
+	transition:
+		background-color 300ms ease-out,
+		border-color 300ms ease-out,
+		fill 300ms ease-out,
+		stroke 300ms ease-out;
+}
+
+/* Blur layers fade back in after theme-changing is removed */
+.blur-layer,
+.bb-layer,
+.nav-bg,
+.bb-bg {
+	transition: opacity 200ms ease-in;
+}
+
+/* Instantly hide blur layers during transition so they don't sample the mid-transition bg */
+.theme-changing .blur-layer,
+.theme-changing .bb-layer,
+.theme-changing .nav-bg,
+.theme-changing .bb-bg {
+	opacity: 0 !important;
+	transition: none !important;
+}
+
 ::view-transition-old(root) {
 	animation: none;
 }
@@ -71,7 +110,7 @@ body {
 
 /* ---------- Text Styles -------------------------------- */
 h1 {
-	@apply text-3xl leading-tight font-semibold tracking-tight;
+	@apply text-3xl leading-normal font-semibold tracking-tight;
 }
 
 span,
