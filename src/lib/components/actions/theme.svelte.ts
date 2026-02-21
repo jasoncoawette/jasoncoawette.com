@@ -1,7 +1,9 @@
 export const theme = $state({ current: 'light' as 'light' | 'dark' });
 
 function syncMeta() {
-	const bg = getComputedStyle(document.documentElement).getPropertyValue('--color-primary-bg').trim();
+	const bg = getComputedStyle(document.documentElement)
+		.getPropertyValue('--color-primary-bg')
+		.trim();
 	document.querySelector('meta[name="theme-color"]')?.setAttribute('content', bg);
 }
 
