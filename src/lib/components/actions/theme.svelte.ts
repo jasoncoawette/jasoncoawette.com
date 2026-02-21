@@ -1,15 +1,16 @@
 export const theme = $state({ current: 'light' as 'light' | 'dark' });
 
 function syncMeta() {
-	const bg = getComputedStyle(document.documentElement)
-		.getPropertyValue('--color-primary-bg')
-		.trim();
-	document.querySelector('meta[name="theme-color"]')?.setAttribute('content', bg);
-	document.documentElement.style.backgroundColor = bg;
+	document.querySelector('meta[name="theme-color"]')?.setAttribute(
+		'content',
+		theme.current === 'dark' ? '#353535' : '#ebebeb'
+	);
 }
 
 export function initTheme() {
 	theme.current = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+	// Remove the inline style set by the flash-guard script so CSS takes over permanently
+	document.documentElement.style.removeProperty('background-color');
 	syncMeta();
 }
 
