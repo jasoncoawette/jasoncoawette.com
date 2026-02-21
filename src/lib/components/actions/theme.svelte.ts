@@ -5,6 +5,7 @@ function syncMeta() {
 		.getPropertyValue('--color-primary-bg')
 		.trim();
 	document.querySelector('meta[name="theme-color"]')?.setAttribute('content', bg);
+	document.documentElement.style.backgroundColor = bg;
 }
 
 export function initTheme() {
