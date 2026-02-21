@@ -1,21 +1,5 @@
 @import 'tailwindcss';
 
-/* ---------- Root Defaults ------------------------------ */
-html,
-body {
-	font-family:
-		'Inter',
-		system-ui,
-		-apple-system,
-		sans-serif;
-	scroll-behavior: smooth;
-	scrollbar-width: none;
-	-ms-overflow-style: none;
-	-webkit-overflow-scrolling: touch;
-	-webkit-touch-callout: none;
-	touch-action: manipulation;
-}
-
 /* ---------- Color Styles ------------------------------- */
 @theme {
 	--color-primary-fg: oklch(14.5% 0 0);
@@ -51,6 +35,25 @@ body {
 		--icon-size: 1.5rem;
 	}
 }
+
+/* ---------- Root Defaults ------------------------------ */
+html,
+body {
+	color: var(--color-primary-fg);
+	background-color: var(--color-primary-bg);
+	font-family:
+			'Inter',
+			system-ui,
+			-apple-system,
+			sans-serif;
+	scroll-behavior: smooth;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	-webkit-overflow-scrolling: touch;
+	-webkit-touch-callout: none;
+	touch-action: manipulation;
+}
+
 
 /* ---------- Text Styles -------------------------------- */
 h1 {
