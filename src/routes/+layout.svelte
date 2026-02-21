@@ -1,6 +1,8 @@
 <script lang="ts">
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
+	import appleIcon from '$lib/assets/apple-icon.png';
+	import banner from '$lib/assets/banner.png';
 	import { initTheme } from '$lib';
 	import { NavBar, Footer } from '$lib';
 	import { onMount } from 'svelte';
@@ -19,7 +21,8 @@
 	/>
 
 	<link rel="icon" href={favicon} />
-
+	<link rel="apple-touch-icon" href={appleIcon} />
+	
 	<!-- OpenGraph Meta Tags -->
 	<meta property="og:title" content="Jason Coawette - Software Engineer" />
 	<meta
@@ -28,6 +31,7 @@
 	/>
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="https://jasoncoawette.com" />
+	<meta property="og:image" content={banner} />
 
 	<!-- Twitter Card Meta Tags -->
 	<meta name="twitter:card" content="summary_large_image" />
@@ -36,6 +40,7 @@
 		name="twitter:description"
 		content="Software engineer at Boeing - Design obsessed - Subtraction first"
 	/>
+	<meta name="twitter:image" content={banner} />
 </svelte:head>
 
 <NavBar title="Jason Coawette" subtitle="Software Engineer" />
