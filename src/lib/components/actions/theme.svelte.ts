@@ -1,17 +1,27 @@
+import { flushSync } from 'svelte';
+
 export const theme = $state({ current: 'light' as 'light' | 'dark' });
 
-export function isDark() {
-	return theme.current === 'dark';
+const BG = { light: 'oklch(92.2% 0 0)', dark: 'oklch(20.5% 0 0)' };
+
+function applyHtmlBg(t: 'light' | 'dark') {
+	document.documentElement.style.backgroundColor = BG[t];
 }
 
 export function initTheme() {
-	// Sync state with what the blocking script in app.html already applied
 	theme.current = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+	applyHtmlBg(theme.current);
 }
 
 export function toggleTheme() {
 	const apply = () => {
-		theme.current = theme.current === 'light' ? 'dark' : 'light';
+		// flushSync forces Svelte's DOM update to complete synchronously so the
+		// view transition captures the correct new state in its screenshot.
+		// Without it the async scheduler runs after the snapshot, corrupting state
+		// on repeated toggles.
+		flushSync(() => {
+			theme.current = theme.current === 'light' ? 'dark' : 'light';
+		});
 		localStorage.setItem('theme', theme.current);
 		document.documentElement.classList.toggle('dark', theme.current === 'dark');
 	};
@@ -25,8 +35,13 @@ export function toggleTheme() {
 		const transition = document.startViewTransition(apply);
 		transition.finished.then(() => {
 			document.documentElement.classList.remove('theme-transitioning');
+			// Set html background-color as inline style after the transition completes —
+			// the canvas background doesn't repaint from a CSS variable change during a
+			// view transition, so we force it here for the iOS tab bar / safe-area chrome.
+			applyHtmlBg(theme.current);
 		});
 	} else {
 		apply();
+		applyHtmlBg(theme.current);
 	}
 }
