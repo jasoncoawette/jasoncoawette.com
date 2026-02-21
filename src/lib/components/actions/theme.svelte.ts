@@ -15,18 +15,9 @@ export function initTheme() {
 
 export function toggleTheme() {
 	const next = theme.current === 'light' ? 'dark' : 'light';
-
-	function apply() {
-		theme.current = next;
-		localStorage.setItem('theme', next);
-		document.documentElement.classList.remove('light', 'dark');
-		document.documentElement.classList.add(next);
-		syncMeta();
-	}
-
-	if (document.startViewTransition) {
-		document.startViewTransition(apply);
-	} else {
-		apply();
-	}
+	theme.current = next;
+	localStorage.setItem('theme', next);
+	document.documentElement.classList.remove('light', 'dark');
+	document.documentElement.classList.add(next);
+	syncMeta();
 }
