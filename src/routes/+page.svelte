@@ -17,9 +17,3 @@ import { flyBlur } from '$lib';
 <!-- 3D Phone/Browser with Case Studies on the Right.-->
 
 <!-- QUOTE	-->
-
-<!-- TECH STACK -->
-
-<!-- POPUP [Book a Call? (think apple store popup)] -->
-<!-- Sticky to 32px from bottom -->
-<!-- Appear on Scroll -->
