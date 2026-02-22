@@ -10,37 +10,29 @@ function getTheme(): Theme {
 	return matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
 
-function applyTheme(value: Theme) {
-	document.documentElement.classList.toggle('dark', value === 'dark');
+export const theme = writable<Theme>(getTheme());
+
+// Subscriber updates DOM + localStorage on every change
+theme.subscribe((value) => {
+	if (!browser) return;
+	document.documentElement.classList.remove('light', 'dark');
+	document.documentElement.classList.add(value);
+	document.documentElement.style.colorScheme = value === 'dark' ? 'dark' : 'light';
 	localStorage.setItem('theme', value);
-}
+});
 
-// Reactive state for the UI (icon switching etc.)
-const _theme = writable<Theme>('light');
-export const theme = { subscribe: _theme.subscribe };
-
+// Follow system preference when no explicit choice is stored
 if (browser) {
-	const initial = getTheme();
-	applyTheme(initial);
-	_theme.set(initial);
-
-	// Follow system preference when no explicit choice is stored
 	matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
 		if (!localStorage.getItem('theme')) {
-			const next: Theme = e.matches ? 'dark' : 'light';
-			applyTheme(next);
-			_theme.set(next);
+			theme.set(e.matches ? 'dark' : 'light');
 		}
 	});
 }
 
 export function themeToggle(node: HTMLElement) {
 	function onClick() {
-		_theme.update((current) => {
-			const next: Theme = current === 'dark' ? 'light' : 'dark';
-			applyTheme(next);
-			return next;
-		});
+		theme.update((current) => (current === 'dark' ? 'light' : 'dark'));
 	}
 
 	node.addEventListener('click', onClick);

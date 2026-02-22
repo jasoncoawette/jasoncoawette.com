@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="bg-primary-bg">
 	<head>
 		<title>Jason Coawette - Software Engineer</title>
 
@@ -22,6 +22,7 @@
 				const resolved =
 					stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
 				document.documentElement.classList.toggle('dark', resolved === 'dark');
+				document.documentElement.style.colorScheme = resolved === 'dark' ? 'dark' : 'light';
 			})();
 		</script>
 
@@ -29,7 +30,7 @@
 	</head>
 	<body
 		data-sveltekit-preload-data="hover"
-		class="flex min-h-screen w-full min-w-xs flex-col items-center justify-start antialiased select-none"
+		class="flex w-full min-w-xs flex-col items-center justify-start antialiased select-none"
 	>
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>
