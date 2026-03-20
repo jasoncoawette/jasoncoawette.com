@@ -45,7 +45,7 @@
 	<div class="flex w-full flex-col items-start justify-center gap-1 sm:items-center sm:text-center">
 		{#if mounted}
 			<blockquote in:flyBlur={{ delay: 160 }} class="text-lg! italic">
-				"Jason makes consistently sound decisions that scale."
+				"Jason consistently makes sound decisions that scale."
 			</blockquote>
 			<p in:flyBlur={{ delay: 240 }}>&#8212; &#160; Dr. Ray Hsu</p>
 		{/if}
