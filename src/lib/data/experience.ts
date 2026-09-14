@@ -1,10 +1,10 @@
 import boeingLogo from '$lib/assets/boeing-logo.avif';
 import stratusLogo from '$lib/assets/stratus-logo.svg';
-import postboxLogo from '$lib/assets/postbox-logo.svg';
+import postboxLogo from '$lib/assets/postbox-logo.png';
 import asuLogo from '$lib/assets/asu-logo.png';
 import watercreditIcon from '$lib/assets/watercredit-icon.svg';
 import tapwaterIcon from '$lib/assets/tapwater-icon.png';
-import postboxIcon from '$lib/assets/postbox-icon.svg';
+import appleIcon from '$lib/assets/apple-download-icon.svg';
 import asuzbtIcon from '$lib/assets/asuzbt-icon.png';
 import asunewsIcon from '$lib/assets/asunews-icon.png';
 
@@ -35,6 +35,8 @@ export type Entry = {
 	emoji?: string;
 	initials: string;
 	links?: EntryLink[];
+	/** Plural noun for the deck's collapsed face. Defaults to "projects". */
+	linkNoun?: string;
 	/** `**…**` marks emphasis, mirroring the bold runs in the CV. */
 	bullets: string[];
 };
@@ -103,7 +105,9 @@ export const entries: Entry[] = [
 				label: 'postbox.sh/download',
 				href: 'https://postbox.sh/download',
 				title: 'Download Postbox',
-				icon: postboxIcon
+				// It is a macOS download, so the platform mark says more than
+				// repeating the app's own icon next to its own entry.
+				icon: appleIcon
 			}
 		],
 		bullets: [
@@ -132,6 +136,7 @@ export const entries: Entry[] = [
 		dates: '2023',
 		emoji: '🏆',
 		initials: '★',
+		linkNoun: 'awards',
 		links: [
 			{ label: 'asuzbt.org', href: 'https://asuzbt.org', title: 'ZBT at ASU', icon: asuzbtIcon },
 			{

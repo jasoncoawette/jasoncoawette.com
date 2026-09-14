@@ -31,9 +31,7 @@
 
 		{#if entry.href}
 			<a class="tl-company" href={entry.href} target="_blank" rel="noopener noreferrer">
-				<span class="link-text">{entry.org}</span><span class="tl-ne" aria-hidden="true"
-					>&nearrow;</span
-				>
+				<span class="link-text">{entry.org}</span>
 			</a>
 		{:else}
 			<span class="tl-company">{entry.org}</span>
@@ -61,6 +59,6 @@
 	{/if}
 
 	{#if entry.links?.length}
-		<ProjectDeck links={entry.links} fallbackIcon={entry.logo} label={entry.org} />
+		<ProjectDeck links={entry.links} fallbackIcon={entry.logo} noun={entry.linkNoun} />
 	{/if}
 </li>

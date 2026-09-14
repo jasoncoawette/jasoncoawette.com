@@ -120,10 +120,28 @@ html.is-recolouring *::after {
 	animation-duration: 0s !important;
 }
 
+/*
+ * The ring takes the shape of whatever it rings: `outline` already follows
+ * `border-radius`, so a pill stays a pill and a card keeps its corners. The
+ * rule used to force 999px, which reshaped every rectangular control the
+ * moment it was tabbed to.
+ */
 :where(a, button):focus-visible {
 	outline: 1px solid var(--color-folio-blue);
-	outline-offset: 3px;
-	border-radius: 999px;
+	outline-offset: 4px;
+}
+
+/*
+ * Inline links carry no padding of their own, so the ring would sit tight
+ * against the letters. The matching negative margin means the surrounding line
+ * does not move when it appears. Padded and fixed-size controls are left
+ * alone — they already have room, and resizing them on focus would shift
+ * their own contents.
+ */
+:where(.link-text, .tl-links a, .tl-company):focus-visible {
+	padding-inline: 5px;
+	margin-inline: -5px;
+	border-radius: 7px;
 }
 
 .sr-only {
@@ -300,25 +318,75 @@ button {
 	display: flex;
 	flex-direction: column;
 	gap: 44px;
-	margin-top: 104px;
+	margin-top: 64px;
+	/* Height of the lead-in curve, and how far into the track it lands. The
+	   path measures its own width, so only these two move. */
+	--curve-h: 110px;
+	--rail-start: 45px;
 }
 
 /* ---------- The rail ----------------------------------- */
 .folio-path {
 	position: absolute;
 	left: calc(var(--rail-x) - 0.5px);
-	top: -65px;
+	top: calc(var(--rail-start) - var(--curve-h));
 	bottom: var(--rail-tail, 24px);
 	width: 1px;
 	pointer-events: none;
+}
+
+/* Sits on the column's centre line, at the head of the curve — the marker the
+   whole path hangs off. */
+.path-chevron {
+	position: absolute;
+	top: 0;
+	left: calc(var(--curve-w, 44px) - 0.5px);
+	width: 16px;
+	height: 17px;
+	transform: translate(-50%, calc(-100% - 10px));
+}
+
+.path-chevron svg {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+.cv {
+	stroke: var(--color-folio-blue);
+	stroke-width: 1.6;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	fill: none;
+	transform-box: fill-box;
+	transform-origin: center;
+	opacity: 0.25;
+	animation: chevDrop 1.9s var(--ease-out) infinite;
+}
+
+.cv-2 {
+	animation-delay: 0.16s;
+}
+
+@keyframes chevDrop {
+	0%,
+	70%,
+	100% {
+		opacity: 0.22;
+		transform: translateY(-2px);
+	}
+	35% {
+		opacity: 1;
+		transform: translateY(2px);
+	}
 }
 
 .path-curve {
 	position: absolute;
 	left: 0;
 	top: 0;
-	width: 44px;
-	height: 110px;
+	width: var(--curve-w, 44px);
+	height: var(--curve-h);
 	overflow: visible;
 }
 
@@ -344,7 +412,7 @@ button {
 .path-rail {
 	position: absolute;
 	left: 0;
-	top: 110px;
+	top: var(--curve-h);
 	bottom: 0;
 	width: 1px;
 	background-image: linear-gradient(
@@ -402,6 +470,14 @@ button {
 	stroke-linecap: round;
 	stroke-linejoin: round;
 	fill: none;
+	transition: stroke 0.4s var(--ease-out);
+}
+
+/* The line has arrived: the last arrow takes the colour it has been drawing
+   with the whole way down. */
+.path-tip.is-lit path {
+	stroke: var(--color-folio-blue);
+	filter: drop-shadow(0 0 4px rgba(var(--path-blue-rgb), 0.5));
 }
 
 /* ---------- Timeline ----------------------------------- */
@@ -532,8 +608,8 @@ button {
 	width: var(--icon-px, 28px);
 	height: var(--icon-px, 28px);
 	box-sizing: border-box;
-	border: 1px solid oklch(from var(--keyline) l c h / 0.5);
-	border-radius: calc(24% + 2px);
+	border: 0;
+	border-radius: calc(22.5% + 2px);
 	corner-shape: squircle;
 	overflow: hidden;
 	display: flex;
@@ -552,9 +628,9 @@ button {
 	user-select: none;
 }
 
-/* Artwork runs to the border; the container's corner does the shaping. The
-   app-icon sources carry their own, shallower radius, so they are pushed just
-   past the clip rather than leaving a sliver of their transparent corners. */
+/* Artwork runs edge to edge and the container's corner does the shaping. With
+   no stroke to align to, the art sits at its native scale — the overscale that
+   used to hide the sources' own, shallower radius only cost sharpness. */
 .app-icon.is-art {
 	background: none;
 }
@@ -563,7 +639,6 @@ button {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	transform: scale(1.06);
 }
 
 .tl-emoji {
@@ -598,11 +673,11 @@ a.tl-company:hover .link-text::after {
 	transform: scaleX(1);
 }
 
-.tl-ne {
-	margin-left: 4px;
-	font-size: 0.8em;
-	line-height: 1;
-	color: var(--color-secondary-fg);
+/* Scroll-driven twin of the hover sweep: the line reaching an entry's dot draws
+   the same rule under its company name, and holds it there until the ring on the
+   next dot has cleared. Same value as :hover, so the two never fight. */
+.tl-entry.is-lit a.tl-company .link-text::after {
+	transform: scaleX(1);
 }
 
 .tl-badge {
@@ -664,6 +739,16 @@ a.tl-company:hover .link-text::after {
 	opacity: 1;
 }
 
+/* The line lands its own width plus the rail offset to the left of the
+   content. On desktop it should clear the top of the first entry by exactly
+   that much, so the corner it turns reads square. Narrow screens land the rail
+   at the top of the track and already carry their own spacing. */
+@media (min-width: 861px) {
+	.folio-timeline > .tl-entry:first-child {
+		margin-top: calc(var(--rail-start) - var(--rail-x) - 1px);
+	}
+}
+
 /* ---------- Outro -------------------------------------- */
 .folio-outro {
 	position: relative;
@@ -672,6 +757,58 @@ a.tl-company:hover .link-text::after {
 	display: flex;
 	flex-direction: column;
 	gap: 4px;
+}
+
+/*
+ * Same shell as the gate's Enter, because it is the same kind of moment: the
+ * one thing to press once the page has said its piece. It sits in glass until
+ * the rail finishes, then fills with the blue it has been drawing with.
+ */
+.outro-cta {
+	align-self: flex-start;
+	margin-top: 14px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	text-decoration: none;
+	font-size: 15px;
+	font-weight: 500;
+	letter-spacing: -0.12px;
+	color: var(--color-folio-ink);
+	cursor: pointer;
+	transition:
+		background 400ms var(--ease-out),
+		border-color 400ms var(--ease-out),
+		color 400ms var(--ease-out),
+		transform 200ms ease-in-out;
+}
+
+.outro-cta:hover {
+	transform: scale(1.02);
+}
+
+.outro-cta:active {
+	transform: scale(0.95);
+}
+
+.folio-outro .outro-cta.is-lit {
+	/*
+	 * Once the button is blue the glass highlight has to be blue too: a white
+	 * bloom over a saturated fill reads as a smudge sitting on top of it,
+	 * where a paler tint of the fill itself reads as light. Derived from the
+	 * same token, so it follows the accent through a theme switch. This one
+	 * property drives the pointer shine, the inset top edge and the hover
+	 * border, since .glass draws all three from it.
+	 */
+	--color-glass-shine: oklch(from var(--color-folio-blue) 84% calc(c * 0.7) h / 0.55);
+	background: linear-gradient(
+		135deg,
+		var(--color-folio-blue) 0%,
+		oklch(from var(--color-folio-blue) calc(l - 0.07) c h) 100%
+	);
+	border-color: oklch(from var(--color-folio-blue) calc(l + 0.1) c h / 0.7);
+	color: oklch(98.5% 0 0);
 }
 
 /* ---------- Entry reveal ------------------------------- */
@@ -737,19 +874,15 @@ html.is-entering body {
 	.folio-track {
 		--rail-x: 3.5px;
 		--entry-indent: 32px;
-		margin-top: 92px;
+		/* The curve starts on the centre line here, so the chevron needs clear
+		   air between it and the intro. */
+		margin-top: 168px;
+		--curve-h: 112px;
+		--rail-start: 1px;
 	}
 
 	.tl-when {
 		display: none;
-	}
-
-	.folio-path {
-		top: -74px;
-	}
-
-	.path-rail {
-		top: 75px;
 	}
 }
 
@@ -774,6 +907,11 @@ html.is-entering body {
 		animation: none;
 	}
 
+	.cv {
+		animation: none;
+		opacity: 0.6;
+	}
+
 	@keyframes itemRevealReduced {
 		0% {
 			opacity: 0;
@@ -784,23 +922,13 @@ html.is-entering body {
 	}
 }
 
-/* Inline dates duplicate the gutter, so they only appear once the gutter is
-   gone. Kept in the DOM either way so screen readers always hear the range. */
+/* Spoken, never shown: the gutter carries the date on wide screens and narrow
+   ones drop it entirely, but screen readers still hear the full range. */
 .tl-dates {
-	font-family: var(--folio-mono);
-	font-size: 11px;
-	letter-spacing: 0.6px;
-	color: var(--color-folio-mute);
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
 	white-space: nowrap;
-}
-
-@media (min-width: 861px) {
-	.tl-dates {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		overflow: hidden;
-		clip-path: inset(50%);
-		white-space: nowrap;
-	}
 }

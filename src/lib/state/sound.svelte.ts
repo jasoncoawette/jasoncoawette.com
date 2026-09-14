@@ -5,10 +5,16 @@ const KEY = 'jc-sound';
 
 /** Chrome and the switch speak the site's own voice: dry and almost invisible. */
 const UI_PACK: PackName = 'minimal';
-const UI_CUES: CueName[] = ['start', 'select'];
+const UI_CUES: CueName[] = ['start', 'stop', 'select', 'level-up'];
 
 /** The gate's one cue: a three-note rise that runs under the ring sweep. */
 const ENTER_CUE: CueName = 'start';
+
+/** Its mirror, for anything folding back up. */
+const CLOSE_CUE: CueName = 'stop';
+
+/** Reaching the end of the rail. The only cue on the page that resolves. */
+const ARRIVE_CUE: CueName = 'level-up';
 
 /**
  * The rail's tick comes from a different pack, so it needs its own player —
@@ -124,9 +130,27 @@ export function playCue(cue: CueName) {
 	fire(ui, cue);
 }
 
+/**
+ * The gate's cue again, reused wherever something opens out of the page — the
+ * deck shuffling apart is the same gesture as the gate lifting, one step down.
+ */
+export function playOpenCue() {
+	fire(ui, ENTER_CUE);
+}
+
+/** The fall to the open cue's rise, for a thing closing back on itself. */
+export function playCloseCue() {
+	fire(ui, CLOSE_CUE);
+}
+
 /** One small acknowledgement per tick the rail crosses, either direction. */
 export function playTick() {
 	fire(trail, TICK_CUE);
+}
+
+/** Fired once as the line reaches the end of the page, with the sign-off. */
+export function playArrival() {
+	fire(ui, ARRIVE_CUE);
 }
 
 /** Called from the gate's Enter click, after primeAudio() in the same handler. */

@@ -40,27 +40,30 @@
 		display: block;
 		width: 62px;
 		height: 42px;
-		margin-bottom: 18px;
+		margin: 0 0 18px;
 		padding: 0;
 		border: 0;
 		background: none;
 		border-radius: 15px;
 		-webkit-tap-highlight-color: transparent;
 
-		/* Plastic, in two lighting states: a face angled out toward the room,
-		   and a face angled back into the housing. */
-		--face-out-near: #5a5a65;
-		--face-out-far: #34343c;
-		--face-in-near: #2e2e36;
-		--face-in-far: #17171b;
+		/* Red plastic, in two lighting states: a face angled out toward the
+		   room, and a face angled back into the housing. Both halves are the
+		   same moulding; only the lamp behind one of them ever changes. */
+		--face-out-near: #6e2a22;
+		--face-out-far: #491610;
+		--face-in-near: #34100c;
+		--face-in-far: #1d0705;
 		--rim: rgba(255, 255, 255, 0.16);
+		--throw: transform 280ms cubic-bezier(0.22, 1.32, 0.36, 1);
+		--lamp-fade: opacity 320ms var(--ease-out);
 		--shell-hi: #45454d;
 		--shell-lo: #212125;
 		--shell-edge: rgba(0, 0, 0, 0.7);
 		--shell-edge-hi: rgba(255, 255, 255, 0.16);
 		--well: #08080a;
-		--glyph-out: rgba(255, 255, 255, 0.5);
-		--glyph-in: rgba(255, 255, 255, 0.22);
+		--glyph-out: rgba(255, 226, 219, 0.55);
+		--glyph-in: rgba(255, 214, 206, 0.22);
 		--drop: rgba(0, 0, 0, 0.6);
 		--lamp-hi: #c9291b;
 		--lamp-lo: #7d1309;
@@ -69,6 +72,10 @@
 		--lamp-well: #4a0702;
 		--lamp-glow: rgba(196, 38, 24, 0.42);
 		--lamp-glyph: rgba(30, 3, 1, 0.85);
+		/* The light the lamp throws across the switch and the surface under it.
+		   Dark mode never reaches the lit state, so it is only ever declared. */
+		--lamp-bloom-rgb: 255, 74, 52;
+		--lamp-bloom-a: 0.3;
 
 		/* Every shadow on the switch is themed. Left as raw black they stayed at
 		   dark-mode strength on a light shell, which is what made the thrown
@@ -81,23 +88,26 @@
 	}
 
 	:global(html[data-theme='light']) .ps {
-		--face-out-near: #fdfcfb;
-		--face-out-far: #dbd7d3;
-		--face-in-near: #c9c5c1;
-		--face-in-far: #a09c98;
-		--rim: rgba(255, 255, 255, 0.85);
+		--face-out-near: #8d3327;
+		--face-out-far: #6b1f16;
+		--face-in-near: #5a1a12;
+		--face-in-far: #40100b;
+		--rim: rgba(255, 226, 218, 0.52);
 		--shell-hi: #f0eeec;
 		--shell-lo: #c6c3bf;
 		--shell-edge: rgba(0, 0, 0, 0.22);
 		--shell-edge-hi: rgba(255, 255, 255, 0.95);
-		--well: #9b9793;
-		--glyph-out: rgba(0, 0, 0, 0.5);
-		--glyph-in: rgba(0, 0, 0, 0.3);
+		--well: #5c4a46;
+		--glyph-out: rgba(255, 238, 233, 0.8);
+		--glyph-in: rgba(255, 228, 221, 0.45);
 		--drop: rgba(0, 0, 0, 0.24);
-		/* A lamp bleeding onto a pale shell is a smudge, not a glow. */
-		--lamp-glow: rgba(150, 20, 10, 0.18);
-		--lamp-shade: rgba(88, 8, 2, 0.45);
-		--lamp-well: #6b1008;
+		--lamp-hi: #f4442c;
+		--lamp-lo: #b41a0a;
+		--lamp-glow: rgba(226, 48, 28, 0.45);
+		--lamp-shade: rgba(120, 12, 3, 0.4);
+		--lamp-well: #8e1508;
+		--lamp-bloom-rgb: 255, 78, 54;
+		--lamp-bloom-a: 0.34;
 
 		--well-shadow: rgba(0, 0, 0, 0.26);
 		--sink-side: rgba(0, 0, 0, 0.2);
@@ -108,6 +118,28 @@
 
 	.ps:active {
 		transform: scale(0.97);
+	}
+
+	/* Lit, the lamp throws light across the whole switch and onto the surface
+	   around it. Centred over the thrown half, because that is where the lamp
+	   physically is, and falling off to nothing well before the edge. */
+	.ps::after {
+		content: '';
+		position: absolute;
+		inset: -20px;
+		border-radius: 30px;
+		pointer-events: none;
+		opacity: 0;
+		background: radial-gradient(
+			ellipse 54% 52% at 64% 50%,
+			rgba(var(--lamp-bloom-rgb), var(--lamp-bloom-a)) 0%,
+			rgba(var(--lamp-bloom-rgb), 0) 76%
+		);
+		transition: var(--lamp-fade);
+	}
+
+	.ps.is-on::after {
+		opacity: 1;
 	}
 
 	.ps:focus-visible {
@@ -150,7 +182,7 @@
 			inset 0 1px 0 0 var(--shell-edge-hi),
 			inset 0 0 0 1px var(--shell-edge),
 			0 6px 16px -5px var(--drop),
-			0 0 24px -4px var(--lamp-glow);
+			0 0 26px -6px var(--lamp-glow);
 	}
 
 	/* ---- Rocker ---------------------------------------- */
@@ -160,7 +192,7 @@
 		transform-style: preserve-3d;
 		/* Negative = "O" tacked in. Positive = "I" tacked in. */
 		transform: rotateY(-19deg);
-		transition: transform 280ms cubic-bezier(0.22, 1.32, 0.36, 1);
+		transition: var(--throw);
 	}
 
 	.ps.is-on .ps-rocker {
@@ -277,12 +309,23 @@
 		color: var(--lamp-glyph);
 	}
 
+	:global(html.is-recolouring) .ps-rocker {
+		transition: var(--throw) !important;
+	}
+
+	:global(html.is-recolouring) .ps::after {
+		transition: var(--lamp-fade) !important;
+	}
+
 	@media (prefers-reduced-motion: reduce) {
 		.ps-rocker,
 		.ps-face,
 		.ps-body,
-		.ps-glyph {
-			transition-duration: 1ms;
+		.ps-glyph,
+		.ps::after,
+		:global(html.is-recolouring) .ps-rocker,
+		:global(html.is-recolouring) .ps::after {
+			transition-duration: 1ms !important;
 		}
 	}
 </style>

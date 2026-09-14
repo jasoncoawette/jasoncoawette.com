@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Gate, PowerSwitch, RailPath, TimelineEntry } from '$lib';
+	import { Gate, PowerSwitch, RailPath, TimelineEntry, shine } from '$lib';
 	import { entries } from '$lib/data/experience';
 	import { gateState } from '$lib/state/gate.svelte';
 	import { navState } from '$lib/navigation.svelte';
@@ -65,8 +65,17 @@
 		</ul>
 
 		<div class="folio-outro reveal" style="--reveal-delay: 540ms">
-			<blockquote>"Jason consistently makes sound decisions that scale."</blockquote>
-			<p>&#8212; &#160; Dr. Ray Hsu</p>
+			<p class="outro-thanks font-medium">Thanks for reading :)</p>
+
+			<!-- Fills blue on the frame the rail finishes, so getting to the end
+			     of the page is what hands over the way to get in touch. -->
+			<a
+				class="outro-cta glass btn-text btn-scale"
+				href="mailto:jason.coawette@gmail.com"
+				use:shine
+			>
+				Reach out if you need anything
+			</a>
 		</div>
 	</div>
 </div>
@@ -104,14 +113,15 @@
 		margin-top: 8px;
 	}
 
-	.folio-outro blockquote {
-		font-size: 17px !important;
-		font-style: italic;
-		color: var(--color-folio-body) !important;
-	}
-
-	.folio-outro p {
-		font-size: 14px !important;
-		color: var(--color-folio-mute) !important;
+	/* Set in the same type as .tl-role — the "Recognition along the way" line —
+	   so the page signs off in the voice it ran in. The bare `p` rule is
+	   unlayered, so it beats Tailwind's utilities no matter the specificity;
+	   every value it touches has to be claimed back here. */
+	.outro-thanks {
+		font-size: 16px !important;
+		font-weight: 500 !important;
+		line-height: 1.6 !important;
+		letter-spacing: -0.12px !important;
+		color: var(--color-secondary-fg) !important;
 	}
 </style>

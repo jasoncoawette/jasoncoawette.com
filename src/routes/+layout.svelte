@@ -1,6 +1,7 @@
 <script lang="ts">
 	import './layout.css';
-	import favicon from '$lib/assets/favicon.svg';
+	import favicon32 from '$lib/assets/favicon-32.png';
+	import favicon96 from '$lib/assets/favicon-96.png';
 	import appleIcon from '$lib/assets/apple-icon.png';
 	import banner from '$lib/assets/banner.png';
 	import { NavBar, Footer } from '$lib';
@@ -16,7 +17,8 @@
 		content="Forward Deployed Engineer - Stratus Ventures and Postbox - previously Boeing"
 	/>
 
-	<link rel="icon" href={favicon} />
+	<link rel="icon" type="image/png" sizes="32x32" href={favicon32} />
+	<link rel="icon" type="image/png" sizes="96x96" href={favicon96} />
 	<link rel="apple-touch-icon" href={appleIcon} />
 
 	<!-- OpenGraph Meta Tags -->

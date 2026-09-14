@@ -26,14 +26,14 @@
 			</button>
 			<a
 				href="https://x.com/jasoncoawette"
-				class="inline-flex p-2 text-tertiary-fg! transition-colors duration-400 ease-out hover:text-primary-fg!"
+				class="inline-flex rounded-lg p-2 text-tertiary-fg! transition-colors duration-400 ease-out hover:text-primary-fg!"
 				aria-label="X"
 			>
 				<X size={16} />
 			</a>
 			<a
 				href="mailto:jason.coawette@gmail.com"
-				class="inline-flex p-2 text-tertiary-fg! transition-colors duration-400 ease-out hover:text-primary-fg!"
+				class="inline-flex rounded-lg p-2 text-tertiary-fg! transition-colors duration-400 ease-out hover:text-primary-fg!"
 				aria-label="Email"
 			>
 				<Email size={18} />
@@ -47,6 +47,8 @@
 	.foot-icon {
 		display: inline-flex;
 		padding: 8px;
+		/* Invisible at rest; it is the shape the focus ring traces. */
+		border-radius: 8px;
 		border: 0;
 		background: none;
 		color: var(--color-tertiary-fg);

@@ -31,7 +31,7 @@
 		>
 			<a
 				href="/"
-				class="nav-title relative flex flex-col items-start justify-start"
+				class="nav-title relative flex flex-col items-start justify-start rounded-lg"
 				class:visible={scrolled}
 			>
 				<h1 class="text-lg! whitespace-nowrap">{title}</h1>
