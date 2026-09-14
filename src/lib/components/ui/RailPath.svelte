@@ -1,0 +1,149 @@
+<script lang="ts">
+	import { gateState } from '$lib/state/gate.svelte';
+
+	/**
+	 * The scroll-drawn rail. Must be rendered as a direct child of `.folio-track`:
+	 * it takes that parent as its measuring frame, reads every `.tl-dot` inside it,
+	 * and terminates on the centre of a `.folio-outro` sibling if one exists.
+	 *
+	 * An S-curve drops in from the upper right and lands on a dotted vertical
+	 * rail. Scroll progress fills the curve first, then the rail; each dot lights
+	 * as the drawn head reaches it.
+	 */
+	const CURVE = 'M43 0V7.3A39 39 0 0 1 21.71 42.05A39 39 0 0 0 0.5 76.75V110';
+	const CURVE_H = 110;
+	/** Per-frame approach rate. Low enough that the line trails the scroll. */
+	const LERP = 0.12;
+	const SETTLED = 2e-4;
+	const REVEALS = ['itemReveal', 'itemRevealReduced'];
+
+	const clamp = (n: number) => Math.min(1, Math.max(0, n));
+
+	function drawOnScroll(node: HTMLElement) {
+		// While the gate is up the document is locked to a single viewport, so
+		// every measurement below would be wrong. Re-runs when it lifts.
+		if (!gateState.entered) return;
+
+		const lit = node.querySelector<SVGPathElement>('.pc-lit');
+		const rail = node.querySelector<HTMLElement>('.path-rail');
+		const track = node.parentElement;
+		if (!lit || !rail || !track) return;
+
+		const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+		let curveLen = 118;
+		let railH = 0;
+		let pathTop = 0;
+		let dots: { el: Element; y: number; on: boolean }[] = [];
+		let current = 0;
+		let target = 0;
+		let frame = 0;
+
+		const scrollProgress = () => {
+			const max = document.documentElement.scrollHeight - window.innerHeight;
+			return max <= 0 ? 1 : clamp(window.scrollY / max);
+		};
+
+		const measure = () => {
+			curveLen = lit.getTotalLength() || 118;
+			railH = rail.offsetHeight;
+			pathTop = node.getBoundingClientRect().top + window.scrollY;
+
+			dots = [...track.querySelectorAll('.tl-dot')].map((el) => {
+				const box = el.getBoundingClientRect();
+				return {
+					el,
+					y: box.top + box.height / 2 + window.scrollY,
+					on: el.classList.contains('is-lit')
+				};
+			});
+
+			// End the rail on the outro's centre line rather than at the raw
+			// bottom of the track, so it reads as arriving somewhere.
+			const outro = track.querySelector('.folio-outro');
+			if (outro) {
+				const box = outro.getBoundingClientRect();
+				const bounds = track.getBoundingClientRect();
+				node.style.setProperty(
+					'--rail-tail',
+					`${(bounds.bottom - (box.top + box.height / 2)).toFixed(1)}px`
+				);
+			}
+		};
+
+		const tick = () => {
+			frame = 0;
+
+			const delta = target - current;
+			current = Math.abs(delta) < SETTLED ? target : current + delta * LERP;
+
+			// The curve and the rail are one continuous run of line: spend the
+			// curve's own arc length first, then whatever is left on the rail.
+			const travel = current * (curveLen + railH);
+			const curveP = clamp(travel / curveLen);
+			const railP = railH ? clamp((travel - curveLen) / railH) : 0;
+
+			node.style.setProperty('--curve-p', curveP.toFixed(4));
+			node.style.setProperty('--rail-p', railP.toFixed(4));
+
+			const tipY = pathTop + CURVE_H * curveP + railH * railP;
+			for (const dot of dots) {
+				const on = dot.y <= tipY;
+				if (on !== dot.on) {
+					dot.on = on;
+					dot.el.classList.toggle('is-lit', on);
+				}
+			}
+
+			if (current !== target) frame = requestAnimationFrame(tick);
+		};
+
+		const onScroll = () => {
+			target = scrollProgress();
+			if (still) current = target;
+			if (!frame) frame = requestAnimationFrame(tick);
+		};
+
+		const onResize = () => {
+			measure();
+			onScroll();
+		};
+
+		const onReveal = (event: AnimationEvent) => {
+			// Entries settling changes the document height under us.
+			if (REVEALS.includes(event.animationName)) onResize();
+		};
+
+		measure();
+		current = scrollProgress();
+		onScroll();
+
+		window.addEventListener('scroll', onScroll, { passive: true });
+		window.addEventListener('resize', onResize);
+		track.addEventListener('animationend', onReveal);
+		const observer = new ResizeObserver(onResize);
+		observer.observe(document.body);
+
+		return () => {
+			window.removeEventListener('scroll', onScroll);
+			window.removeEventListener('resize', onResize);
+			track.removeEventListener('animationend', onReveal);
+			observer.disconnect();
+			if (frame) cancelAnimationFrame(frame);
+		};
+	}
+</script>
+
+<div class="folio-path" aria-hidden="true" {@attach drawOnScroll}>
+	<svg class="path-curve" viewBox="0 0 44 110" fill="none">
+		<path class="pc-dots" d={CURVE} />
+		<!-- pathLength="1" normalises the arc, so one custom property draws it. -->
+		<path class="pc-lit" d={CURVE} pathLength="1" />
+	</svg>
+
+	<div class="path-rail"><div class="path-lit"></div></div>
+
+	<svg class="path-tip" viewBox="0 0 7 3" fill="none">
+		<path d="M0.5 0.5 3.5 2.5 6.5 0.5" />
+	</svg>
+</div>

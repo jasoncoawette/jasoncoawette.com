@@ -37,13 +37,8 @@
 				<p class="nav-subtitle leading-tight! whitespace-nowrap">{subtitle}</p>
 			</a>
 
-			<a
-				href="https://cal.com/jason-coawette/lets-connect"
-				aria-label="Contact"
-				class="btn-pos ml-auto rounded-full"
-				class:scrolled
-			>
-				<button class="glass btn-text btn-scale h-fit w-fit" use:shine>Book Time</button>
+			<a href="mailto:jason.coawette@gmail.com" aria-label="Contact" class="ml-auto rounded-full">
+				<button class="glass btn-text btn-scale h-fit w-fit" use:shine>Contact</button>
 			</a>
 		</div>
 	</div>
@@ -135,20 +130,6 @@
 		filter: blur(0);
 		transform: translateY(0);
 		transition-delay: 150ms;
-	}
-
-	/* ---- Book Time button: aligns with H1 at top, slides into nav on scroll ---- */
-	@media (min-width: 780px) {
-		.btn-pos {
-			position: absolute;
-			right: 0;
-			top: 3.375rem; /* ~54px: button center ≈ H1 center on initial load */
-			transition: top 350ms ease;
-		}
-
-		.btn-pos.scrolled {
-			top: -3px; /* button center ≈ nav-title center */
-		}
 	}
 
 	/* ---- Background tint (complex gradient mask) ---- */

@@ -3,28 +3,27 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import appleIcon from '$lib/assets/apple-icon.png';
 	import banner from '$lib/assets/banner.png';
-	import { NavBar, Footer } from '$lib';
+	import { NavBar, Footer, SidebarIdent, PowerSwitch } from '$lib';
 
 	let { children } = $props();
-
 </script>
 
 <svelte:head>
-	<title>Jason Coawette - Software Engineer</title>
-	
+	<title>Jason Coawette - Forward Deployed Engineer</title>
+
 	<meta
 		name="description"
-		content="Software engineer at Boeing - Design obsessed - Subtraction first"
+		content="Forward Deployed Engineer - Stratus Ventures and Postbox - previously Boeing"
 	/>
 
 	<link rel="icon" href={favicon} />
 	<link rel="apple-touch-icon" href={appleIcon} />
 
 	<!-- OpenGraph Meta Tags -->
-	<meta property="og:title" content="Jason Coawette - Software Engineer" />
+	<meta property="og:title" content="Jason Coawette - Forward Deployed Engineer" />
 	<meta
 		property="og:description"
-		content="Software engineer at Boeing - Design obsessed - Subtraction first"
+		content="Forward Deployed Engineer - Stratus Ventures and Postbox - previously Boeing"
 	/>
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="https://jasoncoawette.com" />
@@ -32,19 +31,21 @@
 
 	<!-- Twitter Card Meta Tags -->
 	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content="Jason Coawette - Software Engineer" />
+	<meta name="twitter:title" content="Jason Coawette - Forward Deployed Engineer" />
 	<meta
 		name="twitter:description"
-		content="Software engineer at Boeing - Design obsessed - Subtraction first"
+		content="Forward Deployed Engineer - Stratus Ventures and Postbox - previously Boeing"
 	/>
 	<meta name="twitter:image" content={banner} />
 </svelte:head>
 
-<NavBar title="Jason Coawette" subtitle="Software Engineer" />
+<NavBar title="Jason Coawette" subtitle="Forward Deployed Engineer" />
+<SidebarIdent />
 <main class="flex w-full max-w-3xl flex-1 flex-col items-center justify-start px-4">
 	{@render children()}
 </main>
 <Footer />
+<PowerSwitch />
 
 <!-- Bottom progressive blur -->
 <div class="bottom-blur" aria-hidden="true">

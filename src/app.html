@@ -1,7 +1,7 @@
 <!doctype html>
-<html lang="en" class="bg-primary-bg">
+<html lang="en" class="is-covered">
 	<head>
-		<title>Jason Coawette - Software Engineer</title>
+		<title>Jason Coawette - Forward Deployed Engineer</title>
 
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -14,17 +14,39 @@
 			rel="stylesheet"
 		/>
 
-		<!-- THEME INIT -->
+		<!-- THEME INIT
+		     Dark is the default and needs no marker; only an explicit switch to
+		     light writes an attribute. Runs blocking in <head> so the first paint
+		     is already the right colour — the gate paints the ground too, and a
+		     light-to-dark snap would be the first thing anyone sees. -->
 		<script>
 			(() => {
-				const stored = localStorage.getItem('theme');
-				const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
-				const resolved =
-					stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
-				document.documentElement.classList.toggle('dark', resolved === 'dark');
-				document.documentElement.style.colorScheme = resolved === 'dark' ? 'dark' : 'light';
+				try {
+					if (localStorage.getItem('jc-theme') === 'light') {
+						document.documentElement.dataset.theme = 'light';
+						document.documentElement.style.colorScheme = 'light';
+					} else {
+						document.documentElement.style.colorScheme = 'dark';
+					}
+				} catch (e) {
+					document.documentElement.style.colorScheme = 'dark';
+				}
 			})();
 		</script>
+
+		<!-- Without JS the gate can never be dismissed, so drop it and release
+		     the scroll lock that is set on <html> above. -->
+		<noscript>
+			<style>
+				html.is-covered,
+				html.is-covered body {
+					overflow: auto !important;
+				}
+				.gate {
+					display: none !important;
+				}
+			</style>
+		</noscript>
 
 		%sveltekit.head%
 	</head>

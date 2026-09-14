@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      uisfx:
+        specifier: ^0.4.0
+        version: 0.4.0
     devDependencies:
       '@eslint/compat':
         specifier: ^2.0.2
@@ -1375,6 +1379,9 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
+  uisfx@0.4.0:
+    resolution: {integrity: sha512-W891N75C09cvpaNeChP+7BiP0Yp5VSbrIcRgZvzpFUT3o/2DxZqROmUcX50oxeyMnY4Hqxu4jEfjndVUpmheEQ==}
+
   undici-types@6.21.0:
     resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
 
@@ -2574,6 +2581,8 @@ snapshots:
       - supports-color
 
   typescript@5.9.3: {}
+
+  uisfx@0.4.0: {}
 
   undici-types@6.21.0: {}
 
