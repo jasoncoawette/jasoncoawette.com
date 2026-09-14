@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { shine } from '$lib';
 	import { navState } from '$lib/navigation.svelte';
 
 	let {
@@ -26,8 +25,10 @@
 
 	<div class="nav-bg"></div>
 
-	<div class="sticky top-0 z-10 h-fit w-full max-w-3xl px-4 pt-6 pb-4">
-		<div class="pointer-events-auto relative flex h-fit items-center justify-start gap-4">
+	<div class="sticky top-0 z-10 h-fit w-full max-w-3xl px-4 pt-6 pb-8">
+		<div
+			class="folio-line pointer-events-auto relative flex h-fit items-center justify-start gap-4"
+		>
 			<a
 				href="/"
 				class="nav-title relative flex flex-col items-start justify-start"
@@ -35,10 +36,6 @@
 			>
 				<h1 class="text-lg! whitespace-nowrap">{title}</h1>
 				<p class="nav-subtitle leading-tight! whitespace-nowrap">{subtitle}</p>
-			</a>
-
-			<a href="mailto:jason.coawette@gmail.com" aria-label="Contact" class="ml-auto rounded-full">
-				<button class="glass btn-text btn-scale h-fit w-fit" use:shine>Contact</button>
 			</a>
 		</div>
 	</div>
@@ -54,36 +51,36 @@
 	}
 
 	.bl-1 {
-		-webkit-backdrop-filter: blur(4px) saturate(1.8);
-		backdrop-filter: blur(4px) saturate(1.8);
+		-webkit-backdrop-filter: blur(16px) saturate(1.8);
+		backdrop-filter: blur(16px) saturate(1.8);
 		mask: linear-gradient(to bottom, #000 0%, #000 20%, transparent 35%);
 		-webkit-mask: linear-gradient(to bottom, #000 0%, #000 20%, transparent 35%);
 	}
 
 	.bl-2 {
-		-webkit-backdrop-filter: blur(4px) saturate(1.6);
-		backdrop-filter: blur(4px) saturate(1.6);
+		-webkit-backdrop-filter: blur(13px) saturate(1.6);
+		backdrop-filter: blur(13px) saturate(1.6);
 		mask: linear-gradient(to bottom, transparent 10%, #000 25%, #000 40%, transparent 55%);
 		-webkit-mask: linear-gradient(to bottom, transparent 10%, #000 25%, #000 40%, transparent 55%);
 	}
 
 	.bl-3 {
-		-webkit-backdrop-filter: blur(4px) saturate(1.4);
-		backdrop-filter: blur(4px) saturate(1.4);
+		-webkit-backdrop-filter: blur(10px) saturate(1.4);
+		backdrop-filter: blur(10px) saturate(1.4);
 		mask: linear-gradient(to bottom, transparent 25%, #000 40%, #000 55%, transparent 70%);
 		-webkit-mask: linear-gradient(to bottom, transparent 25%, #000 40%, #000 55%, transparent 70%);
 	}
 
 	.bl-4 {
-		-webkit-backdrop-filter: blur(2px) saturate(1.2);
-		backdrop-filter: blur(2px) saturate(1.2);
+		-webkit-backdrop-filter: blur(6px) saturate(1.25);
+		backdrop-filter: blur(6px) saturate(1.25);
 		mask: linear-gradient(to bottom, transparent 40%, #000 55%, #000 70%, transparent 85%);
 		-webkit-mask: linear-gradient(to bottom, transparent 40%, #000 55%, #000 70%, transparent 85%);
 	}
 
 	.bl-5 {
-		-webkit-backdrop-filter: blur(1px) saturate(1.1);
-		backdrop-filter: blur(1px) saturate(1.1);
+		-webkit-backdrop-filter: blur(2.5px) saturate(1.1);
+		backdrop-filter: blur(2.5px) saturate(1.1);
 		mask: linear-gradient(to bottom, transparent 55%, #000 70%, #000 85%, transparent 100%);
 		-webkit-mask: linear-gradient(to bottom, transparent 55%, #000 70%, #000 85%, transparent 100%);
 	}

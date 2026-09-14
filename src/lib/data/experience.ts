@@ -1,6 +1,22 @@
 import boeingLogo from '$lib/assets/boeing-logo.avif';
+import stratusLogo from '$lib/assets/stratus-logo.svg';
+import postboxLogo from '$lib/assets/postbox-logo.svg';
+import asuLogo from '$lib/assets/asu-logo.png';
+import watercreditIcon from '$lib/assets/watercredit-icon.svg';
+import tapwaterIcon from '$lib/assets/tapwater-icon.png';
+import postboxIcon from '$lib/assets/postbox-icon.svg';
+import asuzbtIcon from '$lib/assets/asuzbt-icon.png';
+import asunewsIcon from '$lib/assets/asunews-icon.png';
 
-export type EntryLink = { label: string; href: string };
+export type EntryLink = {
+	/** The bare host, kept as the card's second line. */
+	label: string;
+	href: string;
+	/** Card heading. Falls back to the label when a site has no real name. */
+	title?: string;
+	/** The site's own favicon. Entries without one borrow the org's logo. */
+	icon?: string;
+};
 
 export type Entry = {
 	id: string;
@@ -15,6 +31,8 @@ export type Entry = {
 	dates: string;
 	badge?: string;
 	logo?: string;
+	/** Stands in for a logo when the mark is a glyph rather than artwork. */
+	emoji?: string;
 	initials: string;
 	links?: EntryLink[];
 	/** `**…**` marks emphasis, mirroring the bold runs in the CV. */
@@ -31,16 +49,26 @@ export const entries: Entry[] = [
 		year: '2026',
 		dates: 'Aug 2026 – Present',
 		badge: 'Now',
+		logo: stratusLogo,
 		initials: 'SV',
 		links: [
-			{ label: 'stratus.engineer', href: 'https://stratus.engineer' },
-			{ label: 'watercreditregistry.org', href: 'https://watercreditregistry.org' },
-			{ label: 'captivaverde.com/tapwater', href: 'https://captivaverde.com/tapwater' }
+			{
+				label: 'watercreditregistry.org',
+				href: 'https://watercreditregistry.org',
+				title: 'Water Credit Registry',
+				icon: watercreditIcon
+			},
+			{
+				label: 'captivaverde.com/tapwater',
+				href: 'https://captivaverde.com/tapwater',
+				title: 'Tap Water Database',
+				icon: tapwaterIcon
+			}
 		],
 		bullets: [
-			'Built and deployed Water Credit Registry, which turns **physical flow-meter readings into water credits** and tracks each credit.',
-			'Worked with the customer and engineers at hardware vendors Madison Air and ifm to choose an IO-Link device and send meter data to a Go service on AWS. **Built a simulated meter** to test before the equipment arrived.',
-			'Combined government water and health data from PDFs, spreadsheets, and old databases, then built an interactive U.S. map by county and ZIP code.'
+			'Built and shipped Water Credit Registry. It turns **flow-meter readings into water credits** and tracks every one.',
+			'Chose an IO-Link device with the customer and the vendors, Madison Air and ifm. Meter data flows to a Go service on AWS. **Built a simulated meter** to test before the hardware arrived.',
+			'Pulled government water and health data out of PDFs, spreadsheets, and old databases. Built an interactive U.S. map by county and ZIP code.'
 		]
 	},
 	{
@@ -54,9 +82,9 @@ export const entries: Entry[] = [
 		logo: boeingLogo,
 		initials: 'B',
 		bullets: [
-			'Built C++ and Node.js software that connected factory tools to Boeing systems used in **Apache, V-22, Chinook, 787, and Patriot** production.',
-			'Handled different telemetry protocols, organized the data into structured JSON, and sent commands to tools while receiving their readings over private networks.',
-			'Built recovery for Wi-Fi drops so factory jobs could resume without losing state. Worked across Boeing sites with engineers, technicians, mechanics, and equipment users to understand each tool and fix problems.'
+			'Wrote C++ and Node.js software that links factory tools to Boeing systems. Those tools build the **Apache, V-22, Chinook, 787, and Patriot**.',
+			'Turned mixed telemetry protocols into clean JSON. Sent commands to each tool and read its results over private networks.',
+			'Built recovery for Wi-Fi drops so jobs resume without losing state. Worked across Boeing sites with the engineers, technicians, and mechanics who run the tools.'
 		]
 	},
 	{
@@ -68,12 +96,20 @@ export const entries: Entry[] = [
 		year: '2026',
 		dates: 'Aug 2026 – Present',
 		badge: 'Now',
+		logo: postboxLogo,
 		initials: 'P',
-		links: [{ label: 'postbox.sh', href: 'https://postbox.sh' }],
+		links: [
+			{
+				label: 'postbox.sh/download',
+				href: 'https://postbox.sh/download',
+				title: 'Download Postbox',
+				icon: postboxIcon
+			}
+		],
 		bullets: [
-			'Designed and shipped a macOS app for publishing to several social platforms without opening social media; grew it to **23 users organically**.',
-			'Built the Swift app, sign-in, distribution, website, and a Rust web server that handles the platform APIs. Used motion, sound, and SVG interactions to keep the experience simple.',
-			'Navigated API review with major social platforms by reading their policies, working with reviewers, and adapting the product without making it harder to use.'
+			'Designed and shipped a macOS app that posts to several social platforms without opening any of them. **23 users so far**, every one organic.',
+			'Built all of it. The Swift app, sign-in, distribution, website, and a Rust server for the platform APIs. Motion, sound, and SVG keep it simple.',
+			'Passed API review with the major platforms. Read their policies, worked with reviewers, and changed the product without making it harder to use.'
 		]
 	},
 	{
@@ -84,6 +120,7 @@ export const entries: Entry[] = [
 		month: 'Dec',
 		year: '2025',
 		dates: 'Dec 2025',
+		logo: asuLogo,
 		initials: 'ASU',
 		bullets: []
 	},
@@ -93,8 +130,17 @@ export const entries: Entry[] = [
 		role: 'Recognition along the way',
 		year: '2023',
 		dates: '2023',
+		emoji: '🏆',
 		initials: '★',
-		links: [{ label: 'asuzbt.org', href: 'https://asuzbt.org' }],
+		links: [
+			{ label: 'asuzbt.org', href: 'https://asuzbt.org', title: 'ZBT at ASU', icon: asuzbtIcon },
+			{
+				label: 'news.engineering.asu.edu',
+				href: 'https://news.engineering.asu.edu/2023/03/student-entrepreneurs-pitch-innovative-ideas/',
+				title: 'Student entrepreneurs pitch innovative ideas',
+				icon: asunewsIcon
+			}
+		],
 		bullets: [
 			'**Top 4, ASU Venture Devils.**',
 			'**Tech Devils invitee**, featured by ASU in 2023.',

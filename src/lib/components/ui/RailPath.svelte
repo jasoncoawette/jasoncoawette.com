@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { gateState } from '$lib/state/gate.svelte';
+	import { playTick } from '$lib/state/sound.svelte';
 
 	/**
 	 * The scroll-drawn rail. Must be rendered as a direct child of `.folio-track`:
@@ -8,13 +9,18 @@
 	 *
 	 * An S-curve drops in from the upper right and lands on a dotted vertical
 	 * rail. Scroll progress fills the curve first, then the rail; each dot lights
-	 * as the drawn head reaches it.
+	 * as the drawn head reaches it, and sounds as it does — on the way back up
+	 * too, since the line crossing a tick is the same event in reverse.
 	 */
 	const CURVE = 'M43 0V7.3A39 39 0 0 1 21.71 42.05A39 39 0 0 0 0.5 76.75V110';
 	const CURVE_H = 110;
 	/** Per-frame approach rate. Low enough that the line trails the scroll. */
 	const LERP = 0.12;
 	const SETTLED = 2e-4;
+	/** Floor between cues, so a flung scroll reads as a run and not a burst. */
+	const CUE_GAP = 90;
+	/** Deepest that run is allowed to get before the rest are dropped. */
+	const CUE_QUEUE = 4;
 	const REVEALS = ['itemReveal', 'itemRevealReduced'];
 
 	const clamp = (n: number) => Math.min(1, Math.max(0, n));
@@ -34,10 +40,20 @@
 		let curveLen = 118;
 		let railH = 0;
 		let pathTop = 0;
-		let dots: { el: Element; y: number; on: boolean }[] = [];
+		let marks: { el: Element; y: number; on: boolean }[] = [];
 		let current = 0;
 		let target = 0;
 		let frame = 0;
+		// The first frame only records where the head already is — landing
+		// mid-page on a reload should not replay the whole path at once.
+		let armed = false;
+		let lastCue = 0;
+		// Crossings that have not sounded yet. The line catches up faster than
+		// the ear wants, so they are spent one at a time rather than dropped.
+		let queued = 0;
+
+		// Survives the re-measures that resizes and entry reveals trigger.
+		const passed = new WeakSet<Element>();
 
 		const scrollProgress = () => {
 			const max = document.documentElement.scrollHeight - window.innerHeight;
@@ -49,12 +65,12 @@
 			railH = rail.offsetHeight;
 			pathTop = node.getBoundingClientRect().top + window.scrollY;
 
-			dots = [...track.querySelectorAll('.tl-dot')].map((el) => {
+			marks = [...track.querySelectorAll('.tl-dot')].map((el) => {
 				const box = el.getBoundingClientRect();
 				return {
 					el,
 					y: box.top + box.height / 2 + window.scrollY,
-					on: el.classList.contains('is-lit')
+					on: passed.has(el)
 				};
 			});
 
@@ -87,15 +103,30 @@
 			node.style.setProperty('--rail-p', railP.toFixed(4));
 
 			const tipY = pathTop + CURVE_H * curveP + railH * railP;
-			for (const dot of dots) {
-				const on = dot.y <= tipY;
-				if (on !== dot.on) {
-					dot.on = on;
-					dot.el.classList.toggle('is-lit', on);
-				}
+			for (const mark of marks) {
+				const on = mark.y <= tipY;
+				if (on === mark.on) continue;
+				mark.on = on;
+				mark.el.classList.toggle('is-lit', on);
+				if (on) passed.add(mark.el);
+				else passed.delete(mark.el);
+				// Lighting and unlighting both count: scrolling back up crosses
+				// the same ticks, and they should answer either way.
+				if (armed && queued < CUE_QUEUE) queued++;
 			}
 
-			if (current !== target) frame = requestAnimationFrame(tick);
+			const now = performance.now();
+			if (queued > 0 && now - lastCue >= CUE_GAP) {
+				lastCue = now;
+				queued--;
+				playTick();
+			}
+
+			armed = true;
+
+			// Keep the frames coming while the run is still draining, even once
+			// the line itself has settled.
+			if (current !== target || queued > 0) frame = requestAnimationFrame(tick);
 		};
 
 		const onScroll = () => {

@@ -3,14 +3,17 @@
 	import { playCue } from '$lib/state/sound.svelte';
 
 	/**
-	 * A power-strip rocker. Light is ON: the "I" half is pressed in and lit,
-	 * exactly the way the switch on a surge protector reads.
+	 * A power-strip rocker, lying on its side above the name. Light is ON: the
+	 * "I" half is tacked in and lit, exactly the way the switch on a surge
+	 * protector reads.
 	 */
 	const on = $derived(themeState.value === 'light');
 
 	function flip() {
-		const next = toggleTheme();
-		playCue(next === 'light' ? 'toggle-on' : 'toggle-off');
+		toggleTheme();
+		// One cue in both directions: the rocker is the thing that says which
+		// way it went, and a pair of cues only argued with it.
+		playCue('select');
 	}
 </script>
 
@@ -25,26 +28,23 @@
 >
 	<span class="ps-body">
 		<span class="ps-rocker">
-			<span class="ps-face ps-up"><span class="ps-glyph">I</span></span>
-			<span class="ps-face ps-down"><span class="ps-glyph">O</span></span>
+			<span class="ps-face ps-off"><span class="ps-glyph">O</span></span>
+			<span class="ps-face ps-on"><span class="ps-glyph">I</span></span>
 		</span>
 	</span>
 </button>
 
 <style>
 	.ps {
-		position: fixed;
-		right: 20px;
-		bottom: 20px;
-		/* Above the layout's bottom progressive blur, which sits at 10. */
-		z-index: 40;
+		position: relative;
 		display: block;
-		width: 48px;
-		height: 72px;
+		width: 62px;
+		height: 42px;
+		margin-bottom: 18px;
 		padding: 0;
 		border: 0;
 		background: none;
-		border-radius: 11px;
+		border-radius: 15px;
 		-webkit-tap-highlight-color: transparent;
 
 		/* Plastic, in two lighting states: a face angled out toward the room,
@@ -62,9 +62,22 @@
 		--glyph-out: rgba(255, 255, 255, 0.5);
 		--glyph-in: rgba(255, 255, 255, 0.22);
 		--drop: rgba(0, 0, 0, 0.6);
-		--lamp-hi: #ffa855;
-		--lamp-lo: #c4500d;
-		--lamp-glow: rgba(255, 150, 70, 0.55);
+		--lamp-hi: #c9291b;
+		--lamp-lo: #7d1309;
+		--lamp-shade: rgba(74, 6, 2, 0.62);
+		/* The recess the lit half drops into is part of the lamp, not the shell. */
+		--lamp-well: #4a0702;
+		--lamp-glow: rgba(196, 38, 24, 0.42);
+		--lamp-glyph: rgba(30, 3, 1, 0.85);
+
+		/* Every shadow on the switch is themed. Left as raw black they stayed at
+		   dark-mode strength on a light shell, which is what made the thrown
+		   rocker read as a hole instead of a bevel. */
+		--well-shadow: rgba(0, 0, 0, 0.7);
+		--sink-side: rgba(0, 0, 0, 0.5);
+		--sink-top: rgba(0, 0, 0, 0.35);
+		--seam: rgba(0, 0, 0, 0.8);
+		--seam-glow: rgba(0, 0, 0, 0.62);
 	}
 
 	:global(html[data-theme='light']) .ps {
@@ -81,6 +94,16 @@
 		--glyph-out: rgba(0, 0, 0, 0.5);
 		--glyph-in: rgba(0, 0, 0, 0.3);
 		--drop: rgba(0, 0, 0, 0.24);
+		/* A lamp bleeding onto a pale shell is a smudge, not a glow. */
+		--lamp-glow: rgba(150, 20, 10, 0.18);
+		--lamp-shade: rgba(88, 8, 2, 0.45);
+		--lamp-well: #6b1008;
+
+		--well-shadow: rgba(0, 0, 0, 0.26);
+		--sink-side: rgba(0, 0, 0, 0.2);
+		--sink-top: rgba(0, 0, 0, 0.1);
+		--seam: rgba(0, 0, 0, 0.32);
+		--seam-glow: rgba(0, 0, 0, 0.3);
 	}
 
 	.ps:active {
@@ -90,21 +113,22 @@
 	.ps:focus-visible {
 		outline: 1px solid var(--color-folio-blue);
 		outline-offset: 4px;
-		border-radius: 12px;
+		border-radius: 16px;
 	}
 
 	/* ---- Housing --------------------------------------- */
 	.ps-body {
 		position: absolute;
 		inset: 0;
-		border-radius: 10px;
+		border-radius: 14px;
+		overflow: hidden;
 		background: linear-gradient(162deg, var(--shell-hi), var(--shell-lo));
 		box-shadow:
 			inset 0 1px 0 0 var(--shell-edge-hi),
 			inset 0 0 0 1px var(--shell-edge),
 			0 6px 16px -5px var(--drop);
 		/* Short focal length: the whole point is visible foreshortening. */
-		perspective: 130px;
+		perspective: 150px;
 		perspective-origin: 50% 50%;
 		transition: box-shadow 300ms var(--ease-out);
 	}
@@ -114,10 +138,10 @@
 		content: '';
 		position: absolute;
 		inset: 5px;
-		border-radius: 6px;
+		border-radius: 10px;
 		background: var(--well);
 		box-shadow:
-			inset 0 3px 6px rgba(0, 0, 0, 0.7),
+			inset 0 3px 6px var(--well-shadow),
 			inset 0 -1px 0 var(--shell-edge-hi);
 	}
 
@@ -134,25 +158,25 @@
 		position: absolute;
 		inset: 6px;
 		transform-style: preserve-3d;
-		/* Negative = "O" pressed in. Positive = "I" pressed in. */
-		transform: rotateX(-16deg);
+		/* Negative = "O" tacked in. Positive = "I" tacked in. */
+		transform: rotateY(-19deg);
 		transition: transform 280ms cubic-bezier(0.22, 1.32, 0.36, 1);
 	}
 
 	.ps.is-on .ps-rocker {
-		transform: rotateX(16deg);
+		transform: rotateY(19deg);
 	}
 
 	/*
-	 * Two planes hinged in the middle rather than one flat pill. The tent angle
-	 * is large enough that the sunk half visibly shortens under perspective —
-	 * that foreshortening, not the shading, is what sells the see-saw.
+	 * Two planes hinged down the middle rather than one flat pill. The tent
+	 * angle is large enough that the sunk half visibly narrows under
+	 * perspective — that foreshortening, not the shading, sells the see-saw.
 	 */
 	.ps-face {
 		position: absolute;
-		left: 0;
-		right: 0;
-		height: 50%;
+		top: 0;
+		bottom: 0;
+		width: 50%;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -161,24 +185,27 @@
 			box-shadow 300ms var(--ease-out);
 	}
 
-	.ps-up {
-		top: 0;
-		transform-origin: bottom center;
-		transform: rotateX(20deg);
-		border-radius: 4px 4px 0 0;
-		background: linear-gradient(to top, var(--face-out-far), var(--face-out-near));
-		box-shadow: inset 0 1px 0 var(--rim);
-	}
-
-	.ps-down {
-		bottom: 0;
-		transform-origin: top center;
-		transform: rotateX(-20deg);
-		border-radius: 0 0 4px 4px;
+	/* At rest the "O" half is the sunk one: the housing shades it, and the
+	   hinge wall to its right casts back across it. */
+	.ps-off {
+		left: 0;
+		transform-origin: right center;
+		transform: rotateY(-20deg);
+		border-radius: 8px 0 0 8px;
 		background: linear-gradient(to bottom, var(--face-in-near), var(--face-in-far));
 		box-shadow:
-			inset 0 2px 5px rgba(0, 0, 0, 0.5),
-			inset 0 -1px 0 var(--rim);
+			inset -3px 0 6px var(--sink-side),
+			inset 0 1px 0 var(--sink-top);
+	}
+
+	/* Raised: lit from above, rim along the top edge. */
+	.ps-on {
+		right: 0;
+		transform-origin: left center;
+		transform: rotateY(20deg);
+		border-radius: 0 8px 8px 0;
+		background: linear-gradient(to bottom, var(--face-out-near), var(--face-out-far));
+		box-shadow: inset 0 1px 0 var(--rim);
 	}
 
 	/* The fold. A single dark seam at the hinge does more for the illusion
@@ -186,26 +213,45 @@
 	.ps-rocker::after {
 		content: '';
 		position: absolute;
-		left: 0;
-		right: 0;
-		top: 50%;
-		height: 1px;
-		margin-top: -0.5px;
-		background: rgba(0, 0, 0, 0.8);
-		box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.55);
+		top: 0;
+		bottom: 0;
+		left: 50%;
+		width: 1px;
+		margin-left: -0.5px;
+		background: var(--seam);
+		box-shadow: -5px 0 9px -1px var(--seam-glow);
 		pointer-events: none;
 	}
 
 	/* ---- Thrown: "I" sunk and lit ---------------------- */
-	.ps.is-on .ps-up {
-		/* Darker at the far (top) edge, brighter toward the hinge. */
-		background: linear-gradient(to bottom, var(--lamp-lo), var(--lamp-hi));
-		box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.5);
+	/* The wire is made on this side, so the lit half is the one lying flat in
+	   the well and the dead half stands proud of it. */
+	.ps.is-on .ps-body::before {
+		background: linear-gradient(
+			to right,
+			var(--well) 0%,
+			var(--well) 44%,
+			var(--lamp-well) 56%,
+			var(--lamp-well) 100%
+		);
 	}
 
-	.ps.is-on .ps-down {
-		background: linear-gradient(to bottom, var(--face-out-far), var(--face-out-near));
-		box-shadow: inset 0 -1px 0 var(--rim);
+	.ps.is-on .ps-rocker::after {
+		box-shadow: 5px 0 9px -1px var(--seam-glow);
+	}
+
+	.ps.is-on .ps-on {
+		/* Darker at the far (right) edge, brighter toward the hinge, and sat
+		   under the overhang of the half that is now standing up. */
+		background: linear-gradient(to left, var(--lamp-lo), var(--lamp-hi));
+		box-shadow:
+			inset 5px 0 10px var(--lamp-shade),
+			inset 0 2px 5px var(--lamp-shade);
+	}
+
+	.ps.is-on .ps-off {
+		background: linear-gradient(to bottom, var(--face-out-near), var(--face-out-far));
+		box-shadow: inset 0 1px 0 var(--rim);
 	}
 
 	/* ---- Glyphs ---------------------------------------- */
@@ -219,16 +265,16 @@
 		user-select: none;
 	}
 
-	.ps-up .ps-glyph {
+	.ps-on .ps-glyph {
 		color: var(--glyph-out);
 	}
 
-	.ps.is-on .ps-up .ps-glyph {
-		color: rgba(60, 20, 0, 0.75);
+	.ps.is-on .ps-off .ps-glyph {
+		color: var(--glyph-out);
 	}
 
-	.ps.is-on .ps-down .ps-glyph {
-		color: var(--glyph-out);
+	.ps.is-on .ps-on .ps-glyph {
+		color: var(--lamp-glyph);
 	}
 
 	@media (prefers-reduced-motion: reduce) {

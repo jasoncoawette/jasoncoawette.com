@@ -15,7 +15,7 @@
 	--color-glass-shine: oklch(100% 0 0 / 0.12);
 	--color-shadow: oklch(0 0 0 / 0.3);
 	--color-accent: oklch(62.3% 0.214 259.815);
-	--nav-tint: oklch(20.5% 0 0 / 0.65);
+	--nav-tint: oklch(20.5% 0 0 / 0.78);
 
 	/* folio / rail / timeline */
 	--color-folio-ink: oklch(95% 0 0);
@@ -28,6 +28,8 @@
 	--tl-dot-fill: oklch(46% 0 0);
 	--keyline: oklch(100% 0 0 / 0.14);
 	--surface-chip: oklch(28% 0 0);
+	--surface-card-rest: oklch(23.5% 0 0);
+	--surface-card-hover: oklch(17% 0 0);
 }
 
 html[data-theme='light'] {
@@ -40,7 +42,7 @@ html[data-theme='light'] {
 	--color-glass-shine: oklch(100% 0 0 / 0.72);
 	--color-shadow: oklch(0 0 0 / 0.08);
 	--color-accent: oklch(54.6% 0.245 262.881);
-	--nav-tint: oklch(92.2% 0 0 / 0.7);
+	--nav-tint: oklch(92.2% 0 0 / 0.82);
 
 	--color-folio-ink: oklch(15% 0 0);
 	--color-folio-body: oklch(42% 0 0);
@@ -52,6 +54,8 @@ html[data-theme='light'] {
 	--tl-dot-fill: oklch(73% 0 0);
 	--keyline: oklch(100% 0 0 / 0.9);
 	--surface-chip: oklch(95% 0 0);
+	--surface-card-rest: oklch(95.5% 0 0);
+	--surface-card-hover: oklch(87.5% 0 0);
 }
 
 /* ---------- Size / Motion Styles ----------------------- */
@@ -62,6 +66,19 @@ html[data-theme='light'] {
 	--folio-col-w: 560px;
 	--rail-x: -21.5px;
 	--entry-indent: 0px;
+	/* Narrow viewports need every pixel of the centred column, so the slide
+	   only happens once there is room for it. */
+	--folio-shift: 0px;
+}
+
+/* The ident hangs off the left edge; sliding the column toward it is what
+   keeps the page from reading as two unrelated halves. Everything on the
+   column moves by the same amount, so the nav, the content and the footer
+   still share one left edge. */
+@media (min-width: 1280px) {
+	:root {
+		--folio-shift: 70px;
+	}
 }
 @media (max-width: 768px) {
 	:root {
@@ -196,6 +213,11 @@ button {
 .link-text {
 	position: relative;
 	display: inline-block;
+	/* `span, blockquote, p` below would otherwise repaint whatever this wraps
+	   at 16px/400/secondary. The rule is the only thing this class adds. */
+	font: inherit;
+	color: inherit;
+	letter-spacing: inherit;
 	text-decoration: none;
 }
 
@@ -207,20 +229,32 @@ button {
 	height: 1px;
 	width: 100%;
 	background-color: currentColor;
-	transform: scaleX(1);
-	transform-origin: right;
+	transform: scaleX(0);
+	transform-origin: left;
 	transition: transform 400ms ease-out;
 }
 
 .link-text:hover::after {
-	transform: scaleX(0);
+	transform: scaleX(1);
 }
 
 /* ======================================================= */
 /* FOLIO — column, rail, timeline                          */
 /* ======================================================= */
 
+/* The nav, the content and the footer all sit on this column, so every left
+   edge down the page lines up. Each lives inside the same max-w-3xl/px-4 box,
+   which is what the percentage resolves against. */
+.folio-line {
+	position: relative;
+	left: calc(var(--folio-shift) * -1);
+	width: min(100% - 1.5rem, var(--folio-col-w));
+	margin: 0 auto;
+}
+
 .folio-col {
+	position: relative;
+	left: calc(var(--folio-shift) * -1);
 	width: min(100% - 1.5rem, var(--folio-col-w));
 	margin: 0 auto;
 	padding: 0 0 180px;
@@ -230,10 +264,17 @@ button {
 	gap: 48px;
 }
 
+/* Flush with the column's left edge, so the heading, the timeline entries and
+   the outro all hang off one line. */
 .folio-intro {
 	width: 100%;
+	align-self: flex-start;
+	text-align: left;
+}
+
+.folio-intro .folio-lede,
+.folio-intro .folio-sub {
 	max-width: 480px;
-	text-align: center;
 }
 
 .folio-lede {
@@ -479,19 +520,30 @@ button {
 	margin-bottom: 6px;
 }
 
-.tl-logo {
-	width: 28px;
-	height: 28px;
+/*
+ * App-icon geometry: a square with a continuous corner curve rather than the
+ * arc `border-radius` alone gives. Chrome reads `corner-shape` and renders the
+ * true squircle; everywhere else the same radius falls back to a plain round
+ * corner, which is the right shape one order of smoothness down. Shared by the
+ * timeline marks and the favicons on the project cards, so every icon on the
+ * page carries the same rim and lift.
+ */
+.app-icon {
+	width: var(--icon-px, 28px);
+	height: var(--icon-px, 28px);
 	box-sizing: border-box;
-	border: 0.5px solid var(--keyline);
-	border-radius: 50%;
+	border: 1px solid oklch(from var(--keyline) l c h / 0.5);
+	border-radius: calc(24% + 2px);
+	corner-shape: squircle;
 	overflow: hidden;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-shrink: 0;
-	box-shadow: 0 0 0 1px var(--keyline);
 	background: var(--surface-chip);
+	box-shadow:
+		0 1px 2px -1px var(--color-shadow),
+		0 3px 8px -4px var(--color-shadow);
 	font-family: var(--folio-mono);
 	font-size: 10px;
 	font-weight: 600;
@@ -500,10 +552,23 @@ button {
 	user-select: none;
 }
 
-.tl-logo img {
+/* Artwork runs to the border; the container's corner does the shaping. The
+   app-icon sources carry their own, shallower radius, so they are pushed just
+   past the clip rather than leaving a sliver of their transparent corners. */
+.app-icon.is-art {
+	background: none;
+}
+
+.app-icon img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
+	transform: scale(1.06);
+}
+
+.tl-emoji {
+	font-size: 14px;
+	line-height: 1;
 }
 
 .tl-head {
@@ -522,9 +587,22 @@ button {
 	text-decoration: none;
 }
 
-a.tl-company:hover {
-	text-decoration: underline;
-	text-underline-offset: 3px;
+/* The company name runs at line-height 1.8, so the rule borrowed from
+   .link-text needs pulling back up under the text. */
+.tl-company .link-text::after {
+	bottom: 0.32em;
+}
+
+/* The whole link is the target, arrow included — not just the words. */
+a.tl-company:hover .link-text::after {
+	transform: scaleX(1);
+}
+
+.tl-ne {
+	margin-left: 4px;
+	font-size: 0.8em;
+	line-height: 1;
+	color: var(--color-secondary-fg);
 }
 
 .tl-badge {
@@ -545,27 +623,6 @@ a.tl-company:hover {
 	letter-spacing: -0.12px;
 	color: var(--color-folio-body);
 	margin-bottom: 2px;
-}
-
-.tl-links {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 0 10px;
-	margin-bottom: 8px;
-	font-family: var(--folio-mono);
-	font-size: 11px;
-	line-height: 1.8;
-	letter-spacing: 0.6px;
-}
-
-.tl-links a {
-	color: var(--color-folio-mute);
-	text-decoration: none;
-	transition: color 0.2s var(--ease-out);
-}
-
-.tl-links a:hover {
-	color: var(--color-folio-blue);
 }
 
 .tl-desc {
@@ -651,15 +708,28 @@ a.tl-company:hover {
 	place-items: center;
 	padding: 0 6vw;
 	background: var(--color-primary-bg);
-	transition:
-		opacity 0.32s ease,
-		filter 0.32s ease;
 }
 
-.gate.is-leaving {
-	opacity: 0;
-	filter: blur(6px);
-	pointer-events: none;
+/* The page's half of the hand-off: it settles forward out of a slight
+   over-scale while the portal is still opening above it, so the two read as
+   one continuous move toward the viewer rather than a fade after a zoom.
+   The gate's ground is the page's ground, so nothing flashes underneath. */
+html.is-entering .folio {
+	animation: enterDolly 780ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* The over-scale is a few pixels wider than the column; clipped, not scrolled. */
+html.is-entering body {
+	overflow-x: clip;
+}
+
+@keyframes enterDolly {
+	from {
+		transform: scale(1.04);
+	}
+	to {
+		transform: scale(1);
+	}
 }
 
 /* ---------- Narrow layout ------------------------------ */
@@ -694,6 +764,10 @@ a.tl-company:hover {
 	.tl-entry {
 		animation: itemRevealReduced 0.2s var(--ease-out) both;
 		animation-delay: 0ms;
+	}
+
+	html.is-entering .folio {
+		animation: none;
 	}
 
 	.tl-dot.is-lit::before {

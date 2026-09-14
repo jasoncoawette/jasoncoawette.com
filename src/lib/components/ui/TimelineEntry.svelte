@@ -1,14 +1,17 @@
 <script lang="ts">
 	import { segments, type Entry } from '$lib/data/experience';
+	import ProjectDeck from './ProjectDeck.svelte';
 
 	let { entry, index }: { entry: Entry; index: number } = $props();
 </script>
 
 <li class="tl-entry" style="--reveal-delay: {120 + index * 70}ms">
 	<div class="tl-logos">
-		<span class="tl-logo" aria-hidden="true">
+		<span class="app-icon" class:is-art={!!entry.logo} aria-hidden="true">
 			{#if entry.logo}
 				<img src={entry.logo} alt="" />
+			{:else if entry.emoji}
+				<span class="tl-emoji">{entry.emoji}</span>
 			{:else}
 				{entry.initials}
 			{/if}
@@ -28,7 +31,9 @@
 
 		{#if entry.href}
 			<a class="tl-company" href={entry.href} target="_blank" rel="noopener noreferrer">
-				{entry.org}
+				<span class="link-text">{entry.org}</span><span class="tl-ne" aria-hidden="true"
+					>&nearrow;</span
+				>
 			</a>
 		{:else}
 			<span class="tl-company">{entry.org}</span>
@@ -43,14 +48,6 @@
 		<span class="tl-dates">· {entry.dates}</span>
 	</p>
 
-	{#if entry.links?.length}
-		<div class="tl-links">
-			{#each entry.links as link (link.href)}
-				<a href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</a>
-			{/each}
-		</div>
-	{/if}
-
 	{#if entry.bullets.length}
 		<ul class="tl-desc">
 			{#each entry.bullets as bullet (bullet)}
@@ -61,5 +58,9 @@
 				</li>
 			{/each}
 		</ul>
+	{/if}
+
+	{#if entry.links?.length}
+		<ProjectDeck links={entry.links} fallbackIcon={entry.logo} label={entry.org} />
 	{/if}
 </li>

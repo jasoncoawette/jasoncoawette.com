@@ -3,7 +3,7 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import appleIcon from '$lib/assets/apple-icon.png';
 	import banner from '$lib/assets/banner.png';
-	import { NavBar, Footer, SidebarIdent, PowerSwitch } from '$lib';
+	import { NavBar, Footer } from '$lib';
 
 	let { children } = $props();
 </script>
@@ -39,13 +39,11 @@
 	<meta name="twitter:image" content={banner} />
 </svelte:head>
 
-<NavBar title="Jason Coawette" subtitle="Forward Deployed Engineer" />
-<SidebarIdent />
+<NavBar title="Jason Coawette" subtitle="Designing and building beautiful software" />
 <main class="flex w-full max-w-3xl flex-1 flex-col items-center justify-start px-4">
 	{@render children()}
 </main>
 <Footer />
-<PowerSwitch />
 
 <!-- Bottom progressive blur -->
 <div class="bottom-blur" aria-hidden="true">

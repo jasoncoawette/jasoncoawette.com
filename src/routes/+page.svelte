@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Gate, RailPath, TimelineEntry } from '$lib';
+	import { Gate, PowerSwitch, RailPath, TimelineEntry } from '$lib';
 	import { entries } from '$lib/data/experience';
 	import { gateState } from '$lib/state/gate.svelte';
 	import { navState } from '$lib/navigation.svelte';
@@ -42,10 +42,12 @@
 
 <div class="folio folio-col" class:booting={!gateState.entered}>
 	<section class="folio-intro reveal" aria-label="Introduction">
+		<PowerSwitch />
+
 		<h1 class="intro-name" class:past={navState.pastHeading} {@attach trackHeading}>
 			Jason Coawette
 		</h1>
-		<p class="intro-role">Forward Deployed Engineer</p>
+		<p class="intro-role">Designing and building beautiful software</p>
 		<p class="folio-lede">Every linked project below is live. I'd rather show than tell.</p>
 		<p class="folio-sub">
 			Communication matters as much as technical ability: listen first, explain simply, and help
