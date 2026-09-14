@@ -4,8 +4,8 @@
 
 	/**
 	 * A power-strip rocker, lying on its side above the name. Light is ON: the
-	 * "I" half is tacked in and lit, exactly the way the switch on a surge
-	 * protector reads.
+	 * "I" half is pressed down flat and lit, exactly the way the switch on a
+	 * surge protector reads.
 	 */
 	const on = $derived(themeState.value === 'light');
 
@@ -190,13 +190,13 @@
 		position: absolute;
 		inset: 6px;
 		transform-style: preserve-3d;
-		/* Negative = "O" tacked in. Positive = "I" tacked in. */
-		transform: rotateY(-19deg);
+		/* Positive = "O" pressed flat. Negative = "I" pressed flat. */
+		transform: rotateY(19deg);
 		transition: var(--throw);
 	}
 
 	.ps.is-on .ps-rocker {
-		transform: rotateY(19deg);
+		transform: rotateY(-19deg);
 	}
 
 	/*
@@ -217,27 +217,28 @@
 			box-shadow 300ms var(--ease-out);
 	}
 
-	/* At rest the "O" half is the sunk one: the housing shades it, and the
-	   hinge wall to its right casts back across it. */
+	/* At rest the "O" half lies flat: angled out toward the room, rim along
+	   the top edge, and no lamp behind it. */
 	.ps-off {
 		left: 0;
 		transform-origin: right center;
 		transform: rotateY(-20deg);
 		border-radius: 8px 0 0 8px;
-		background: linear-gradient(to bottom, var(--face-in-near), var(--face-in-far));
-		box-shadow:
-			inset -3px 0 6px var(--sink-side),
-			inset 0 1px 0 var(--sink-top);
+		background: linear-gradient(to bottom, var(--face-out-near), var(--face-out-far));
+		box-shadow: inset 0 1px 0 var(--rim);
 	}
 
-	/* Raised: lit from above, rim along the top edge. */
+	/* The "I" half is the one standing up out of the well: the housing shades
+	   it, and the hinge wall to its left casts back across it. */
 	.ps-on {
 		right: 0;
 		transform-origin: left center;
 		transform: rotateY(20deg);
 		border-radius: 0 8px 8px 0;
-		background: linear-gradient(to bottom, var(--face-out-near), var(--face-out-far));
-		box-shadow: inset 0 1px 0 var(--rim);
+		background: linear-gradient(to bottom, var(--face-in-near), var(--face-in-far));
+		box-shadow:
+			inset 3px 0 6px var(--sink-side),
+			inset 0 1px 0 var(--sink-top);
 	}
 
 	/* The fold. A single dark seam at the hinge does more for the illusion
@@ -251,13 +252,13 @@
 		width: 1px;
 		margin-left: -0.5px;
 		background: var(--seam);
-		box-shadow: -5px 0 9px -1px var(--seam-glow);
+		box-shadow: 5px 0 9px -1px var(--seam-glow);
 		pointer-events: none;
 	}
 
-	/* ---- Thrown: "I" sunk and lit ---------------------- */
-	/* The wire is made on this side, so the lit half is the one lying flat in
-	   the well and the dead half stands proud of it. */
+	/* ---- Thrown: "I" flat and lit ---------------------- */
+	/* The wire is made on this side, so the lit half is the one pressed down
+	   flat and the dead half stands up out of the well. */
 	.ps.is-on .ps-body::before {
 		background: linear-gradient(
 			to right,
@@ -269,21 +270,23 @@
 	}
 
 	.ps.is-on .ps-rocker::after {
-		box-shadow: 5px 0 9px -1px var(--seam-glow);
+		box-shadow: -5px 0 9px -1px var(--seam-glow);
 	}
 
 	.ps.is-on .ps-on {
-		/* Darker at the far (right) edge, brighter toward the hinge, and sat
-		   under the overhang of the half that is now standing up. */
-		background: linear-gradient(to left, var(--lamp-lo), var(--lamp-hi));
+		/* Lit from directly behind, so the face carries the lamp evenly and
+		   only dips where the half standing up beside it overhangs the hinge. */
+		background: linear-gradient(to bottom, var(--lamp-hi), var(--lamp-lo));
 		box-shadow:
-			inset 5px 0 10px var(--lamp-shade),
-			inset 0 2px 5px var(--lamp-shade);
+			inset 0 1px 0 var(--rim),
+			inset 4px 0 9px var(--lamp-shade);
 	}
 
 	.ps.is-on .ps-off {
-		background: linear-gradient(to bottom, var(--face-out-near), var(--face-out-far));
-		box-shadow: inset 0 1px 0 var(--rim);
+		background: linear-gradient(to bottom, var(--face-in-near), var(--face-in-far));
+		box-shadow:
+			inset -3px 0 6px var(--sink-side),
+			inset 0 1px 0 var(--sink-top);
 	}
 
 	/* ---- Glyphs ---------------------------------------- */
@@ -297,12 +300,12 @@
 		user-select: none;
 	}
 
-	.ps-on .ps-glyph {
+	.ps-off .ps-glyph {
 		color: var(--glyph-out);
 	}
 
 	.ps.is-on .ps-off .ps-glyph {
-		color: var(--glyph-out);
+		color: var(--glyph-in);
 	}
 
 	.ps.is-on .ps-on .ps-glyph {
