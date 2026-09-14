@@ -1,16 +1,19 @@
 # ---- Base builder image ----
 FROM node:20-slim AS builder
 
-# Enable pnpm via corepack
+# Enable pnpm via corepack. The version comes from package.json "packageManager",
+# so the image uses the same pnpm that generated pnpm-lock.yaml.
 ENV COREPACK_ENABLE_STRICT=0
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 RUN corepack enable
 
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml ./
-COPY .npmrc pnpm-workspace.yaml ./
+# pnpm-workspace.yaml carries onlyBuiltDependencies; without it pnpm refuses the
+# install with ERR_PNPM_IGNORED_BUILDS.
+COPY package.json pnpm-lock.yaml .npmrc pnpm-workspace.yaml ./
 
-RUN pnpm install
+RUN pnpm install --frozen-lockfile
 
 # Copy the rest of the app and build
 COPY . .
@@ -24,13 +27,15 @@ WORKDIR /app
 
 # Enable pnpm in runtime too
 ENV COREPACK_ENABLE_STRICT=0
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 RUN corepack enable
 
-# Copy package.json and lockfile for prod install
-COPY package.json pnpm-lock.yaml ./
+# Same config files as the builder stage, so pnpm resolves identical settings
+COPY package.json pnpm-lock.yaml .npmrc pnpm-workspace.yaml ./
 
-# Install only production dependencies
-RUN pnpm install --prod
+# Install only production dependencies. --ignore-scripts skips the "prepare"
+# hook, which shells out to svelte-kit (a devDependency absent from this stage).
+RUN pnpm install --prod --frozen-lockfile --ignore-scripts
 
 # Copy built SvelteKit output from builder
 COPY --from=builder /app/build ./build
