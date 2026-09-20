@@ -48,10 +48,10 @@
 			Jason Coawette
 		</h1>
 		<p class="intro-role">I design and build software</p>
-		<p class="folio-lede">Every project below is live. Take a look around.</p>
+		<p class="folio-lede">Everything below is live. Click around if you want.</p>
 		<p class="folio-sub">
-			I listen first and say things in plain words. I like helping technical and nontechnical people
-			understand each other.
+			I won't claim I'm the best engineer you'll meet. What I can tell you is I listen first, I say
+			things in plain words, and I finish what I start.
 		</p>
 	</section>
 
@@ -65,7 +65,7 @@
 		</ul>
 
 		<div class="folio-outro reveal" style="--reveal-delay: 540ms">
-			<p class="outro-thanks font-medium">Thanks for reading :)</p>
+			<p class="outro-thanks font-medium">Thanks for reading. Hope this finds you well :)</p>
 
 			<!-- Fills blue on the frame the rail finishes, so getting to the end
 			     of the page is what hands over the way to get in touch. -->
@@ -74,7 +74,7 @@
 				href="mailto:jason.coawette@gmail.com"
 				use:shine
 			>
-				Say hi any time
+				Say hi, I'd love to hear from you
 			</a>
 		</div>
 	</div>
