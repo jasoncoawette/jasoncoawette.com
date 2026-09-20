@@ -47,11 +47,10 @@
 		<h1 class="intro-name" class:past={navState.pastHeading} {@attach trackHeading}>
 			Jason Coawette
 		</h1>
-		<p class="intro-role">Designing and building beautiful software</p>
-		<p class="folio-lede">Every linked project below is live. I'd rather show than tell.</p>
-		<p class="folio-sub">
-			Communication matters as much as technical ability: listen first, explain simply, and help
-			technical and nontechnical people understand each other.
+		<p class="intro-role">I design and build software</p>
+		<p class="folio-lede">
+			I won't claim I'm the best engineer you'll meet. What I can tell you is I listen first, I say
+			things in plain words, and I finish what I start.
 		</p>
 	</section>
 
@@ -65,7 +64,7 @@
 		</ul>
 
 		<div class="folio-outro reveal" style="--reveal-delay: 540ms">
-			<p class="outro-thanks font-medium">Thanks for reading :)</p>
+			<p class="outro-thanks font-medium">Thanks for reading. Hope this finds you well :)</p>
 
 			<!-- Fills blue on the frame the rail finishes, so getting to the end
 			     of the page is what hands over the way to get in touch. -->
@@ -74,7 +73,7 @@
 				href="mailto:jason.coawette@gmail.com"
 				use:shine
 			>
-				Reach out if you need anything
+				Say hi, I'd love to hear from you
 			</a>
 		</div>
 	</div>
@@ -109,11 +108,7 @@
 		color: var(--color-folio-mute) !important;
 	}
 
-	.folio-sub {
-		margin-top: 8px;
-	}
-
-	/* Set in the same type as .tl-role — the "Recognition along the way" line —
+	/* Set in the same type as .tl-role — the awards role line —
 	   so the page signs off in the voice it ran in. The bare `p` rule is
 	   unlayered, so it beats Tailwind's utilities no matter the specificity;
 	   every value it touches has to be claimed back here. */

@@ -68,9 +68,9 @@ export const entries: Entry[] = [
 			}
 		],
 		bullets: [
-			'Built and shipped Water Credit Registry. It turns **flow-meter readings into water credits** and tracks every one.',
-			'Chose an IO-Link device with the customer and the vendors, Madison Air and ifm. Meter data flows to a Go service on AWS. **Built a simulated meter** to test before the hardware arrived.',
-			'Pulled government water and health data out of PDFs, spreadsheets, and old databases. Built an interactive U.S. map by county and ZIP code.'
+			'Built Water Credit Registry. It turns **flow-meter readings into water credits** and keeps track of each one.',
+			'Picked an IO-Link device with the customer and the vendors, Madison Air and ifm. Meter data flows to a Go service on AWS. I **built a simulated meter** so we could test before the hardware arrived.',
+			'Pulled government water and health data out of PDFs, spreadsheets, and old databases. Then I built a U.S. map you can search by county and ZIP code.'
 		]
 	},
 	{
@@ -84,9 +84,9 @@ export const entries: Entry[] = [
 		logo: boeingLogo,
 		initials: 'B',
 		bullets: [
-			'Wrote C++ and Node.js software that links factory tools to Boeing systems. Those tools build the **Apache, V-22, Chinook, 787, and Patriot**.',
-			'Turned mixed telemetry protocols into clean JSON. Sent commands to each tool and read its results over private networks.',
-			'Built recovery for Wi-Fi drops so jobs resume without losing state. Worked across Boeing sites with the engineers, technicians, and mechanics who run the tools.'
+			'Wrote C++ and Node.js software that links factory tools to Boeing systems. Those tools help build the **Apache, V-22, Chinook, 787, and Patriot**.',
+			'Turned mixed telemetry protocols into clean JSON. The software sends commands to each tool and reads the results over private networks.',
+			'Added recovery for Wi-Fi drops so a job picks up where it left off. I worked across Boeing sites with the engineers, technicians, and mechanics who use the tools every day.'
 		]
 	},
 	{
@@ -111,9 +111,9 @@ export const entries: Entry[] = [
 			}
 		],
 		bullets: [
-			'Designed and shipped a macOS app that posts to several social platforms without opening any of them. **23 users so far**, every one organic.',
-			'Built all of it. The Swift app, sign-in, distribution, website, and a Rust server for the platform APIs. Motion, sound, and SVG keep it simple.',
-			'Passed API review with the major platforms. Read their policies, worked with reviewers, and changed the product without making it harder to use.'
+			'Designed and shipped a free macOS app that posts to several social platforms without opening any of them. I have posted with it about 100 times and saved around 10 hours. **23 people use it now**, and they all found it on their own.',
+			'I built the Swift app, sign-in, distribution, website, and a Rust server for the platform APIs. Motion, sound, and SVG keep it simple.',
+			'Passed API review with the major platforms. I read their policies, worked with the reviewers, and changed the product to fit. I am still making it better.'
 		]
 	},
 	{
@@ -131,7 +131,7 @@ export const entries: Entry[] = [
 	{
 		id: 'awards',
 		org: 'Awards',
-		role: 'Recognition along the way',
+		role: 'A few nice things that happened along the way',
 		year: '2023',
 		dates: '2023',
 		emoji: '🏆',
@@ -147,9 +147,9 @@ export const entries: Entry[] = [
 			}
 		],
 		bullets: [
-			'**Top 4, ASU Venture Devils.**',
-			'**Tech Devils invitee**, featured by ASU in 2023.',
-			'**National ZBT Chapter Best Website.**'
+			'We placed **top 4 at ASU Venture Devils**.',
+			'ASU invited me to **Tech Devils** and wrote about the pitch in 2023.',
+			'Our chapter won **National ZBT Best Website**.'
 		]
 	}
 ];

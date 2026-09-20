@@ -97,7 +97,7 @@
 			</div>
 
 			<p class="gate-name">Jason Coawette</p>
-			<p class="gate-role">Designing and building beautiful software</p>
+			<p class="gate-role">I design and build software</p>
 
 			<button
 				class="glass btn-text btn-scale gate-btn"

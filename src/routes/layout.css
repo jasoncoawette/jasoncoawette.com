@@ -290,8 +290,7 @@ button {
 	text-align: left;
 }
 
-.folio-intro .folio-lede,
-.folio-intro .folio-sub {
+.folio-intro .folio-lede {
 	max-width: 480px;
 }
 
@@ -301,15 +300,6 @@ button {
 	line-height: 1.8;
 	letter-spacing: -0.12px;
 	color: var(--color-folio-ink);
-}
-
-.folio-sub {
-	font-weight: 400;
-	font-size: 16px;
-	line-height: 1.6;
-	letter-spacing: -0.12px;
-	color: var(--color-folio-body);
-	opacity: 0.8;
 }
 
 .folio-track {
