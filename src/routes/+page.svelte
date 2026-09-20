@@ -48,8 +48,7 @@
 			Jason Coawette
 		</h1>
 		<p class="intro-role">I design and build software</p>
-		<p class="folio-lede">Everything below is live. Click around if you want.</p>
-		<p class="folio-sub">
+		<p class="folio-lede">
 			I won't claim I'm the best engineer you'll meet. What I can tell you is I listen first, I say
 			things in plain words, and I finish what I start.
 		</p>
@@ -109,11 +108,7 @@
 		color: var(--color-folio-mute) !important;
 	}
 
-	.folio-sub {
-		margin-top: 8px;
-	}
-
-	/* Set in the same type as .tl-role — the "Recognition along the way" line —
+	/* Set in the same type as .tl-role — the awards role line —
 	   so the page signs off in the voice it ran in. The bare `p` rule is
 	   unlayered, so it beats Tailwind's utilities no matter the specificity;
 	   every value it touches has to be claimed back here. */
