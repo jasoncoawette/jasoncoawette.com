@@ -41,7 +41,7 @@
 	<meta name="twitter:image" content={banner} />
 </svelte:head>
 
-<NavBar title="Jason Coawette" subtitle="Designing and building beautiful software" />
+<NavBar title="Jason Coawette" subtitle="I design and build software" />
 <main class="flex w-full max-w-3xl flex-1 flex-col items-center justify-start px-4">
 	{@render children()}
 </main>

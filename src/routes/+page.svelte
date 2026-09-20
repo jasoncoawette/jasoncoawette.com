@@ -47,11 +47,11 @@
 		<h1 class="intro-name" class:past={navState.pastHeading} {@attach trackHeading}>
 			Jason Coawette
 		</h1>
-		<p class="intro-role">Designing and building beautiful software</p>
-		<p class="folio-lede">Every linked project below is live. I'd rather show than tell.</p>
+		<p class="intro-role">I design and build software</p>
+		<p class="folio-lede">Every project below is live. Take a look around.</p>
 		<p class="folio-sub">
-			Communication matters as much as technical ability: listen first, explain simply, and help
-			technical and nontechnical people understand each other.
+			I listen first and say things in plain words. I like helping technical and nontechnical people
+			understand each other.
 		</p>
 	</section>
 
@@ -74,7 +74,7 @@
 				href="mailto:jason.coawette@gmail.com"
 				use:shine
 			>
-				Reach out if you need anything
+				Say hi any time
 			</a>
 		</div>
 	</div>
