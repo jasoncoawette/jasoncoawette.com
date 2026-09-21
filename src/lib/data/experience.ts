@@ -80,13 +80,14 @@ export const entries: Entry[] = [
 		role: 'Software Engineer',
 		month: 'Jan',
 		year: '2026',
-		dates: 'Jan 2026 – Aug 2026',
+		dates: 'Jan 2026 – Present',
+		badge: 'Now',
 		logo: boeingLogo,
 		initials: 'B',
 		bullets: [
 			'Wrote C++ and Node.js software that links factory tools to Boeing systems. Those tools help build the **Apache, V-22, Chinook, 787, and Patriot**.',
 			'Turned mixed telemetry protocols into clean JSON. The software sends commands to each tool and reads the results over private networks.',
-			'Added recovery for Wi-Fi drops so a job picks up where it left off. I worked across Boeing sites with the engineers, technicians, and mechanics who use the tools every day.'
+			'Added recovery for Wi-Fi drops so a job picks up where it left off. I work across Boeing sites with the engineers, technicians, and mechanics who use the tools every day.'
 		]
 	},
 	{
