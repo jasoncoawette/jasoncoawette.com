@@ -97,8 +97,8 @@ export const entries: Entry[] = [
 		role: 'Founder, Designer and Engineer',
 		month: 'Aug',
 		year: '2026',
-		dates: 'Aug 2026 – Present',
-		badge: 'Now',
+		dates: 'Aug 2026',
+		badge: 'Done',
 		logo: postboxLogo,
 		initials: 'P',
 		links: [
@@ -114,7 +114,7 @@ export const entries: Entry[] = [
 		bullets: [
 			'Designed and shipped a free macOS app that posts to several social platforms without opening any of them. I have posted with it about 100 times and saved around 10 hours. **23 people use it now**, and they all found it on their own.',
 			'I built the Swift app, sign-in, distribution, website, and a Rust server for the platform APIs. Motion, sound, and SVG keep it simple.',
-			'Passed API review with the major platforms. I read their policies, worked with the reviewers, and changed the product to fit. I am still making it better.'
+			'Passed API review with the major platforms. I read their policies, worked with the reviewers, and changed the product to fit.'
 		]
 	},
 	{
