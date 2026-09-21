@@ -97,8 +97,7 @@ export const entries: Entry[] = [
 		role: 'Founder, Designer and Engineer',
 		month: 'Aug',
 		year: '2026',
-		dates: 'Aug 2026',
-		badge: 'Done',
+		dates: 'Aug 2026 – Sep 2026',
 		logo: postboxLogo,
 		initials: 'P',
 		links: [
