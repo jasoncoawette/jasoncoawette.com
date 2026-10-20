@@ -48,10 +48,6 @@
 			Jason Coawette
 		</h1>
 		<p class="intro-role">I design and build software</p>
-		<p class="folio-lede">
-			I won't claim I'm the best engineer you'll meet. What I can tell you is I listen first, I say
-			things in plain words, and I finish what I start.
-		</p>
 	</section>
 
 	<div class="folio-track">
