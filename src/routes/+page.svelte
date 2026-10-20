@@ -48,6 +48,7 @@
 			Jason Coawette
 		</h1>
 		<p class="intro-role">I design and build software</p>
+
 	</section>
 
 	<div class="folio-track">
