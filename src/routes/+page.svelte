@@ -44,6 +44,7 @@
 	<section class="folio-intro reveal" aria-label="Introduction">
 		<PowerSwitch />
 
+
 		<h1 class="intro-name" class:past={navState.pastHeading} {@attach trackHeading}>
 			Jason Coawette
 		</h1>
