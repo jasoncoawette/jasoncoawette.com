@@ -3,6 +3,7 @@
 	import { entries } from '$lib/data/experience';
 	import { gateState } from '$lib/state/gate.svelte';
 	import { navState } from '$lib/navigation.svelte';
+	import portrait from '$lib/assets/jason.webp';
 
 	/**
 	 * Hands the nav its cue to swap in the small title, and fades the big one out.
@@ -42,8 +43,10 @@
 
 <div class="folio folio-col" class:booting={!gateState.entered}>
 	<section class="folio-intro reveal" aria-label="Introduction">
-		<PowerSwitch />
-
+		<div class="intro-top">
+			<img class="intro-avatar" src={portrait} alt="Jason Coawette" width="56" height="56" />
+			<PowerSwitch />
+		</div>
 
 		<h1 class="intro-name" class:past={navState.pastHeading} {@attach trackHeading}>
 			Jason Coawette
@@ -80,6 +83,29 @@
 <style>
 	.folio-col {
 		padding-top: 6vh;
+	}
+
+	.intro-top {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 16px;
+	}
+
+	/* The switch carries its own bottom margin for the old stacked layout;
+	   zeroed here so align-items: center lines it up with the avatar. */
+	.intro-top :global(.ps) {
+		margin: 0;
+	}
+
+	.intro-avatar {
+		width: 56px;
+		height: 56px;
+		border-radius: 999px;
+		object-fit: cover;
+		box-shadow:
+			0 10px 30px -12px var(--color-shadow),
+			inset 0 0 0 1px var(--keyline);
 	}
 
 	.intro-name {

@@ -1,5 +1,5 @@
 import boeingLogo from '$lib/assets/boeing-logo.avif';
-import stratusLogo from '$lib/assets/stratus-logo.svg';
+import coetLogo from '$lib/assets/coet-icon.svg';
 import postboxLogo from '$lib/assets/postbox-logo.png';
 import asuLogo from '$lib/assets/asu-logo.png';
 import watercreditIcon from '$lib/assets/watercredit-icon.svg';
@@ -51,7 +51,7 @@ export const entries: Entry[] = [
 		year: '2026',
 		dates: 'Aug 2026 – Present',
 		badge: 'Now',
-		logo: stratusLogo,
+		logo: coetLogo,
 		initials: 'SV',
 		links: [
 			{
@@ -78,10 +78,9 @@ export const entries: Entry[] = [
 		org: 'Boeing',
 		href: 'https://boeing.com',
 		role: 'Software Engineer',
-		month: 'Jan',
+		month: 'Aug',
 		year: '2026',
-		dates: 'Jan 2026 – Present',
-		badge: 'Now',
+		dates: 'Jan 2026 – Aug 2026',
 		logo: boeingLogo,
 		initials: 'B',
 		bullets: [
